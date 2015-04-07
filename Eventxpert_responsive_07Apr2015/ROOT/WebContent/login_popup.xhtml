@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<h:panelGrid id="loginForm">
+		<div id="dialoglogin" title="Login" onclick="clearText();"
+			style="display: none">
+			<table width="100%" cellpadding="2" cellspacing="2" border="0">
+				<tr>
+					<td>Username:</td>
+					<td><input id="txtUserName" type="text" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input id="txtPassword" type="password" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><div id="divMessage"
+							style="font-style: italic; color: Red;"></div></td>
+
+				</tr>
+			</table>
+			<p></p>
+		</div>
+
+	</h:panelGrid>
+</h:body>
+</html>

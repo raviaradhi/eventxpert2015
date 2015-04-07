@@ -1,0 +1,295 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="/template/user/commonLayout.xhtml">
+		<ui:define name="content">
+  
+    <div class="content-bg clear-both"> 
+      <!--lt-flap starts--> 
+      <div class="lt-flap"> <img src="images/left.png" /></div> 
+      <!--lt-flap ends--> 
+      <!--messag-heart starts--> 
+      <div class="flap-mid"> 
+        <div class="black-shade"> 
+          <div class="clear home"> Home > &#160;<span name="spnTitle"></span>&#160;</div>  
+        </div> 
+      </div> 
+      <!--messag-heart ends--> 
+      <!--rt-flap starts--> 
+      <div class="rt-flap"> <img src="images/right.png" /></div> 
+      <!--rt-flap ends--> 
+      <div class="clear"> 
+        <!--mid contents starts--> 
+        <div class="mid-content"> 
+          <!--select details starts--> 
+          <div class="clear"> 
+            <h1 id="h1title"> 1. Select&#160;<span name="spnTitle"></span>&#160;Details</h1> 
+          </div> 
+          <!--select details ends--> 
+          <div class="clear"> 
+            <!--details head starts--> 
+            <div class="box-nav1 active" id="divdetails"> 1.&#160;<span name="spnTitle"></span>&#160;Details </div> 
+            <!--details head ends--> 
+            <!--summary head starts--> 
+            <div class="box-nav2" id="divsummary"> 2.&#160;<span name="spnTitle"></span>&#160;Summary </div> 
+            <!--summary head ends--> 
+            <!--Payment head starts--> 
+            <div class="box-nav3" id="divpayment"> 3. Payment Details</div> 
+            <!--Payment head ends--> 
+          </div> 
+          <h:form id="frm">
+      <!-- payment details starts--> 
+      <div  id="maindiv3" class="payment_container"> 
+         <div >
+		 
+		 	<!-- payment details section left sidebar starts --> 
+			<div class="evleftbar">
+				<div class="evpackage">
+					<div class="evpack_head">
+						<h2>Event Package</h2>
+					</div>
+					<div class="evpack_content">
+						<div class="evdate">
+							<label>Event Date:</label> <span>5july 2012</span>
+						</div>
+						<div class="evlocation">
+							<label>Location:</label> <span>Himayathnagar</span>
+						</div>
+						<div class="evvenuetype">
+							<label>Venue Type:</label> <span>Taj Hotel</span>
+						</div>
+						<div class="evguest">
+							<label>Guests:</label> <span>200</span>
+						</div>
+					</div>	
+				</div>
+				<div class="serequest">
+					<div class="evpack_head">
+						<h2>Service Request</h2>
+					</div>
+					<div class="se_sub">
+						<h3>Venue:</h3>
+						<div class="se_sub_left">
+							<p>Taj Mahal Hotel</p>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+						</div>
+						<span>25000.00</span>
+						
+					</div>
+					<div class="se_sub">
+						<h3>Catering:</h3>
+						<div class="se_sub_left">
+							<p>The Best Caterers</p>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+						</div>
+						<span>15000.00</span>
+						
+					</div>
+					<div class="se_sub">
+						<h3>Photographer:</h3>
+						<div class="se_sub_left">
+							<p>The Photo</p>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+						</div>
+						<span>18000.00</span>
+						
+					</div>
+					<div class="se_sub">
+						<h3>Invitation:</h3>
+						<div class="se_sub_left">
+							<p>The Invites</p>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+							<img src="images/yellow_star.jpg" alt="yellow_star"/>
+						</div>
+						<span>18000.00</span>
+						
+					</div>
+					
+					<div class="ev_charges">
+						<label>Services Charges</label>
+						<span>5000.00</span>
+					</div>
+					<div class="ev_cost">
+						<label>Event Cost</label>
+						<span>45000.00</span>
+					</div>
+					
+					
+				</div>
+			</div>
+		 	<!-- payment details section left sidebar ends --> 
+
+		 	<!-- payment details section right sidebar starts --> 
+			<div class="payment_right">
+				<div class="genTabs" id="paymentTabs">
+					<ul>
+						<li class="active" id="creditCard">Credit Cards</li>
+						<li id="debitCard">Debit Cards</li>
+						<li id="netBanking">Net Banking</li>
+					</ul>
+				</div>
+				<div class="billing_information">
+					<h3>Billing Information:</h3>
+					<form name="billing_form">
+					<table class="billing_table">
+					<tr>
+						<td><label>First Name:</label></td>
+						<td><input type="text"/></td>
+					</tr>
+					<tr>
+						<td><label>Last Name:</label></td>
+						<td><input type="text"/></td>
+					</tr>
+					<tr>
+						<td><label>Address1</label></td>
+						<td><input type="text"/></td>
+					</tr>
+					<tr>
+						<td><label>Address2</label></td>
+						<td><input type="text"/></td>
+					</tr>
+					<tr>
+						<td><label>City</label></td>
+						<td><select><option>select</option></select></td>
+					</tr>
+					<tr>
+						<td><label>State</label></td>
+						<td><select><option>select</option></select></td>
+					</tr>
+					<tr>
+						<td><label>Postal/Zip Code</label></td>
+						<td><input class="zipcode" type="text"/></td>
+					</tr>
+					</table>
+					</form>
+				</div>
+				<div class="payment_information" id="paymentInformation">
+					<div id="creditCardDetails" style="display:block ">
+						<form name="payment_form">
+						<h3>Credit Card Information:</h3>
+							<table class="payment_table">
+							<tr>
+								<td><label>Name:</label></td>
+								<td><input type="text"/></td>
+							</tr>
+							<tr>
+								<td><label>Card Number:</label></td>
+								<td><input type="text"/></td>
+								<td><img src="images/payment_card.jpg"/></td>
+							</tr>
+							<tr>
+								<td><label>Security Code:</label></td>
+								<td><input type="text" class="sec_code"/></td>
+								<td><a href="#">what's this?</a></td>
+							</tr>
+							<tr>
+								<td><label>Expiration Date:</label></td>
+								<td><input type="text" class="sec_code"/></td>
+							</tr>
+							<tr>
+								<td><label>Amount Payable:</label></td>
+								<td><span id="amount">INR 45000.00</span></td>
+							</tr>
+							<tr>
+								<td><label>Postal/Zip Code</label></td>
+								<td><input class="zipcode" type="text"/></td>
+							</tr>
+							<tr class="term_con">
+							<td colspan="2"><input type="checkbox" /><p>I agree as per<span>&#160;Terms&#160;</span>and<span>&#160;Conditions</span></p></td>
+							</tr>
+							</table>
+							<!--btn checkout starts--> 
+							<div align="right" class=""> <a href="Javascript:void(0)" id="imgCheckout" class="nextStepButton">Checkout</a></div> 
+							<!--btn checkout ends--> 
+							</form>
+					</div>
+					<div id="debitCardDetails">
+						<h3>Debit Card Information:</h3>
+							<table class="payment_table">
+							<tr>
+								<td><label>Name:</label></td>
+								<td><input type="text" /></td>
+							</tr>
+							<tr>
+								<td><label>Card Number:</label></td>
+								<td><input type="text" /></td>
+								<td><img src="images/payment_card.jpg"/></td>
+							</tr>
+							<tr>
+								<td><label>Security Code:</label></td>
+								<td><input type="text" class="sec_code" /></td>
+								<td><a href="#">what's this?</a></td>
+							</tr>
+							<tr>
+								<td><label>Expiration Date:</label></td>
+								<td><input type="text" class="sec_code" /></td>
+							</tr>
+							<tr>
+								<td><label>Amount Payable:</label></td>
+								<td><span id="amount">INR 45000.00</span></td>
+							</tr>
+							<tr>
+								<td><label>Postal/Zip Code</label></td>
+								<td><input class="zipcode" type="text" /></td>
+							</tr>
+							<tr class="term_con">
+							<td colspan="2"><input type="checkbox" /><p>I agree as per<span>&#160;Terms&#160;</span>and<span>&#160;Conditions</span></p></td>
+							</tr>
+							</table>
+							<!--btn checkout starts--> 
+							<div align="right" class=""> <a href="Javascript:void(0)" id="img1" class="nextStepButton">Checkout</a></div> 
+							<!--btn checkout ends--> 
+					</div>
+					<div id="netBankingDetails">
+						<h3>Net Banking Information:</h3>
+							<table class="payment_table">
+							<tr>
+								<td><label>Select Bank:</label></td>
+								<td><select><option>select</option></select></td>
+							</tr>
+							</table>
+							<!--btn checkout starts--> 
+							<div align="right" class=""> <a href="Javascript:void(0)" id="img1" class="nextStepButton">Checkout</a></div> 
+							<!--btn checkout ends--> 
+						</div>
+				</div>
+				
+			</div>
+		 	<!-- payment details section right sidebar ends --> 
+		</div>
+      </div> 
+      <!-- payment details ends--> 
+          </h:form>
+    </div> 
+    <!--icons starts--> 
+     <div style="float: right; width: 63px; margin-top: 30px;">
+                        <a href="contact.jsf">
+                            <img src="images/icon1.png" width="63" height="46" border="0" /></a><a href="contact.jsf"><img
+                                src="images/icon2.png" border="0" /></a></div>
+    <!--icons ends--> 
+  </div> 
+  <div class="clear"></div> 
+</div> 
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Customer Registration</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/user/commonLayout.xhtml">
+		<ui:define name="content">
+		
+							<style type="text/css">
+.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default
+	{
+	color: #555555;
+	font-weight: bold !important;
+}
+</style>
+			<!--BODY CONTENT STARTS HERE-->
+			<div class="content-bg clear-both">
+				<div class="lt-flap">
+					<img src="images/left.png" alt="" />
+				</div>
+				<div class="flap-mid">
+					<div class="black-shade">&#160;</div>
+				</div>
+				<div class="rt-flap">
+					<img src="images/right.png" alt="" />
+				</div>
+				<!--phone and chat icon starts -->
+				<div class="icon-1-top">
+					<a href="#"> <img src="images/icon2.png" border="0" alt="" /></a>
+				</div>
+				<!--phone and chat icon ends -->
+				<div class="clear" id="maindiv2">
+					<h:form id="frm">
+					 <div style="background-color: white;margin-left:20px; padding-left: 20px; width: 930px;" >
+						<div id="divD">
+							<p:outputPanel id="panel1">
+								<p:dialog resizable="true" modal="true" dynamic="true"
+									position="center" id="eventDialog" widgetVar="eventDialog"
+									width="570" height="470">
+									<ui:include src="eventDisplay.xhtml" />
+								</p:dialog>
+							</p:outputPanel>
+						</div>
+
+						<div id="divOne" style="padding-right: 30px">
+							<p:dataTable
+								style="font-size: 13px; font-family: Century Gothic;"
+								id="tab" lazy="true" paginator="true" rows="10" var="event"
+								value="#{eventHistoryManagedBean.allEvents.entrySet().toArray()}">
+
+								<f:facet name="header">List of Events</f:facet>
+								<p:column>
+									<f:facet name="header">Event Id</f:facet>
+									<div align="center">
+									<h:outputText value="#{event.key.eventId}" />
+									</div>
+								</p:column>
+								<p:column headerText="Event Type">
+									<h:outputText value="#{event.key.eventType.eventType}" />
+								</p:column>
+
+								<p:column headerText="Event Date">
+									<h:outputText value="#{event.key.eventEffectiveDate}">
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Venue">
+									<h:outputText value="#{event.key.venueType.venueType}" />:&nbsp;
+                   						<ui:repeat value="#{event.value.get(0)}"
+										var="service">
+										<ui:repeat value="#{service.value.entrySet().toArray()}"
+											var="service1">
+											<h:outputText value="#{service1.key.venueName}" />
+										</ui:repeat>
+									</ui:repeat>
+								</p:column>
+								<p:column headerText="Services">
+									<ui:repeat value="#{event.value.get(1)}" var="service">
+										<h:outputText value="#{service.key}" />:&nbsp;
+                  						<ui:repeat
+											value="#{service.value.entrySet().toArray()}" var="service1">
+											<h:outputText value="#{service1.key.serviceProviderName}" />
+											<br />
+										</ui:repeat>
+									</ui:repeat>
+								</p:column>
+								<p:column headerText="Total Cost (Rs.)">
+									<div align="right">
+									<h:outputText value="Rs. #{event.key.cost}" />
+									</div>
+								</p:column>
+
+								<p:column headerText="Total Guests">
+								<div align="center">
+									<h:outputText value="#{event.key.estimatedGuests}" />
+									</div>
+								</p:column>
+
+								<p:column headerText="Show">
+									<p:commandButton icon="ui-icon-search"
+										update=":frm:eventDialog"
+										action="#{eventHistoryManagedBean.getSelEvent1(event.key.eventId)}"
+										oncomplete="eventDialog.show()">
+									</p:commandButton>
+								</p:column>
+
+								<f:facet name="footer">#{eventHistoryManagedBean.eventInfo.size()} event(s) found.</f:facet>
+
+
+							</p:dataTable>
+							<h:inputHidden value="#{eventHistoryManagedBean.eventType}" />
+							<h:inputHidden value="#{eventHistoryManagedBean.eventTypeId}" />
+							<ui:remove>
+								<div>
+									<p:commandLink styleClass="nextStepButton" style="size: 30"
+										value="Create a New Event"
+										action="#{eventHistoryManagedBean.submitForm}" ajax="false" onclick="PF('buiload').show()" />
+								</div>
+							</ui:remove>
+						</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+
+

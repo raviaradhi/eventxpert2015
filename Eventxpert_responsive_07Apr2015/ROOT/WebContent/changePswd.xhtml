@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Customer Registration</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/common/commonLayout.xhtml">
+		<ui:define name="content">
+			<!--BODY CONTENT STARTS HERE-->
+			<div class="content-bg clear-both">
+				<div class="lt-flap">
+					<img src="images/left.png" alt="" />
+				</div>
+				<div class="flap-mid">
+					<div class="black-shade">&#160;</div>
+				</div>
+				<div class="rt-flap">
+					<img src="images/right.png" alt="" />
+				</div>
+				<!--phone and chat icon starts -->
+				<div class="icon-1-top">
+					<a href="#"> <img src="images/icon2.png" border="0" alt="" /></a>
+				</div>
+				<!--phone and chat icon ends -->
+
+				<div style="padding-left: 70px;">
+					<h:form id="frm" prependId="false" rendered="#{!customerManagedBean.showChangePassword}">
+					
+					
+						<h1>Change Password</h1>
+						
+						<div style="width: 600px;padding-top:10px;">
+							<p:messages />
+						</div>
+
+						<h:panelGrid columns="3">
+							<h:outputLabel for="passwordOLD" value="Old Password: *" />
+							<p:password maxlength="15" id="passwordOLD" required="true"
+								label="Old Password" value="#{customerManagedBean.oldPassword}" />
+							<p:message for="passwordOLD" />
+							<h:outputLabel for="passwordL" value="Password: *" />
+							<p:password maxlength="15" id="passwordL" match="passwordL2"
+								required="true" label="Password"
+								value="#{customerManagedBean.newPassword}" feedback="true"
+								inline="true">
+								<f:validateLength minimum="8" maximum="20" />
+							</p:password>
+							<p:message for="passwordL" />
+							<h:outputLabel for="passwordL2" value="Confirm Password: *" />
+							<p:password maxlength="15" id="passwordL2" required="true"
+								label="Confirm Password" value="#{customerManagedBean.newPassword}"
+								feedback="true" inline="true">
+								<f:validateLength minimum="8" maximum="20" />
+							</p:password>
+							<p:message for="passwordL2" />
+						</h:panelGrid>
+						<br />
+						<p:commandButton value="Submit" ajax="false" styleClass="nextStepButton1 buttonStyle"
+							onclick="PF('buiload').show()" validateClient="true"
+							action="#{customerManagedBean.updatePassword()}" />
+						<p:commandButton ajax="false" onclick="PF('buiload').show()"
+							immediate="true" value="Cancel"
+							action="#{customerManagedBean.cancelHome}" />
+					</h:form>
+					<h:form id="frms" prependId="false" rendered="#{customerManagedBean.showChangePassword}">
+						<h4>The option is not valid here.</h4>
+						
+						<div style="width:600px;padding-top:10px;">
+							
+						</div>
+						
+						<br />
+					</h:form>
+					
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+
+
