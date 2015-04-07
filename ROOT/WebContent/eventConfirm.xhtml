@@ -1,0 +1,355 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title>Event Confirmation</title>
+	<!--<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
+	<style type="text/css">
+@page {
+	size: potrait;
+}
+
+.ui-accordion .ui-accordion-content {
+    border-top: 0 none;
+    margin-bottom: 2px;
+    margin-top: -2px;
+    overflow: auto;
+    padding: 0;
+    position: relative;
+    top: 1px;
+}
+</style>
+
+
+-->
+</h:head>
+    <h:body id="pnl">
+       
+	 <ui:composition template="/template/user/commonLayout.xhtml"> 
+      <ui:define name="content">
+	<div class="content-bg clear-both">
+<div class="lt-flap">
+        <img src="images/left.png" alt="" />
+</div>
+<div class="flap-mid">
+        <div class="black-shade"></div>
+</div>
+<div class="rt-flap">
+        <img src="images/right.png" alt="" />
+</div>
+		<ui:remove>
+<!--logo starts -->
+		<div id="header" class="header">
+			<div class="logo">
+				<p:graphicImage value="images/logo.png" />
+			</div>
+		</div>
+		<!--logo ends -->
+		</ui:remove>
+		
+
+		<div class="clear" style="background-color: white">
+			<!--mid contents starts-->
+			<div class="mid-content" style="background-color: white;padding-left:20px;width:940px;">
+				<!--select details starts-->
+				<!--  <div class="clear">
+                        <h1 id="h1title">Selected&#160;<span>#{eventDetailsManagedBean.eventType}</span>&#160;Options
+                        </h1>
+                </div> -->
+				<!--select details ends-->
+				<!--  <div class="clear"> -->
+				<!--details head starts-->
+				<!--    <div class="box-nav1 active" id="divdetails">
+                                1.Enter Requirements
+                        </div> -->
+				<!--details head ends-->
+				<!--summary head starts-->
+				<!-- <div class="box-nav2 active" id="divsummary">
+                                2.Select Vendor Packages
+                        </div> -->
+				<!--summary head ends-->
+				<!--Payment head starts-->
+				<!--   <div class="box-nav3 active" id="divpayment">3. Review and Confirm Event</div> -->
+				<!--Payment head ends-->
+				<!-- </div>
+                -->
+                            
+				<h:form id="frm">
+                                
+					<!--details starts-->
+                                        <div style="background-color: white">
+						<!--details ends-->
+						<!--summary details left panel starts-->
+						<!--<div class="left">-->
+							<!--summary lt-panel starts-->
+							<!--<div class="summary_container">-->
+								<!--<div class="evleftbar">
+									<p:accordionPanel style="background: #a87878;" id="ap"
+										activeIndex="0,1,2">
+										<p:tab titleStyleClass="tabttitle" id="evntDts"
+											title="Event Details">
+
+											<table class="sideBarForm2">
+												<tr>
+													<th style="font-weight: bold;">Event Date:</th>
+													<td><h:outputText
+															value="#{eventConfirmManagedBean.eventInfo.eventEffectiveDate}">
+															<f:convertDateTime pattern="dd-MM-yyyy" />
+														</h:outputText></td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th style="font-weight: bold;">Location:</th>
+													<td>#{eventConfirmManagedBean.area},
+														#{eventConfirmManagedBean.city}</td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th style="font-weight: bold;">Venue Type:</th>
+													<td>#{eventConfirmManagedBean.eventInfo.venueType.getVenueDescription()}</td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th style="font-weight: bold;">Guests:</th>
+													<td>#{eventConfirmManagedBean.eventInfo.estimatedGuests}</td>
+												</tr>
+											</table>
+										</p:tab>
+
+										<p:tab titleStyleClass="tabttitle" id="srvRqst"
+											title="Service Request">
+											<div id="divWhere">
+												<div class="where-cont-new">
+													<div class="grey-box-new">Venue</div>
+													<table class="sideBarForm2">
+														<c:forEach
+															items="#{eventConfirmManagedBean.venues.entrySet().toArray()}"
+															var="venue" varStatus="stVenue">
+															<c:forEach items="#{venue.value.entrySet().toArray()}"
+																var="service" varStatus="stVenue">
+
+																<tr>
+																	<th colspan="2">#{service.key.getVenueName()}</th>
+																</tr>
+																<tr>
+																	<td><h:outputText value="Amount: " /></td>
+																	<td><h:outputText styleClass="amount-style"
+																			value="Rs. #{service.value.eventServiceProviderTotamt}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputText
+																			value="Tax (#{service.value.eventServiceProviderTax}%): " /></td>
+																	<td><h:outputText styleClass="amount-style"
+																			value="Rs. #{service.value.eventServiceProviderTaxamt}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputText value="Sub Total: " /></td>
+																	<td><h:outputText styleClass="amount-style"
+																			value="Rs. #{service.value.eventServiceProviderCost}" /></td>
+																</tr>
+															</c:forEach>
+														</c:forEach>
+													</table>
+
+													<c:forEach
+														items="#{eventConfirmManagedBean.services.entrySet().toArray()}"
+														var="venue" varStatus="stVenue">
+														<div class="grey-box-new">#{venue.key}:</div>
+														<table class="sideBarForm2">
+															<c:forEach items="#{venue.value.entrySet().toArray()}"
+																var="service" varStatus="stVenue">
+																<tr>
+																	<th colspan="2">#{service.key.getServiceProviderName()}</th>
+																</tr>
+																<tr>
+																	<td><h:outputText value="Amount: " /></td>
+																	<td><h:outputText styleClass="amount-style"
+																			value="Rs. #{service.value.eventServiceProviderTotamt}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputText
+																			value="Tax (#{service.value.eventServiceProviderTax}%): " /></td>
+																	<td><h:outputText styleClass="amount-style"
+																			value="Rs. #{service.value.eventServiceProviderTaxamt}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputText value="Sub Total: " /></td>
+																	<td><h:outputText styleClass="amount-style"
+																			value="Rs. #{service.value.eventServiceProviderCost}" /></td>
+																</tr>
+															</c:forEach>
+														</table>
+													</c:forEach>
+												</div>
+											</div>
+										</p:tab>
+
+										<p:tab titleStyleClass="tabttitle" id="totalTab"
+											title="Cost Details">
+											<table class="sideBarForm2">
+												<tr>
+													<th>Total Charges:</th>
+													<td style="font-weight: bold;">Rs.
+														#{eventConfirmManagedBean.eventInfo.totalAmount}</td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th>Service Charges (8%):</th>
+													<td style="font-weight: bold;">Rs.
+														#{eventConfirmManagedBean.eventInfo.serviceCharges}</td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th>Service Tax (12.36%):</th>
+													<td style="font-weight: bold;">Rs.
+														#{eventConfirmManagedBean.eventInfo.serviceTax}</td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th>Total Amount:</th>
+													<td style="font-weight: bold;">Rs.
+														#{eventConfirmManagedBean.eventInfo.cost}</td>
+												</tr>
+												<tr class="hr-line-dot">
+													<th>Amount Paid:</th>
+													<td style="font-weight: bold;">Rs.
+														#{eventConfirmManagedBean.eventInfo.amountPaidByCustomer}</td>
+												</tr>
+											</table>
+										</p:tab>
+
+									</p:accordionPanel>
+
+
+								</div> -->
+
+								<!--summary details left panel ends-->
+
+								<!--<div>
+									<h2 style="padding-top: 5px;">#{eventConfirmManagedBean.eventType}
+										event package details</h2>
+									<br />
+
+									<div class="hr-line-solid">
+
+										<c:forEach
+											items="#{eventConfirmManagedBean.venues.entrySet().toArray()}"
+											var="finalV">
+
+											<div class="bd_pack_ven">
+												<div class="ev_rt_venue">
+													<span>#{finalV.key}</span>
+
+												</div>
+												<c:forEach items="#{finalV.value.entrySet().toArray()}"
+													var="service">
+													<div class="bd_ven_content">
+														<div class="bd_all_content">
+															<p:graphicImage height="100px" width="100px"
+																id="slider#{st.count}"
+																value="#{eventConfirmManagedBean.getHotelImagesSm(service.key.getVenueId())}" />
+															<p:spacer width="20px" height="100px"></p:spacer>
+															<h3>#{service.key.getVenueName()}</h3>
+															<p>
+																<span>Address:</span>
+																#{service.key.getAddressId().addressLine1},
+																#{service.key.getAddressId().addressLine2},
+																#{service.key.getAddressId().cityId}
+															</p>
+															<br />
+															<p>
+																<span>Hall:</span>#{service.value.getHallId().hallName}
+															</p>
+
+														</div>
+													</div>
+												</c:forEach>
+											</div>
+
+										</c:forEach>
+
+										<c:forEach
+											items="#{eventConfirmManagedBean.services.entrySet().toArray()}"
+											var="finalV">
+
+											<div class="bd_pack_ven">
+												<div class="ev_rt_venue">
+													<span>#{finalV.key}</span>
+
+												</div>
+												<c:forEach items="#{finalV.value.entrySet().toArray()}"
+													var="service">
+													<div class="bd_ven_content">
+														<div class="bd_all_content">
+
+															<p:spacer width="20px" height="100px"></p:spacer>
+															<h3>#{service.key.getServiceProviderName()}</h3>
+															<p>
+																<span>Address:</span>
+																#{service.key.getAddressId().addressLine1},
+																#{service.key.getAddressId().addressLine2},
+																#{service.key.getAddressId().cityId}
+															</p>
+
+														</div>
+													</div>
+												</c:forEach>
+											</div>
+
+										</c:forEach>
+
+									</div>
+									<br>&nbsp;</br> <br>&nbsp;</br> <br>&nbsp;</br> <br>&nbsp;</br>
+                                                                             -->
+									<!--<ui:fragment>-->
+
+										<!--<p:remoteCommand id="lazyload" name="lazyload" autoRun="true"
+                                                                                                 action="#{eventConfirmManagedBean.sendEmail}" onstart="PF(':frm:blockUIWidget').block()" oncomplete="PF(':frm:blockUIWidget').unblock()"/>   
+                                                                                                 
+                                                                                <p:blockUI block=":frm" trigger=":frm:lazyload" />
+                                                                                <pe:blockUI id="blockUIWidget" widgetVar="blockUIWidget" >  
+                                                                                                        <h:panelGrid columns="2">  
+                                                                                                            <h:graphicImage library="images" name="ajax-loader1.gif"  
+                                                                                                                            style="margin-right: 12px; vertical-align: middle;"/>  
+                                                                                                            <h:outputText value="Please wait..." style="white-space: nowrap;"/>  
+                                                                                                        </h:panelGrid>  
+                                                                                                    </pe:blockUI>  -->
+                                                                                
+										<!--<p:notificationBar position="top" effect="slide"
+											widgetVar="bar" styleClass="top">-->
+                                                                            <!--   <f:event listener="#{eventConfirmManagedBean.sendEmail}" type="preRenderView" />-->
+											<h:outputText transient="true"
+												value="Thank you for the opportunity to serve you!. We acknowledge your event requirements. EventXperts will reach you shortly..."
+												style="color:#FFCC00;font-size:36px;" />
+                                                                                        <p:graphicImage width="100%" value="images/AfterProcess.png" />
+										<!--</p:notificationBar>-->
+
+									<!--</ui:fragment>
+
+
+								</div>
+
+							</div>
+						</div>-->
+					</div>
+                                           
+				</h:form>
+
+			</div>
+		</div>
+	</div>
+	 </ui:define>
+    </ui:composition>
+     
+	<!--<script type="text/javascript">
+    $(document).ready(function() {
+       // lazyload(); 
+    });            
+</script>
+	<script type="text/javascript">
+     jQuery(function() { bar.show() });
+</script>-->
+</h:body>
+</html>
+

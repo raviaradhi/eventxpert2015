@@ -1,0 +1,217 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Customer Registration</title>
+	<script>  
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {  
+            //PF('loginDialog').jq.effect("shake", { times:5 }, 100);  
+            PF('loginDialog').show();
+        }   
+        else {  
+            PF('loginDialog').hide();  
+           // $('#loginLink').fadeOut();  
+        }  
+    }   
+</script>
+</h:head>
+<h:body>
+	<p:ajaxStatus onstart="PF('statusDialog').show();"
+		onsuccess="PF('statusDialog').hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" draggable="false"
+		closable="false" showHeader="false">
+		<p:graphicImage value="/images/progress_bar.GIF" />
+	</p:dialog>
+	<p:blockUI block="loginPanel" widgetVar="builoadL" />
+	<!--BODY CONTENT STARTS HERE-->
+	<div>
+		<div>
+			<h:panelGroup id="group">
+				<h:panelGrid id="loginPanel"
+					rendered="#{!(customerManagedBean.showRegister)}">
+					<div>
+						<p:panel id="loginPanelD" widgetVar="loginPanelD"
+							style="width:450px;padding-left:80px;border:none;">
+							<p:messages for="Activate Account" />
+							<p:messages for="Invalid credentials" />
+							<p:messages for="Password Sent" />
+							<p:messages for="Email not registered" />
+							<h:outputText styleClass="login" value="SIGN INTO YOUR ACCOUNT"></h:outputText>
+							<a href="#{customerManagedBean.facebookUrlAuth}"> <p:graphicImage
+									style="padding-left:15px; padding-top:5px;" height="60px"
+									width="300px" value="/images/facebook.jpg" />
+							</a>
+							<a href="#{customerManagedBean.googleUrlAuth}" id="signInButton">
+								<p:graphicImage style="padding-left:15px;margin-top:-5px;"
+									height="60px" width="300px" value="/images/Google.jpg" />
+							</a>
+							<p:graphicImage style="padding-left:35px;"
+								value="/images/orimage.jpg" />
+							<br />
+							<p:message for="userIdLD" />
+							<p:message for="passwordLD" />
+							<p:message for="emailNew" />
+							<p:commandLink rendered="#{customerManagedBean.isShowActLink()}"
+								id="showDialogButton1" ajax="true" update="loginPanelD"
+								immediate="true" styleClass="loginForgot"
+								action="#{customerManagedBean.enableResend}"
+								value="Click here to Resend Activation Link" />
+							<h:panelGrid columns="2" style="padding-top:5px;"
+								rendered="#{!(customerManagedBean.forgotLink)}">
+								<h:outputLabel for="userIdLD" value="Your Email * "
+									styleClass="loginFields" />
+								<h:inputText id="userIdLD" required="true" label="User ID"
+									value="#{customerManagedBean.customerInfo.email}"
+									style="padding: 4px;width:210px;" />
+								<p:spacer height="10px" width="5px" />
+								<p:spacer height="10px" width="5px" />
+								<h:outputLabel for="passwordLD" value="Password * "
+									styleClass="loginFields" />
+								<h:inputSecret maxlength="15" id="passwordLD" required="true"
+									label="Password"
+									value="#{customerManagedBean.customerInfo.password}"
+									style="padding: 4px;width:210px;" />
+
+								<p:spacer height="10px" width="5px" />
+								<p:spacer height="10px" width="5px" />
+
+								<p:spacer height="5px" width="5px" />
+								<p:commandLink id="showDialogButton" ajax="true"
+									immediate="true" validateClient="true" process="loginPanelD"
+									styleClass="loginForgot"
+									action="#{customerManagedBean.showForgot}" update="loginPanelD"
+									value="Forgot Password?"
+									oncomplete="handleLoginRequest(xhr,status,args);" />
+							</h:panelGrid>
+							<h:panelGrid columns="2" style="padding-top:5px;"
+								rendered="#{customerManagedBean.forgotLink}">
+								<h:outputLabel for="emailNew" value="Email Id *  "
+									styleClass="loginFields" />
+								<h:inputText validatorMessage="Please enter a valid email id."
+									requiredMessage="Please enter a valid email id." id="emailNew"
+									required="true"
+									style="padding: 4px;width:210px;margin-left: 10px;"
+									value="#{customerManagedBean.customerInfo.email}">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</h:inputText>
+								<p:spacer height="10px" width="5px" />
+								<p:spacer height="10px" width="5px" />
+								<p:spacer height="10px" width="5px" />
+								<p:commandLink id="forgotLink" ajax="true" immediate="true"
+									validateClient="true" process="loginPanelD"
+									styleClass="loginForgot" style="margin-left:10px;"
+									action="#{customerManagedBean.showForgot}" update="loginPanelD"
+									value="Go back to Login"
+									oncomplete="handleLoginRequest(xhr,status,args);" />
+							</h:panelGrid>
+                     &#160;<br />  &#160;
+                    <div style="float: right">
+								<p:commandButton validateClient="true" ajax="true"
+									partialSubmit="true" styleClass="loginButton buttonStyle"
+									rendered="#{customerManagedBean.forgotLink and !customerManagedBean.resendLink}"
+									value="SUBMIT" process="loginPanelD"
+									action="#{customerManagedBean.forgotPswd}" update="loginPanelD" />
+								<p:commandButton validateClient="true" ajax="true"
+									partialSubmit="true" styleClass="loginButton"
+									style="background:#269c22;"
+									rendered="#{customerManagedBean.forgotLink and customerManagedBean.resendLink}"
+									value="Resend Activation Link" process="loginPanelD"
+									action="#{customerManagedBean.resendActLink()}"
+									update="loginPanelD" />
+								<p:commandButton ajax="true"
+									rendered="#{!(customerManagedBean.forgotLink)}"
+									styleClass="loginButton buttonStyle" validateClient="true"
+									process="loginPanelD" value="SIGN IN"
+									action="#{customerManagedBean.loginDlg}" update="loginPanelD"
+									oncomplete="handleLoginRequest(xhr,status,args);" />
+								<br />
+								<h:outputText styleClass="loginText"
+									rendered="#{!(customerManagedBean.forgotLink)}"
+									value="Not a member yet? "></h:outputText>
+								<p:commandLink styleClass="loginJoin"
+									rendered="#{!(customerManagedBean.forgotLink)}" value="Join"
+									immediate="true" update="group"
+									actionListener="#{customerManagedBean.enableRegister}" />
+							</div>
+							<br />
+							<br />
+						</p:panel>
+					</div>
+				</h:panelGrid>
+				<h:panelGrid rendered="#{customerManagedBean.showRegister}">
+					<div>
+						<p:panel id="panel" widgetVar="panel"
+							style="width:450px;padding-left:60px;border:none;">
+							<h:outputText styleClass="login" value="SIGN UP"></h:outputText>
+							<br />
+							<h:outputText styleClass="loginText" value="Already a member? "></h:outputText>
+							<p:commandLink id="showLgn" ajax="true" immediate="true"
+								styleClass="loginJoin"
+								action="#{customerManagedBean.enableLogin}" update="group"
+								value="Login" oncomplete="handleLoginRequest(xhr,status,args);" />
+							<br />
+							<h:outputText styleClass="loginMandatory"
+								value="All fields are mandatory"></h:outputText>
+							<br />
+							<p:message for="password" />
+							<p:message for="password1" />
+							<p:message for="email" />
+							<h:panelGrid columns="2" style="padding-top:5px;">
+								<h:outputLabel for="email" value="Email "
+									styleClass="loginFields" />
+								<p:inputText id="email" required="true" label="Email"
+									value="#{customerManagedBean.customerInfo.email}"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;"
+									validatorMessage="Invalid email format  (or)  Email is already registered. Please try to login">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									<f:validator validatorId="emailValidator" />
+									<p:ajax event="change" update="email" />
+								</p:inputText>
+								<h:outputLabel for="password" value="Password "
+									styleClass="loginFields" />
+								<p:password
+									promptLabel="Should be a combination of alphabets and numbers and special characters"
+									feedback="true" maxlength="20" id="password" required="true"
+									label="Password"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;"
+									value="#{customerManagedBean.customerInfo.password}"
+									match="password1" inline="true">
+									<f:validateLength minimum="8" maximum="20" />
+								</p:password>
+								<h:outputLabel for="password1" value="Re-Enter Password "
+									styleClass="loginFields" />
+								<p:password
+									promptLabel="Should be a combination of alphabets and numbers and special characters"
+									feedback="true" maxlength="20" id="password1" required="true"
+									label="Password"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;"
+									value="#{customerManagedBean.customerInfo.password}"
+									inline="true">
+									<f:validateLength minimum="8" maximum="20" />
+								</p:password>
+							</h:panelGrid>
+							<br />
+							<a class="loginJoin" href="terms.jsf"
+								onclick="loginDialog.hide()">View terms of use</a>
+							<br />
+							<br />
+							<div style="float: right" id="btns">
+								<p:commandButton value="SIGN UP" process="panel" id="cmdButton"
+									action="#{customerManagedBean.saveCustomer}" update="panel"
+									styleClass="loginButton buttonStyle"
+									oncomplete="if (args &amp;&amp; !args.validationFailed){ eventDialog.hide()}" />
+							</div>
+						</p:panel>
+					</div>
+				</h:panelGrid>
+			</h:panelGroup>
+		</div>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <f:facet name="first">
+     <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+      <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+      <meta http-equiv="Cache-Control" content="no-cache" />
+      <meta http-equiv="Pragma" content="no-cache" />
+    <title>Welcome To EventExpert</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src="js/externaljs-eventdetails-page.js" type="text/javascript"></script>
+    </f:facet>
+    
+</h:head>
+<h:body>
+   
+<div id="tap-wrapper" class="homePage"> 
+  <div id="wrapper"> 
+	<ui:insert name="header">
+		<ui:include src="/template/admin/commonHeader.xhtml" />
+	</ui:insert>
+	<ui:insert name="content">
+		<ui:include src="/template/admin/commonContent.xhtml" />
+	</ui:insert>
+	<ui:insert name="footer">
+		<ui:include src="/template/admin/commonFooter.xhtml" />
+	</ui:insert>
+ </div>
+ </div>
+</h:body>
+</html>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+         xmlns:pe="http://primefaces.org/ui/extensions">
+<body>
+	<ui:composition>
+		<!--HEADER STARTS HERE-->
+                <div id="header" class="header">
+                    
+			<!--logo starts -->
+			<div class="logo">
+				<!--<a href="index.jsf?faces-redirect=true"> <img src="images/logo.png" border="0"
+					alt="" /></a>-->
+                                <p:commandLink  action="#{customerManagedBean.goLoginPage}">
+                                <p:graphicImage  value="images/logo.png" />
+                                </p:commandLink>
+			</div>
+			<!--logo ends -->
+                        
+			<!--top menu starts -->
+                        <h:form id="frmHeader">
+				<div class="menu">
+					<ul>
+						
+						<!--<li class="border-right-none"><a href="eventexpert.jsf">EventXpert
+								Team</a></li> -->
+                                                <h:panelGroup rendered="#{sessionScope['userId'].email==null}">
+                                                <li class="border-right-none">
+                                                    <p:commandLink rendered="#{sessionScope['serviceProviderManagedBean'].loginUser==null}" value="Login" onclick="loginDialog.show()" />
+                                                </li>
+                                                <li class="li-margin-loggedin border-right-none">
+                                                    <a href="contact.jsf">Contact Us</a></li>
+                                                <li class="li-margin-loggedin">
+                                                    <a href="aboutUs.jsf">About Us</a>
+                                                </li><li class="li-margin-loggedin">
+                                                        <p:commandLink rendered="#{sessionScope['serviceProviderManagedBean'].loginUser==null}" styleClass="homeBtn" action="#{customerManagedBean.goLoginPage}" />                                                          
+                                                    </li>
+                                                    
+                                                </h:panelGroup>
+                                                
+                                                <h:panelGroup rendered="#{sessionScope['userId'].email!=null}">                                                    
+                                                    
+                                                    <li  style="padding-right: 20px">
+                                                        <h:panelGroup rendered="#{sessionScope['userId'].firstname!=null}">
+                                                       <blue>#{sessionScope['userId'].firstname}</blue>
+                                                   </h:panelGroup>
+                                                    </li>
+                                                    <li style="display: #{!sessionScope['eventDetailsManagedBean'].show_summary ? '' : 'none'};">
+                                                        <p:commandLink rendered="#{!sessionScope['eventDetailsManagedBean'].show_summary}" immediate="true"  value="History" action="#{customerManagedBean.history}" />
+                                                    </li>
+                                                    <li style="display: #{sessionScope['eventDetailsManagedBean'].show_summary ? '' : 'none'};">
+                                                        <p:commandLink rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}" onclick="cancelConfirmation0.show()"    value="History" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation0"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation0.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                    <!-- <li>
+                                                        <p:commandLink immediate="true" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}"  value="Event Summary" action="#{customerManagedBean.eventSummary}" />
+                                                    </li> -->
+                                                    <li style="display: #{!sessionScope['eventDetailsManagedBean'].show_summary ? '' : 'none'};">
+                                                        <p:commandLink rendered="#{!sessionScope['eventDetailsManagedBean'].show_summary}"  value="Profile" action="#{customerManagedBean.editProfile}" />
+                                                    </li> 
+                                                    <li style="display: #{sessionScope['eventDetailsManagedBean'].show_summary ? '' : 'none'};">
+                                                        <p:commandLink rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}" onclick="cancelConfirmation.show()"    value="Profile" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                    
+                                                     <li style="display: #{!sessionScope['eventDetailsManagedBean'].show_summary and !sessionScope['customerManagedBean'].showChangePassword ? '' : 'none'};">
+                                                        <p:commandLink immediate="true"  value="Change Password" action="#{customerManagedBean.chngPswd}" />
+                                                    </li>
+                                                    <li style="display: #{sessionScope['eventDetailsManagedBean'].show_summary  and !sessionScope['customerManagedBean'].showChangePassword ? '' : 'none'};">
+                                                        <p:commandLink onclick="cancelConfirmation1.show()"  value="Change Password" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation1"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation1.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                    <li class="border-right-none" style="padding-right: 25px">
+                                                        <p:commandLink rendered="#{!sessionScope['eventDetailsManagedBean'].show_summary}" immediate="true"  value="Logout" action="#{customerManagedBean.logout}" />                                                            
+                                                    </li>
+                                                    <li style="display: #{sessionScope['eventDetailsManagedBean'].show_summary ? '' : 'none'};">>
+                                                        <p:commandLink rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}" onclick="cancelConfirmation2.show()"  value="Logout" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation2"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation2.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                     
+                                                    
+                                                    
+                                                    
+                                                    <li class="li-margin-loggedin border-right-none">
+                                                        <p:commandLink rendered="#{!sessionScope['eventDetailsManagedBean'].show_summary}" immediate="true" ajax="false"  value="Contact Us" action="#{customerManagedBean.contactUs}" />                                                          
+                                                    </li>
+                                                      <li class="li-margin-loggedin border-right-none">
+                                                        <p:commandLink rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}" onclick="cancelConfirmation5.show()"  value="Contact Us" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation5"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation5.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                     <li class="li-margin-loggedin">
+                                                         <p:commandLink rendered="#{!sessionScope['eventDetailsManagedBean'].show_summary}" immediate="true" ajax="false"  value="About Us" action="#{customerManagedBean.aboutUs}" />                                                          
+                                                    </li>
+                                                      <li class="li-margin-loggedin">
+                                                        <p:commandLink rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}" onclick="cancelConfirmation4.show()"  value="About Us" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation4"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation4.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                    <li class="li-margin-loggedin">
+                                                        <p:commandLink rendered="#{!sessionScope['eventDetailsManagedBean'].show_summary}" immediate="true" ajax="false"  styleClass="homeBtn" action="#{customerManagedBean.goLoginPage}" />                                                          
+                                                    </li>
+                                                      <li class="li-margin-loggedin">
+                                                        <p:commandLink rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}" onclick="cancelConfirmation3.show()"  styleClass="homeBtn" />
+                                                        
+                                                         <p:confirmDialog widgetVar="cancelConfirmation3"
+                                                                closable="false" header="Save Details"
+                                                                message="Please Save or Cancel the session"
+                                                                showEffect="fade" hideEffect="explode" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}">                                                               
+                                                                <p:commandButton type="button" value="OK"
+                                                                        onclick="cancelConfirmation3.hide()"
+                                                                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </li>
+                                                     
+                                                </h:panelGroup> 
+                                                
+                                                <h:panelGroup rendered="#{sessionScope['serviceProviderManagedBean'].loginUser!=null}">
+                                                   <li  style="padding-right: 20px">
+                                                        <h:panelGroup rendered="#{sessionScope['serviceProviderManagedBean'].loginUser!=null}">
+                                                       <blue>#{sessionScope['serviceProviderManagedBean'].loginUser}</blue>
+                                                   </h:panelGroup>
+                                                   </li>
+                                                     <li>
+                                                        <p:commandLink immediate="true" value="Change Password" action="#{serviceProviderManagedBean.chngPswd}" />
+                                                    </li>
+                                                    <li style="display: #{sessionScope['serviceProviderManagedBean'].admin ? '' : 'none'};">
+                                                        <p:commandLink rendered="#{sessionScope['serviceProviderManagedBean'].admin}" immediate="true" value="All Vendors" action="#{vendorManagedBean.redirectAllVendors}"/>
+                                                    </li>
+                                                    <li class="border-right-none" style="padding-right: 25px">
+                                                        <p:commandLink immediate="true" value="Logout" action="#{serviceProviderManagedBean.logout}" />                                                            
+                                                    </li>
+                                                </h:panelGroup>
+                                                
+                                                
+						
+					</ul>
+                                   
+				</div>
+                                   <p:dialog  resizable="false" dynamic="true" model="true" 
+                                                    position="400,90" id="servicePopup" widgetVar="loginDialog" 
+                                                    width="570" height="470" >
+                                                    <p:ajax event="close" listener="#{customerManagedBean.handleClose}" update="group" />
+                                                    <ui:include src="../../loginDlg.xhtml" />
+                                            </p:dialog>
+                                       
+                            <p:outputPanel  id="panel1">
+                                <p:dialog resizable="false" modal="true" dynamic="true" 
+                                          position="400,90"  id="eventDialog" widgetVar="eventDialog" 
+                                    width="570" height="490">
+                                    <ui:include src="../../customerRegDlg.xhtml" />
+                            </p:dialog>
+                            </p:outputPanel>
+                            
+                            
+                           
+                        
+                        </h:form>
+		</div>
+		<!--HEADER ENDS HERE-->
+              <!--  <p:ajaxStatus onstart="PF('buiload').show();" oncomplete="PF('buiload').hide();" onsuccess="PF('buiload').hide();"/>
+            
+<p:dialog modal="true" widgetVar="statusDialog" 
+        draggable="false" closable="false">
+    <p:graphicImage value="/images/loading.gif" />
+</p:dialog>
+                <p:blockUI  block=":frm" widgetVar="buiload"/>
+                --> 
+               
+   <!-- <p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+    <f:facet name="default">
+        <h:outputText value="Status: StandBy" />
+    </f:facet>
+ 
+    <f:facet name="start">
+        <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
+    </f:facet>
+ 
+    <f:facet name="complete">
+        <h:outputText value="Status: Completed" />
+    </f:facet>
+</p:ajaxStatus>
+             
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
+</p:dialog>
+ 
+-->
+
+
+ 
+ <h:panelGroup rendered="#{sessionScope['serviceProviderManagedBean'].loginUser!=null}">
+     
+      <p:idleMonitor timeout="#{session.maxInactiveInterval * 1000 - 125000}" onidle="idleDialog.show()" />
+ 
+	<p:dialog id="confirmDialog1"		
+                  header="Session Expired" closable="false" modal="true" position="center" widgetVar="idleDialog">
+		
+            <p:outputLabel value="Your Working Session has Expired" /><br/>
+            <p:outputLabel value="Please try again" /><br/>
+		<p:commandButton id="Logout1" value="OK" 
+			oncomplete="idleDialog.hide()"
+			action="#{serviceProviderManagedBean.logout}" />
+ 
+	</p:dialog>
+ </h:panelGroup>
+ 
+ <h:panelGroup rendered="#{sessionScope['userId'].firstname!=null}">
+     <p:idleMonitor
+         timeout="#{session.maxInactiveInterval * 1000 - 125000}">
+         <p:ajax event="idle" listener="#{customerManagedBean.logout}"/> 
+     </p:idleMonitor>
+ </h:panelGroup>
+ 
+ <h:panelGroup rendered="#{sessionScope['userId'].firstname==null}">
+    <!-- <p:idleMonitor
+         timeout="5000">
+         <p:ajax event="idle" listener="#{customerManagedBean.goLoginPage}" oncomplete="PF('dlg').show()" />
+     </p:idleMonitor>  
+     <p:dialog widgetVar="dlg" onShow="#{customerManagedBean.goLoginPage()}" modal="true" draggable="false" closable="false" resizable="false" showHeader="false"/>
+    -->
+    <p:idleMonitor timeout="#{session.maxInactiveInterval * 1000 - 125000}" onidle="idleDialog.show()" />
+ 
+	<p:dialog id="confirmDialog"		
+                  header="Session Expired" closable="false" modal="true" position="center" widgetVar="idleDialog">
+		
+            <p:outputLabel value="Your Working Session has Expired" /><br/>
+            <p:outputLabel value="Please try again" /><br/>
+		<p:commandButton id="Logout" value="OK" 
+			oncomplete="idleDialog.hide()"
+			action="#{customerManagedBean.goLoginPage}" />
+ 
+	</p:dialog>
+ </h:panelGroup>
+       
+  
+</ui:composition> 
+     
+</body>
+    
+</html>
+
+

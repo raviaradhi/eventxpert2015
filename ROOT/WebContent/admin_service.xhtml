@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Welcome To EventExpert</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
+    <link href="css/jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="js/JQuery/jquery.min.js" type="text/javascript"></script>
+    <script src="js/msdropdown/jquery.dd.js" type="text/javascript"></script>
+    <script src="js/JQuery/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/JQuery/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="js/externaljs-eventdetails-page.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+<h:form>
+    <div id="divAlertPopup" title='Alert'>
+    </div>
+    <div id="tap-wrapper">
+        <div id="wrapper">
+            <!--header starts-->
+            <div id="header">
+                <div class="logo">
+                    <a href="home.htm">
+                        <!--logo starts-->
+                        <img src="images/logo.png" border="0" alt="" /></a></div>
+                <!--logo ends-->
+                <!--menu starts-->
+                <div class="menu">
+                    <ul>
+                        <li><a href="about.htm">About Us</a></li>
+                        <li class="border-right-none"><a href="eventexpret.htm">EventXpert Team</a></li>
+                        <li class="li-margin"><a href="login.jsf">Logout</a></li>
+                        <li><a href="guide.htm">Guide Me</a></li>
+                        <li class="border-right-none"><a href="conatct.htm">Contact Us</a></li>
+                    </ul>
+                </div>
+                <!--menu ends-->
+            </div>
+            <!--header ends-->
+            <div class="content-bg clear-both">
+                <!--lt-flap starts-->
+                <div class="lt-flap">
+                    <img src="images/left.png" /></div>
+                <!--lt-flap ends-->
+                <!--messag-heart starts-->
+                <div class="flap-mid">
+                    <div class="black-shade">
+                        <div class="clear home">
+							</div>
+                    </div>
+                </div>
+                <!--messag-heart ends-->
+                <!--rt-flap starts-->
+                <div class="rt-flap">
+                    <img src="images/right.png" /></div>
+                <!--rt-flap ends-->
+                <div class="clear">
+                    <!--mid contents starts-->
+                    <div class="mid-content">
+				
+					<ul class="uisTabs" id="adminTab">
+						<li id="registrationList" ><a href="admin.jsf">Registration</a></li>
+						<li id="informationList" class="active"><a href="admin_service.jsf">Service Information</a></li>
+						<li id="detailsList">Event Details</li>
+					</ul>
+					<div class="adminTabContent" id="informationList-content">
+							<!-- information content starts here -->
+							<table class="catListMenu">
+								<tr>
+									<td>
+										<label>What type of service?</label>
+										  <h:outputLabel  value="#{serviceProviderManagedBean.serviceName} " />
+									</td>
+									
+								</tr>
+							</table>
+							
+							<!-- venue content starts here -->
+							
+							<!-- venue content ends here -->
+							
+							
+							<!-- catering content starts here -->
+							<div id="CateringContent" class="selectCatContent" >
+								<fieldset>
+									<legend>Package Details</legend>
+									<table class="datasTable">
+										<h:dataTable value="#{serviceProviderManagedBean.pList}" var="package1">
+		 
+											<h:column>
+												<f:facet name="header">Event Type</f:facet>
+												#{package1.eventType}
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Package Name</f:facet>
+												#{package1.packageName}
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Description</f:facet>
+												#{package1.description}
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Cost(INR)</f:facet>
+												#{package1.cost}
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Quantity</f:facet>
+												#{package1.unitOfCost}
+											</h:column>
+											<h:column>
+											<h:commandButton styleClass="admin-btn" value="Edit" action="#{serviceProviderManagedBean.modifyPackage}">
+												<f:param name="action" value="#{package1.packageId}" />
+											</h:commandButton>
+											<h:commandButton styleClass="admin-btn" value="--" action="#{serviceProviderManagedBean.removePackage}">
+												<f:param name="action" value="#{package1.packageId}" />
+											</h:commandButton>	
+											</h:column>
+										</h:dataTable>		
+										
+									</table>
+									
+								</fieldset>
+								<fieldset>
+									<legend>Provide Package Details</legend>
+									<table class="datasTable">
+									<tr>
+										<td width="240">Package Name</td>
+										<td><h:inputText id="packageName" label="Package Name" value="#{serviceProviderManagedBean.packageName}"/></td>
+										<td>Event Type</td>
+										<td><h:selectOneMenu label="Event Type" value="#{serviceProviderManagedBean.eventId}">
+												<f:selectItem itemLabel="Select a Event" noSelectionOption="true"/>
+												<f:selectItems value="#{serviceProviderManagedBean.eventInfo}"/>
+											</h:selectOneMenu>
+										</td>
+									</tr>
+									
+									
+									<tr>
+										<td>Package Details</td>
+										<td><p><h:inputTextarea value="#{serviceProviderManagedBean.description}" cols="50" rows="2" /></p>
+										</td>
+									</tr>
+									<tr>
+										<td>Package Cost</td>
+										<td><h:inputText id="cost" label="Package Cost" value="#{serviceProviderManagedBean.cost}"/></td>
+									</tr>
+									
+									</table>
+									<h:commandButton styleClass="admin-btn"  value="Add/Modify" action="#{serviceProviderManagedBean.insertPackageDetails}">
+									<f:param name="action" value="#{serviceProviderManagedBean.packageId}" />
+									</h:commandButton>
+								</fieldset>
+								
+								<fieldset>
+									<legend>Additional Details</legend>
+									<h3>List of Menu Items available with the Service Provider</h3>
+									<table class="datasTable">
+										<h:dataTable styleClass="#{empty serviceProviderManagedBean.pItemList ? 'empty' : ''}" value="#{serviceProviderManagedBean.pItemsList}" var="pItems">
+		 
+											<h:column>
+												<f:facet name="header">Item</f:facet>
+												<h:selectOneMenu label="Items" value="#{pItems.itemId}" 
+											 		onchange="submit()"  valueChangeListener="#{serviceProviderManagedBean.categoryChangeEvent}">
+													<f:selectItem itemLabel="Select a Item" noSelectionOption="true"/>
+													<f:selectItems value="#{serviceProviderManagedBean.itemInfo}"></f:selectItems>
+												</h:selectOneMenu>
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Category</f:facet>
+												<h:inputText id="itemCategory" readonly="true" label="Category" value="#{pItems.category}" />
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Quantity</f:facet>
+												<h:inputText id="costOfUnit" label="Quantity" value="#{pItems.unitOfCost}"/>
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Rate(INR)</f:facet>
+												<h:inputText id="rate" label="Rate(INR)" value="#{pItems.itemCost}"/>
+											</h:column>
+								 
+											<h:column>
+												<f:facet name="header">Ingrediants</f:facet>
+												<h:inputText id="itemDesc" readonly="true" label="ItemDescription" value="#{pItems.itemDesc}"/>
+											</h:column>
+											<h:column>
+												<h:commandButton styleClass="admin-btn" value="--" action="#{serviceProviderManagedBean.removeProviderItem}">
+													<f:param name="action" value="#{pItems.providerItemId}" />
+												</h:commandButton>
+											</h:column>
+											
+										</h:dataTable>		
+										<h:commandButton styleClass="admin-btn" value="++" action="#{serviceProviderManagedBean.add}" />
+										
+									</table>
+									
+									<h:commandButton styleClass="admin-btn" value="Save Details" action="#{serviceProviderManagedBean.insertProviderItems}" />
+								</fieldset>
+								
+							</div>
+							<!-- catering content ends here -->
+							
+							<!-- photographer content starts here -->
+							
+							<!-- photographer content ends here -->
+							
+							<!-- information content ends here -->						
+						</div>
+					
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear-both pd-141">
+            <img src="images/bottom.jpg" /></div>
+        <div class="clear-both" align="center">
+            <!--footer area starts-->
+            <div id="footer" class="clear-both">
+                <div class="left mar-150" align="left">
+                    &copy; 2012 - 2013 | Circulos Technologies Pvt Ltd | Registered in India.</div>
+                <!--footer icons starts-->
+                <div class="right">
+                    <a href="#">
+                        <img src="images/face-icon.png" border="0" /></a>&nbsp;&nbsp;<a href="#"><img src="images/twitter-icon.png"
+                            width="31" height="32" border="0" /></a></div>
+                <!--footer icons ends-->
+            </div>
+            <!--footer area ends-->
+        </div>
+    </div>
+    <div id="divMessageContainer">
+    </div>
+   
+</h:form>
+</h:body>
+</html>
+

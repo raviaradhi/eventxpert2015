@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+  <h:head>
+        <title>Administrator</title>
+        
+  
+</h:head> 
+<h:body> 
+<ui:composition template="/template/common/commonLayout.xhtml">
+    <ui:define name="content">
+      <div style="background-color: white" >
+      <div class="lt-flap">
+            <img src="images/left.png" alt="" />
+    </div>
+    <div class="flap-mid">
+            <div class="black-shade">&#160;</div>
+    </div>
+    <div class="rt-flap">
+            <img src="images/right.png" alt="" />
+    </div>
+    
+      <div style="background-color: white" class="mid-content">	
+<!--BODY CONTENT STARTS HERE-->
+<div style="background-color: white">			
+    <h:form id="frm">
+    <div style="padding-left: 30%">
+        
+<h:panelGrid> 
+<div>  
+        
+       
+            <p:panel  id="loginPanel" header="Login">
+           
+                <p:messages for="Invalid credentials" /><p:messages for="Mismatch credentials" />
+                              
+                <h:panelGrid columns="3">
+                <h:outputLabel for="userIdL" value="User ID: *" />
+                <p:inputText maxlength="50" id="userIdL"  required="true" label="Email ID"
+                                value="#{adminManagedBean.user}" >
+                </p:inputText>
+                <p:message for="userIdL" />
+                <h:outputLabel for="passwordL" value="Password: *" />
+                <p:password maxlength="15" id="passwordL"  required="true" label="Password"
+                                value="#{adminManagedBean.password}" >
+                </p:password>
+                <p:message for="passwordL" />
+              
+                </h:panelGrid>
+                <div style="padding-left: 70px">
+                    <p:commandButton id="logbtn"  value="Login" action="#{adminManagedBean.checkLogin}" process="loginPanel" update="loginPanel" />
+               
+                </div>
+            </p:panel>
+            
+    
+    
+      
+</div>
+</h:panelGrid> 
+     
+	
+</div>
+    </h:form>
+</div>
+ </div>
+      </div> 
+    </ui:define>
+    </ui:composition>
+    
+    
+</h:body>
+  
+</html>
+
+

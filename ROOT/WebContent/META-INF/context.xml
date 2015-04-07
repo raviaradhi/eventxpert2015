@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/WEB-INF">
+  <Manager className="org.apache.catalina.session.PersistentManager" debug="0" distributable="false" saveOnRestart="false">
+    <Store className="org.apache.catalina.session.FileStore"/>
+  </Manager>
+   <!--<Resource name="jdbc/eventDB" auth="Container" type="javax.sql.DataSource"
+				factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+				maxActive="10" maxIdle="10" maxWait="10" minIdle="1"
+               username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/event12_alpha?zeroDateTimeBehavior=convertToNull" />
+          
+              <Resource name="jdbc/eventDB" auth="Container" type="javax.sql.DataSource"
+				factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+				maxActive="10" maxIdle="10" maxWait="10" minIdle="1"
+               username="event12_alpha01" password="Alpha123A" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://mysql1000.mochahost.com:3306/event12_alpha?zeroDateTimeBehavior=convertToNull" />
+              -->
+
+</Context>

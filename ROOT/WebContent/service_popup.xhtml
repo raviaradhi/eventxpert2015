@@ -1,0 +1,190 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+
+<h:body>
+	<style type="text/css">
+.old {
+	background: #FBF2EF;
+}
+</style>
+	<style type="text/css">
+.ui-layout-center {
+	overflow: hidden !important;
+}
+
+.ui-layout-unit {
+	border: none;
+}
+
+.ui-layout-center .ui-layout-unit-content {
+	overflow: hidden !important;
+}
+</style>
+	<p:layout>
+		<p:layoutUnit position="north">
+
+			<p:layout>
+				<p:layoutUnit style="height: 50px" position="north">
+					<div class="clear">
+						<div class="wd-627">
+							<h1>
+								#{eventDetailsManagedBean.popupViewServiceProvider.serviceProviderName}
+							</h1>
+							<span class="txt4"><span id="spnHotelAddress">#{eventDetailsManagedBean.popupViewServiceProvider.areaName},#{eventDetailsManagedBean.popupViewServiceProvider.cityName}</span></span>
+							<br />
+						</div>
+
+						<div style="float: right" class="AmountRs">
+							<h3
+								hidden="#{(null == eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}">
+								<h:outputText
+									rendered="#{(null == eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}"
+									style="text-decoration: line-through"
+									value="#{eventDetailsManagedBean.getProjectedCost(eventDetailsManagedBean.popupViewServiceProvider.cost, eventDetailsManagedBean.popupViewServiceProvider.unitOfCost)}" />
+								<br />
+							</h3>
+							<h2
+								hidden="#{(null == eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}">
+								<h:outputText
+									rendered="#{(null == eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}"
+									value="#{eventDetailsManagedBean.getProjectedCost(eventDetailsManagedBean.popupViewServiceProvider.finalCost, eventDetailsManagedBean.popupViewServiceProvider.unitOfCost)}" />
+							</h2>
+							<h3
+								hidden="#{(null != eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}">
+								<h:outputText
+									rendered="#{(null != eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}"
+									style="text-decoration: line-through"
+									value="#{eventDetailsManagedBean.getProjectedCost(eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode).cost, eventDetailsManagedBean.popupViewServiceProvider.unitOfCost)}" />
+								<br />
+							</h3>
+							<h2
+								hidden="#{(null != eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}">
+								<h:outputText
+									rendered="#{(null != eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode))}"
+									value="#{eventDetailsManagedBean.getProjectedCost(eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode).finalAmount, eventDetailsManagedBean.popupViewServiceProvider.unitOfCost)}" />
+							</h2>
+						</div>
+
+					</div>
+
+				</p:layoutUnit>
+
+				<p:layoutUnit style="height: 70px" position="west" minSize="400">
+					<div>
+
+						<p:galleria panelHeight="200" panelWidth="300" id="galleryS"
+							value="#{eventDetailsManagedBean.servicesImages}" var="image">
+							<ui:remove>
+								<p:graphicImage height="200px" width="300px"
+									value="images/#{image}" />
+							</ui:remove>
+							<p:graphicImage height="200px" width="300px" value="#{image}" />
+						</p:galleria>
+					</div>
+				</p:layoutUnit>
+				<p:layoutUnit position="center">
+					<div>
+						<ui:remove>
+							<div class="wd-229">
+								<!--  <m:map width="300px" height="200px" address="#{eventDetailsManagedBean.popupViewServiceProvider.serviceProviderName},#{eventDetailsManagedBean.popupViewServiceProvider.areaName},#{eventDetailsManagedBean.popupViewServiceProvider.cityName}">
+                                            <m:marker/>
+                                            <m:htmlInformationWindow htmlText="#{eventDetailsManagedBean.popupViewServiceProvider.serviceProviderName},#{eventDetailsManagedBean.popupViewServiceProvider.areaName},#{eventDetailsManagedBean.popupViewServiceProvider.cityName}"/>
+                                        </m:map> -->
+							</div>
+						</ui:remove>
+
+						<p:gmap model="#{eventDetailsManagedBean.circleModel}"
+							center="#{eventDetailsManagedBean.center}" zoom="55"
+							type="HYBRID" fitBounds="true" streetView="true"
+							style="width:300px;height:250px" />
+					</div>
+				</p:layoutUnit>
+
+			</p:layout>
+
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+
+			<!-- popup details starts -->
+			<div id="popTab1-content" class="clwrapper popUpTabContents">
+				<div class="clabout">
+					<h2>About
+						#{eventDetailsManagedBean.popupViewServiceProvider.serviceProviderName}</h2>
+					<p>#{eventDetailsManagedBean.popupViewServiceProvider.serviceProviderDesc}
+					</p>
+				</div>
+
+				<div class="cldetails">
+					<p:dataTable id="tabView" var="service"
+						value="#{eventDetailsManagedBean.servicePackges}"
+						rowKey="#{service.packageId}"
+						rowStyleClass="#{eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode).packageId == service.packageId ? 'old' : null}">
+						<!-- <p:column headerText="Package Name">                                                     
+                                                        
+                                                        <h:outputText value="#{service.packageId}" /><h:outputText value="#{service.packageName}" />
+                                                 </p:column> -->
+						<p:column headerText="Package Description">
+
+							<h:outputText id="playerName" value="#{service.description}"
+								style="font-weight: bold; white-space: pre-line" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+                                                        Package Cost
+                                                        </f:facet>
+                            <h:outputText value="Rs."></h:outputText>
+							<h:outputText style="text-decoration: line-through"
+								value="#{service.cost}"  ><f:convertNumber pattern="#0" /></h:outputText>
+							<br />
+							<h:outputText value="Rs."></h:outputText>
+							<h:outputText value="#{service.finalAmount}" ><f:convertNumber pattern="#0" /></h:outputText>
+						</p:column>
+						<p:column
+							rendered="#{eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode eq 'CATR'}">
+							<f:facet name="header">
+                                                        Total Cost <br />(Package Cost*Total Guests)
+                                                        </f:facet>
+                            <h:outputText value="Rs."></h:outputText>                            
+							<h:outputText style="text-decoration: line-through"
+								value="#{eventDetailsManagedBean.getProjectedCost(service.cost, service.unitOfCost)} " />
+							<br />
+							<h:outputText value="Rs."></h:outputText>
+							<h:outputText styleClass="vhead"
+								value="#{eventDetailsManagedBean.getProjectedCost(service.finalAmount, service.unitOfCost)} " />
+						</p:column>
+						<p:column
+							rendered="#{eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode != 'CATR'}">
+							<f:facet name="header">
+                                                        Total Cost
+                                                        </f:facet>
+                            <h:outputText value="Rs."></h:outputText>
+							<h:outputText style="text-decoration: line-through"
+								value="#{eventDetailsManagedBean.getProjectedCost(service.cost, service.unitOfCost)} " />
+							<br />
+							<h:outputText value="Rs."></h:outputText>
+							<h:outputText styleClass="vhead"
+								value="#{eventDetailsManagedBean.getProjectedCost(service.finalAmount, service.unitOfCost)} " />
+						</p:column>
+
+						<p:column headerText="Select">
+							<p:commandButton value="Book Now"
+								rendered="#{eventDetailsManagedBean.finalServicesMap.get(eventDetailsManagedBean.popupViewServiceProvider.serviceTypeCode).packageId != service.packageId}"
+								actionListener="#{eventDetailsManagedBean.selectedFinalServicePackage(service.packageId)}"
+								ajax="false" onclick="PF('buiload').show()" />
+						</p:column>
+					</p:dataTable>
+
+
+				</div>
+			</div>
+
+		</p:layoutUnit>
+
+	</p:layout>
+</h:body>
+</html>

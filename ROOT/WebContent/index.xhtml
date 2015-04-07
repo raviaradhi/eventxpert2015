@@ -1,0 +1,265 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="/template/common/commonLayout.xhtml">
+		<ui:define name="content">
+
+			<script type="text/javascript">
+		
+		data = [
+				[ "images/home/DecorOne.jpg" ],
+				[ "images/home/DecorTwo.jpg" ],
+				[ "images/home/DecorFour.jpg" ],
+				[ "images/home/DecorFive.jpg" ],
+				[ "images/home/DecorSix.jpg" ],
+				[ "images/home/DecorEight.jpg" ],
+				[ "images/home/DecorNine.jpg" ],
+				[ "images/home/DecorTen.jpg" ],
+				[ "images/home/DecorEleven.jpg" ],
+				[ "images/home/DecorTwelve.jpg" ],
+				[ "images/home/DecorThirteen.jpg" ]
+			]
+
+		imgPlaces = 3 // number of images visible
+		imgWidth = 450 // width of the images
+		imgHeight = 220 // height of the images
+		imgSpacer = 4 // space between the images
+
+		dir = 0 // 0 = left, 1 = right
+
+		moz = document.getElementById("his3container");
+
+		step = 1
+		timer = ""
+		speed = 20
+		nextPic = 0
+		initPos = new Array()
+		nowDivPos = new Array()
+		
+		$(function(){			
+			for ( var i = 0; i &lt; imgPlaces + 1; i++) {
+				newImg = document.createElement("IMG")
+				newImg.setAttribute("id", "pic_" + i)
+				newImg.setAttribute("src", "")
+				newImg.style.position = "absolute"
+				newImg.style.width = imgWidth + "px"
+				newImg.style.height = imgHeight + "px"
+				newImg.style.border = 0
+				newImg.alt = ""
+				newImg.i = i
+				document.getElementById("display_area").appendChild(newImg)
+			} 
+			
+			containerEL = document.getElementById("his3container")
+			displayArea = document.getElementById("display_area")
+			pic0 = document.getElementById("pic_0")
+
+			containerBorder = (document.compatMode == "CSS1Compat" ? 0
+					: parseInt(containerEL.style.borderWidth) * 2)
+			containerWidth = (imgPlaces * imgWidth) + ((imgPlaces - 1) * imgSpacer)
+			containerEL.style.width = containerWidth
+					+ (!moz ? containerBorder : "") + "px"
+			containerEL.style.height = imgHeight + (!moz ? containerBorder : "")
+					+ "px"
+
+			displayArea.style.width = containerWidth + "px"
+			displayArea.style.clip = "rect(0," + (containerWidth + "px") + ","
+					+ (imgHeight + "px") + ",0)"
+
+
+			imgPos = -pic0.width
+			for ( var i = 0; i &lt; imgPlaces + 1; i++) {
+				currentImage = document.getElementById("pic_" + i)
+
+				if (dir == 0) {
+					imgPos += pic0.width + imgSpacer
+				}
+
+				initPos[i] = imgPos
+				if (dir == 0) {
+					currentImage.style.left = initPos[i] + "px"
+				}
+
+				if (dir == 1) {
+					document.getElementById("pic_" + [ (imgPlaces - i) ]).style.left = initPos[i]
+							+ "px"
+					imgPos += pic0.width + imgSpacer
+				}
+
+				if (nextPic == data.length) {
+					nextPic = 0
+				}
+
+				currentImage.src = data[nextPic][0]
+				currentImage.alt = data[nextPic][1]
+				currentImage.i = nextPic
+				nextPic++
+			}
+
+			scrollHIS3()
+			
+		});
+		
+		timer = ""
+			function scrollHIS3() {
+			clearTimeout(timer)
+			for ( var i = 0; i &lt; imgPlaces + 1; i++) {
+				currentImage = document.getElementById("pic_" + i)
+
+				nowDivPos[i] = parseInt(currentImage.style.left)
+
+				if (dir == 0) {
+					nowDivPos[i] -= step
+				}
+				if (dir == 1) {
+					nowDivPos[i] += step
+				}
+
+				if (dir == 0 &amp;&amp; nowDivPos[i] &lt;= -(pic0.width + imgSpacer)
+						|| dir == 1 &amp;&amp; nowDivPos[i] &gt; containerWidth) {
+
+					if (dir == 0) {
+						currentImage.style.left = containerWidth + imgSpacer + "px"
+					}
+					if (dir == 1) {
+						currentImage.style.left = -pic0.width - (imgSpacer * 2)
+								+ "px"
+					}
+
+					if (nextPic &gt; data.length - 1) {
+						nextPic = 0
+					}
+
+					currentImage.src = data[nextPic][0]
+					currentImage.alt = data[nextPic][1]
+					currentImage.i = nextPic
+
+					nextPic++
+
+				} else {
+					currentImage.style.left = nowDivPos[i] + "px"
+				}
+
+			}
+			timer = setTimeout("scrollHIS3()", speed)
+
+		}
+			
+	</script>
+
+			<style type="text/css">
+</style>
+
+
+			<!--BODY CONTENT STARTS HERE-->
+			<div class="content-bg clear-both">
+				<div class="lt-flap">
+					<img src="images/left.png" alt="" />
+				</div>
+				<div class="flap-mid">
+					<div class="black-shade">&#160;</div>
+				</div>
+				<div class="rt-flap">
+					<img src="images/right.png" alt="" />
+				</div>
+				<!--phone and chat icon starts -->
+				<div style="float: right; width: 63px; margin-top: 30px;">
+					<a href="contact.jsf"><img src="images/icon2.png" width="63"
+						height="46" border="0" /></a>
+					<p:spacer width="50px" height="50px" />
+				</div>
+				<!--phone and chat icon ends -->
+				<h:form id="frm" prependId="false">
+					<!--step1, step2, step3 image starts -->
+
+					<div class="Easy-steps">
+						<div class="stepsContainer">
+							<div id="his3container"
+								style="position: relative; width: 0px; height: 0px; border: 1px solid white; overflow: hidden">
+								<div id="display_area"
+									style="position: absolute; left: 0; top: 0; width: 0px; height: 0px; clip: rect(0, 0, 0, 0)">
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--step1, step2, step3 image ends -->
+					<div class="BannerBG">
+						<!--Birthday Get started link starts -->
+						<ui:repeat value="#{eventManagedBean.eventDetails}" var="event"
+							varStatus="st">
+							<div>
+
+								<h:panelGroup rendered="#{userId.firstname==null}">
+									<p:commandLink styleClass="EventBanner"
+										style="background-color: white"
+										action="#{eventManagedBean.eventForm(eventManagedBean.eventTypeId,eventManagedBean.eventType)}">
+										<f:setPropertyActionListener value="#{event.eventType}"
+											target="#{eventManagedBean.eventTypeId}" />
+										<f:setPropertyActionListener value="#{event.eventDescription}"
+											target="#{eventManagedBean.eventType}" />
+										<f:param name="eventType" value="#{event.eventDescription}" />
+										<f:param name="eventTypeId" value="#{event.eventType}" />
+										<p:graphicImage alt="Plan a #{event.eventDescription}"
+											value="images/banner/#{event.eventDescription}Banner.png" />
+										<h:outputText styleClass="EventBannerTitleEvent"
+											value="#{event.eventDesc}" />
+										<br />
+										<br />
+										<p:commandButton value="Get Started"
+											style="position:absolute;margin-left: 0px;width:130px;color:white;background:#{event.color};">
+											<p:effect type="bounce" event="mouseover" />											
+										</p:commandButton>
+										<br />
+									</p:commandLink>
+								</h:panelGroup>
+
+								<h:panelGroup rendered="#{userId.firstname!=null}">
+									<p:commandLink styleClass="EventBanner"
+										style="background-color: white"
+										action="#{eventManagedBean.submitForm(event.eventType,event.eventDescription)}">
+										<p:graphicImage alt="Plan a #{event.eventDescription}"
+											value="images/banner/#{event.eventDescription}Banner.png" />
+										<h:outputText styleClass="EventBannerTitleEvent"
+											value="#{event.eventDesc}" />
+										<h:outputText styleClass="EventBannerTitleEvent"
+											value="#{event.eventDesc}" />
+										<br />
+										<br />
+										<p:commandButton value="Get Started"
+											style="position:absolute;margin-left: 0px;width:130px;color:white;background:#{event.color};">
+											<p:effect type="bounce" event="mouseover" />											
+										</p:commandButton><br />
+									</p:commandLink>
+								</h:panelGroup>
+							</div>
+						</ui:repeat>
+						<p:confirmDialog widgetVar="confirmation" closable="false"
+							header="Register" message="Register before proceeding"
+							showEffect="fade" hideEffect="explode">
+							<p:commandButton id="btnYes" value="Yes"
+								action="#{eventManagedBean.loginForm}"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton id="btnNo" value="No#{eventType}"
+								action="#{eventManagedBean.eventForm(eventManagedBean.eventTypeId,eventManagedBean.eventType)}"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+						<br />
+						<p:graphicImage value="images/EventPartners.jpg" width="930px"></p:graphicImage>
+
+						<!--Birthday Get started link ends -->
+					</div>
+					<div style="clear: both;"></div>
+				</h:form>
+			</div>
+			<!--BODY CONTENT ENDS HERE-->
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
