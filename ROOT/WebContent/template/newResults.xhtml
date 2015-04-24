@@ -176,16 +176,16 @@
 		<ul class="nav-tabs clearfix" role="tablist">
 			<li role="presentation" class="active"><a
 				href="home-page-with-flexslider.html#about-us-tab-1" role="tab"
-				data-toggle="tab">Catering</a></li>
-			<li role="presentation"><a
-				href="home-page-with-flexslider.html#about-us-tab-2" role="tab"
-				data-toggle="tab">Decorator</a></li>
-			<li role="presentation"><a
-				href="home-page-with-flexslider.html#about-us-tab-3" role="tab"
-				data-toggle="tab">Entertainment</a></li>
-			<li role="presentation"><a
-				href="home-page-with-flexslider.html#about-us-tab-3" role="tab"
-				data-toggle="tab">Photographer</a></li>
+				data-toggle="tab">Venue</a></li>
+			<c:forEach
+				rendered="#{not empty eventsManagedBean.allSelectedServicesMap}"
+				id="foreach"
+				items="#{eventsManagedBean.allSelectedServicesMap.entrySet().toArray()}"
+				varStatus="stat" var="allS">
+				<li role="presentation"><a
+					href="home-page-with-flexslider.html##{allS.key.getHeading()}"
+					role="tab" data-toggle="tab">#{allS.key.getHeading()}</a></li>
+			</c:forEach>
 		</ul>
 		<div class="clear"></div>
 
@@ -198,7 +198,7 @@
 						<div class="container clearfix">
 							<div class="row">
 								<div class="section-header-3 col-md-8 col-md-offset-2">
-									<h2 class="text-color-02">Matching Catering Services</h2>
+									<h2 class="text-color-02">Matching Venue Services</h2>
 									<p>Did not find a matching vendor? Please don't hesitate to
 										call us anytime on +91-92931-30333</p>
 								</div>
@@ -213,16 +213,17 @@
 													<div class="img">
 														<!-- <p:graphicImage height="120px" width="120px"
 																						id="slider#{st.count}"
-																						value="#{eventDetailsManagedBean.getHotelImagesSm(venue.venueId).get(0)}">
+																						value="#{eventsManagedBean.getHotelImagesSm(venue.venueId).get(0)}">
 																					</p:graphicImage> -->
 														<img
-															src="#{eventDetailsManagedBean.getHotelImagesSm(venue.venueId).get(0)}"
+															src="#{eventsManagedBean.getHotelImagesSm(venue.venueId).get(0)}"
 															alt="hotel room" />
 													</div>
 													<div class="content">
-														<p:commandLink id="cmdlgS#{st.count}"
-																					action="#{eventsManagedBean.selectedVenueVals(venue.venueId)}">
-														<h3>#{venue.venueName}</h3></p:commandLink>
+														<p:commandLink
+															action="#{eventsManagedBean.selectedVenueVals(venue.venueId)}">
+															<h3>#{venue.venueName}</h3>
+														</p:commandLink>
 														<p>#{venue.areaName}, #{venue.cityName}</p>
 														<div class="row">
 															<div class="col-sm-6 col-xs-12">
@@ -241,7 +242,8 @@
 																&nbsp;(43)
 															</div>
 														</div>
-														<h4>Rs. #{eventsManagedBean.getCost(eventsManagedBean.finalVenueInfo.finalAmount)}</h4>
+														<h4>Rs.
+															#{eventsManagedBean.getCost(eventsManagedBean.finalVenueInfo.finalAmount)}</h4>
 														<p>South Indian, North Indian, Continental
 															Specialists.</p>
 														<div class="row">
@@ -256,15 +258,89 @@
 											</li>
 										</c:forEach>
 									</ul>
-
 								</div>
 							</div>
 						</div>
 						</section>
-
 					</div>
 				</div>
 			</div>
+			<c:forEach
+				rendered="#{not empty eventsManagedBean.allSelectedServicesMap}"
+				id="foreach"
+				items="#{eventsManagedBean.allSelectedServicesMap.entrySet().toArray()}"
+				varStatus="stat" var="allS">
+				<div role="tabpanel" class="tab-pane fade"
+					id="#{allS.key.getHeading()}">
+					<div class="tab-content-inner-about-us">
+						<div class="content-info">
+							<section class="section-sresults">
+							<div class="container clearfix">
+								<div class="row">
+									<div class="section-header-3 col-md-8 col-md-offset-2">
+										<h2 class="text-color-02">Matching
+											#{allS.key.getHeading()} Services</h2>
+										<p>Did not find a matching vendor? Please don't hesitate
+											to call us anytime on +91-92931-30333</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-10 col-md-offset-1">
+										<ul class="featured-img-list">
+											<c:forEach items="#{allS.value}" var="service" varStatus="st">
+												<li class="wow fadeIn clearfix">
+													<div class="inner">
+														<div class="img">
+															<img
+																src="#{eventsManagedBean.getServiceImagesSm(service.serviceProviderId).get(0)}"
+																alt="hotel room" />
+														</div>
+														<div class="content">
+															<p:commandLink action="#{eventsManagedBean.popupService(allS.key,service.serviceProviderCode)}">
+																<h3>#{service.serviceProviderName}</h3>
+															</p:commandLink>
+															<p>#{service.areaName}, #{service.cityName}</p>
+															<div class="row">
+																<div class="col-sm-6 col-xs-12">
+																	<fieldset class="rating">
+																		<input type="radio" id="star5" name="rating" value="5" /><label
+																			for="star5" title="Rocks!">5 stars</label> <input
+																			type="radio" id="star4" name="rating" value="4" /><label
+																			for="star4" title="Pretty good">4 stars</label> <input
+																			type="radio" id="star3" name="rating" value="3" /><label
+																			for="star3" title="Meh">3 stars</label> <input
+																			type="radio" id="star2" name="rating" value="2" /><label
+																			for="star2" title="Kinda bad">2 stars</label> <input
+																			type="radio" id="star1" name="rating" value="1" /><label
+																			for="star1" title="Sucks big time">1 star</label>
+																	</fieldset>
+																	&nbsp;(43)
+																</div>
+															</div>
+															<h4>Rs.
+																#{eventsManagedBean.getProjectedCost(service.finalCost,service.unitOfCost)}</h4>
+															<p>South Indian, North Indian, Continental
+																Specialists.</p>
+															<div class="row">
+																<div class="col-sm-4 col-xs-12">
+																	<p:commandButton style="float:right"
+																		styleclass="btn btn-primary btn-block caps"
+																		value="Book Now" />
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+											</c:forEach>
+										</ul>
+									</div>
+								</div>
+							</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	</section>
