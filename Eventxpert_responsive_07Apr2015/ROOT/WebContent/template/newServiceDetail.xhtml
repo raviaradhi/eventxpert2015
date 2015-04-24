@@ -94,21 +94,18 @@
 		<div class="tab-style-1">
 			<ul class="nav-tabs clearfix" role="tablist">
 				<c:forEach id="foreachNew"
-					rendered="#{not empty eventsManagedBean.hallMap}"
-					items="#{eventsManagedBean.hallMap.entrySet().toArray()}"
-					varStatus="stat" var="allS">
+					items="#{eventsManagedBean.servicePackges}"
+					var="srvc">
 					<li role="presentation"><a
-						href="home-page-with-flexslider.html##{allS.key}" role="tab"
-						data-toggle="tab">#{allS.key}#{allS.value}</a></li>
+						href="home-page-with-flexslider.html##{srvc.packageName}" role="tab"
+						data-toggle="tab">#{srvc.packageName}</a></li>
 				</c:forEach>
 			</ul>
 
 			<div class="tab-content">
 				<c:forEach id="foreachNew"
-					rendered="#{not empty eventsManagedBean.hallMap}"
-					items="#{eventsManagedBean.hallMap.entrySet().toArray()}"
-					varStatus="stat" var="allS">
-					<div role="tabpanel" class="tab-pane fade" id="#{allS.key}">
+					items="#{eventsManagedBean.servicePackges}" var="srvc">
+					<div role="tabpanel" class="tab-pane fade" id="#{srvc.packageName}">
 						<div class="tab-content-inner-vendor">
 							<div class="content-info">
 								<div class="vendor">
@@ -137,9 +134,8 @@
 											</div>
 										</div>
 										<div class="content">
-											<h3>#{eventsManagedBean.popupViewVenue.venueName}</h3>
-											<p>#{eventsManagedBean.popupViewVenue.areaName},
-												#{eventsManagedBean.popupViewVenue.cityName}</p>
+											<h3>#{eventsManagedBean.srvcpkg.packageName}</h3>
+											
 											<div class="row">
 												<div class="col-sm-6 col-xs-12">
 													<fieldset class="rating">
@@ -161,8 +157,7 @@
 													<a>Link Review </a>&nbsp;&nbsp;&nbsp;<a>Read Review</a>
 												</div>
 											</div>
-											<h4>Rs.
-												#{eventsManagedBean.getCost(eventsManagedBean.popupViewVenue.finalCOST)}</h4>
+											<h4>Rs. #{eventsManagedBean.getProjectedCost(eventsManagedBean.srvcpkg.finalAmount, eventsManagedBean.srvcpkg.unitOfCost)}</h4>
 											<p>South Indian, North Indian, Continental Specialists.</p>
 
 											<h4>Capacity : 500</h4>
@@ -205,13 +200,9 @@
 
 													<div class="section-header-3 col-md-7 col-md-offset-2">
 														<h2 class="text-color-02">DESCRIPTION</h2>
-														<p>#{eventsManagedBean.hallLocalMap.get(allS.key).description}</p>
+														<p>#{eventsManagedBean.srvcpkg.packageName}</p>
 													</div>
-													<div class="section-header-3 col-md-7 col-md-offset-2">
-														<h2 class="text-color-02">Other Facilities</h2>
-														<p>Air Condition</p>
-														<p>Stage</p>
-													</div>
+													
 												</div>
 											</div>
 										</div>
