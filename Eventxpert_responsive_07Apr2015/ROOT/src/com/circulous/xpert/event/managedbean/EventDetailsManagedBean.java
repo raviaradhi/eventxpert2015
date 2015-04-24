@@ -1918,76 +1918,27 @@ public class EventDetailsManagedBean implements Serializable {
         
 	public ArrayList getAllSelectedServices() {
 		logger.debug("getAllSelectedServices*******  " + allSelectedServices);
-		allSelectedServices = new ArrayList();
-		// allSelectedServices.add(getAllVenueList());
-		// getAllVenueList();
-		// selectedSrvList = new ArrayList<ServiceVO>();
-		//
-		// for (ServiceVO dataItem : serviceList) {
-		// if (dataItem.isSelected()) {
-		// logger.debug("dataItem --" + dataItem);
-		// selectedSrvList.add(dataItem);
-		// // allSelectedServices.add(dataItem);
-		// }
-		// }
+		allSelectedServices = new ArrayList();		
 		logger.debug("selectedSrvList******* alllll  " + selectedSrvList);
 		allSelectedServices.add(selectedSrvList);
-
-		// allSelectedServices.add(getAllServicesList());
-
-		// allSelectedServicesMap.put(selectedVenueVO, getAllVenueList());
-		// for(int j=0;j<selectedSrvList.size();j++)
-		// {
-		// this.allSelectedServicesMap.put(selectedSrvList.get(j),
-		// getServiceListDtls(selectedSrvList.get(j)));
-		//
-		// }
-
-		// List mapValues = new ArrayList(allSelectedServicesMap.values());
-		// List mapKeys = new ArrayList(selectedSrvList.keySet());
-		// Collections.sort(mapValues);
-		// Collections.sort(mapKeys);
-		//
-		LinkedHashMap sortedMap = new LinkedHashMap();
-		//
-		// Collections.sort(mapKeys, new ServiceVOComparator());
-		// Iterator<AreaTypeMaster> atr = mapKeys.iterator();
-		// while (atr.hasNext()) {
-		// AreaTypeMaster atm = atr.next();
-		// if (null != city && city == atm.getCityId().getCityId()) {
-		// if (areaList.isEmpty()) {
-		// setArea(atm.getAreaId());
-		// }
-		// // areaList.add(new SelectItem(atm.getAreaId(), atm.getAreaName()));
-		// areaList.put(atm.getAreaName(), atm.getAreaId());
-		// areaListLocal.put(atm.getAreaId(), atm.getAreaName());
-		// // logger.debug(" Area  Name:" + atm.getAreaName() +
-		// // " Area  Code:" + atm.getAreaId());
-		// }
-		// }
+		LinkedHashMap sortedMap = new LinkedHashMap();		
 		disServiceTab = new ArrayList();
 		List<ServiceVO> sortedAreaList = new LinkedList<ServiceVO>(selectedSrvList);
 		Collections.sort(sortedAreaList, new ServiceVOComparator());
 		Iterator<ServiceVO> atr = sortedAreaList.iterator();
 		int j = 0;
 		while (atr.hasNext()) {
-
 			ServiceVO atm = atr.next();
-
 			sortedMap.put(atm, getServiceListDtls(atm));
 			if (j == 0 && allVenueList.isEmpty()) {
 				disServiceTab.add(false);
 			} else {
 				disServiceTab.add(true);
 			}
-
 			j++;
 		}
-
 		allSelectedServicesMap = sortedMap;
-
 		logger.debug("getAllSelectedServices------------  " + allSelectedServices);
-		// allSelectedServices.add(allSelectedServicesMap);
 		return allSelectedServices;
 	}
 
@@ -2002,8 +1953,6 @@ public class EventDetailsManagedBean implements Serializable {
 	public void setVenueType(String venueType) {
 		this.venueType = venueType;
 	}
-
-	/***************************************************************************/
 
 	public void dChange(AjaxBehaviorEvent event) {
 		Calendar date = (Calendar) event.getComponent();
