@@ -11,12 +11,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -45,14 +47,26 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import com.circulous.xpert.event.comparator.ServiceProviderComparatorByAmount;
+import com.circulous.xpert.event.comparator.ServiceProviderComparatorByArea;
+import com.circulous.xpert.event.comparator.ServiceProviderComparatorByName;
+import com.circulous.xpert.event.comparator.ServiceVOComparator;
 import com.circulous.xpert.event.comparator.VenueComparatorByAmount;
+import com.circulous.xpert.jpa.entities.AreaTypeMaster;
+import com.circulous.xpert.jpa.entities.EventDates;
+import com.circulous.xpert.jpa.entities.EventDates_;
 import com.circulous.xpert.jpa.entities.EventServiceProviderInfo;
 import com.circulous.xpert.jpa.entities.EventServiceProviderInfo_;
 import com.circulous.xpert.jpa.entities.EventTypeMaster;
+import com.circulous.xpert.jpa.entities.ServiceProviderInfo;
+import com.circulous.xpert.jpa.entities.ServiceProviderInfo_;
 import com.circulous.xpert.jpa.entities.ServiceTypeMaster;
 import com.circulous.xpert.jpa.entities.VenueHallInfo;
 import com.circulous.xpert.jpa.entities.VenueInfo;
 import com.circulous.xpert.jpa.entities.VenueTypeMaster;
+import com.circulous.xpert.jpa.entities.views.ViewServiceProvider;
+import com.circulous.xpert.jpa.entities.views.ViewServiceProviderPackage;
+import com.circulous.xpert.jpa.entities.views.ViewServiceProvider_;
 import com.circulous.xpert.jpa.entities.views.ViewVenue;
 import com.circulous.xpert.jpa.entities.views.ViewVenuePackage;
 import com.google.gson.Gson;
@@ -80,8 +94,6 @@ public class EventsManagedBean implements Serializable {
 	private String venueRadio = "";
 
 	private String[] selectedServices;
-
-	private List<String> services;
 
 	private List<String> guests;
 
@@ -147,18 +159,54 @@ public class EventsManagedBean implements Serializable {
 
 	private String center;
 
+	private ViewServiceProvider popupViewServiceProvider;
+
+	private ArrayList allSelectedServices;
+
+	private List<ServiceVO> selectedSrvList;
+
+	private ArrayList<Boolean> disServiceTab = new ArrayList<Boolean>();
+
+	private HashMap allSelectedServicesMap = new HashMap();
+
+	private Integer area = new Integer(0);
+
+	private String sortBy = "";
+
+	private List<ViewServiceProvider> viewServiceProviderList = new ArrayList<ViewServiceProvider>();
+
+	private String popupServiceCode = "";
+
+	private List<ServiceTypeMaster> srvList;
+
+	public List<String> hotelImagesSmall;
+
+	public List<String> serviceImagesSmall;
+
+	private BigDecimal pCost;
+
+	private List<ViewServiceProviderPackage> servicePackges;
+
+	private boolean chkServicePop = false;
+
+	public ServiceVO selService;
+
+	private List<String> servicesImages;
+
+	private List<String> servicePkgImages;
+
+	private int serviceProviderId = 0;
+
+	private ViewServiceProviderPackage srvcpkg;
+
+	private String packDesc;
+
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
 	EntityManager em = emf.createEntityManager();
 
 	public EventsManagedBean() {
 
 		populateVenueList();
-
-		services = new ArrayList<String>();
-		services.add("Catering");
-		services.add("Decorator");
-		services.add("Entertainment");
-		services.add("Photography");
 
 		guests = new ArrayList<String>();
 		guests.add("0-50");
@@ -279,12 +327,14 @@ public class EventsManagedBean implements Serializable {
 
 		Query queryService = em.createNamedQuery("ServiceTypeMaster.findByIsActive");
 		queryService.setParameter("isActive", 'Y');
-		List<ServiceTypeMaster> sList = queryService.getResultList();
-		for (Iterator<ServiceTypeMaster> iterator = sList.iterator(); iterator.hasNext();) {
+		srvList = queryService.getResultList();
+		for (Iterator<ServiceTypeMaster> iterator = srvList.iterator(); iterator.hasNext();) {
 			ServiceTypeMaster srvTypeMaster = iterator.next();
 			serviceList.add(srvTypeMaster.getServiceName());
 		}
-
+		
+		Query qryViewServiceProviderList = em.createNamedQuery("ViewServiceProvider.findAll");
+		viewServiceProviderList = qryViewServiceProviderList.getResultList();
 	}
 
 	public List<ViewVenue> getAllVenueList1() {
@@ -354,7 +404,7 @@ public class EventsManagedBean implements Serializable {
 
 				for (Iterator<ViewVenue> iterator = viewVenueList.iterator(); iterator.hasNext();) {
 					ViewVenue type = (ViewVenue) iterator.next();
-					if (type.getVenueTypeId() == 3) {
+					if (type.getVenueTypeId() == 2) {
 						type.setVenueCost(type.getVenueCost().multiply(new BigDecimal(getTotalCount())));
 						type.setFinalCOST(type.getFinalCOST().multiply(new BigDecimal(getTotalCount())));
 					} else {
@@ -400,10 +450,163 @@ public class EventsManagedBean implements Serializable {
 
 		System.out.println(selectedGuest);
 
+		selectedSrvList = new ArrayList<ServiceVO>();
+
+		ServiceVO srv;
+
+		for (String item : selectedServices) {
+			for (ServiceTypeMaster stm : srvList) {
+				if (item.equalsIgnoreCase(stm.getServiceName())) {
+					srv = new ServiceVO(stm.getServiceTypeCode(), null, stm.getServiceName(),
+							stm.getServiceDescription());
+					selectedSrvList.add(srv);
+					break;
+				}
+			}
+		}
+
 		setAllVenueList(getAllVenueList1());
-
+		getAllSelectedServices();
 		return "newResults";
+	}
 
+	public ArrayList getAllSelectedServices() {
+		logger.debug("getAllSelectedServices*******  " + allSelectedServices);
+		allSelectedServices = new ArrayList();
+		logger.debug("selectedSrvList******* alllll  " + selectedSrvList);
+		allSelectedServices.add(selectedSrvList);
+		LinkedHashMap sortedMap = new LinkedHashMap();
+		disServiceTab = new ArrayList();
+		List<ServiceVO> sortedAreaList = new LinkedList<ServiceVO>(selectedSrvList);
+		Collections.sort(sortedAreaList, new ServiceVOComparator());
+		Iterator<ServiceVO> atr = sortedAreaList.iterator();
+		int j = 0;
+		while (atr.hasNext()) {
+			ServiceVO atm = atr.next();
+			sortedMap.put(atm, getServiceListDtls(atm));
+			if (j == 0 && allVenueList.isEmpty()) {
+				disServiceTab.add(false);
+			} else {
+				disServiceTab.add(true);
+			}
+			j++;
+		}
+		allSelectedServicesMap = sortedMap;
+		logger.debug("getAllSelectedServices------------  " + allSelectedServices);
+		return allSelectedServices;
+	}
+
+	public List<ViewServiceProvider> getServiceListDtls(ServiceVO serviceVO) {
+
+		List<ViewServiceProvider> localVIList = new ArrayList<ViewServiceProvider>();
+		try {
+			ServiceVO selectedServiceVO = null;
+			logger.debug("serviceVO.getHeading::::: " + serviceVO.getHeading());
+			logger.debug("serviceVO.getId::::: " + serviceVO.getId());
+			selectedServiceVO = serviceVO;
+			logger.debug("selectedServiceVO.getId::::: " + selectedServiceVO.getId());
+			long lCount = new Long(getTotalCount()).longValue();
+
+			if (null != selectedServiceVO) {
+
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
+				EntityManager em = emf.createEntityManager();
+
+				ServiceTypeMaster stm = new ServiceTypeMaster(selectedServiceVO.getId());
+				SimpleDateFormat readFormat = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+				SimpleDateFormat writeFormat = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat writeFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+				Date d = readFormat.parse(eventDate.toString());
+				logger.debug("dattteee " + d);
+				String str = writeFormat.format(d);
+				Date strDate = writeFormat1.parse(str);
+				logger.debug("strDate " + strDate);
+				CriteriaBuilder cb = em.getCriteriaBuilder();
+				CriteriaQuery<ViewServiceProvider> criteriaQuery = cb.createQuery(ViewServiceProvider.class);
+				Root<ViewServiceProvider> vSProvider = criteriaQuery.from(ViewServiceProvider.class);
+				CriteriaQuery<ViewServiceProvider> select = criteriaQuery.select(vSProvider);
+				Subquery<EventDates> cq = criteriaQuery.subquery(EventDates.class);
+				Root<EventDates> edates = cq.from(EventDates.class);
+				Root<ServiceProviderInfo> sp = cq.from(ServiceProviderInfo.class);
+				cq.select(edates);
+				cq.where(cb.and(
+						cb.equal(edates.get(EventDates_.eventDate), strDate),
+						cb.equal(sp.get(ServiceProviderInfo_.serviceProviderId),
+								edates.get(EventDates_.serviceProviderId)),
+						cb.equal(sp.get(ServiceProviderInfo_.serviceTypeCode), stm)));
+				logger.debug("(SP CQ**********   " + cq);
+
+				Expression<String> exp = vSProvider.get("serviceProviderId");
+				Predicate predicate = exp.in(cq);
+				select.where(cb.and(
+						cb.equal(vSProvider.get(ViewServiceProvider_.serviceTypeCode), selectedServiceVO.getId()),
+						cb.not(predicate)));
+
+				TypedQuery<ViewServiceProvider> qryViewServiceProviderList = em.createQuery(select);
+
+				logger.debug("(SP**********   " + select);
+
+				localVIList = qryViewServiceProviderList.getResultList();
+
+				List<ViewServiceProvider> templist = new ArrayList<ViewServiceProvider>();
+				ArrayList indexes = new ArrayList();
+
+				for (int j = 0; j < localVIList.size(); j++) {
+					System.out.println("localVIList.size()**  " + localVIList.size());
+					ViewServiceProvider type = (ViewServiceProvider) localVIList.get(j);
+					Query qryList11 = em.createNamedQuery("ViewServiceProviderPackage.findBySrvPrvdIdEType");
+					qryList11.setParameter("serviceProviderId", type.getServiceProviderId());
+					qryList11.setParameter("eventType", eventTypeId);
+					System.out.println("qryList11***  " + qryList11);
+					List vList = qryList11.getResultList();
+
+					if (vList.size() > 0) {
+						System.out.println("Records exists");
+						templist.add(type);
+					} else {
+						System.out.println("No Records exists");
+					}
+				}
+				localVIList = templist;
+
+				logger.debug("getAllServicesList::::: localVIList size -- " + localVIList.size()
+						+ "  qryViewServiceProviderList " + qryViewServiceProviderList);
+
+				Query arQry = em.createNamedQuery("AreaTypeMaster.findByAreaId");
+				arQry.setParameter("areaId", area);
+				AreaTypeMaster atm = (AreaTypeMaster) arQry.getSingleResult();
+
+				System.out.println("area  " + area);
+
+				double lat = Double.valueOf(atm.getLatitude());
+				double lng = Double.valueOf(atm.getLongitude());
+				LatitudeLongitude current = new LatitudeLongitude(lat, lng);
+
+				PlacesLatitudes sample = new PlacesLatitudes();
+				try {
+					localVIList = sample.calculateDistancesServices(current, localVIList);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+
+			logger.debug("getAllServicesList::::: localVIList  -- " + localVIList);
+
+			if ("Amount".equals(sortBy)) {
+				Collections.sort(localVIList, new ServiceProviderComparatorByAmount());
+			} else if ("Area".equals(sortBy)) {
+				Collections.sort(localVIList, new ServiceProviderComparatorByArea());
+			} else if ("Name".equals(sortBy)) {
+				Collections.sort(localVIList, new ServiceProviderComparatorByName());
+			} else {
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return localVIList;
 	}
 
 	public String getCost(BigDecimal cost) {
@@ -412,7 +615,7 @@ public class EventsManagedBean implements Serializable {
 
 	public String selectedVenueVals(int venueId) {
 
-		setPopupVenueId(String.valueOf(2));
+		setPopupVenueId(String.valueOf(venueId));
 		logger.debug("getPopupViewVenue :: popupVenueId   -- " + popupVenueId);
 		logger.debug("getPopupViewVenue :: venueId   -- " + venueId);
 		for (int j = 0; j < viewVenueList.size(); j++) {
@@ -563,67 +766,256 @@ public class EventsManagedBean implements Serializable {
 
 	}
 
+	public List<String> getHotelImagesSm(String venueId) {
+		hotelImagesSmall = new ArrayList<String>();
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		File dir = new File(path + "/venue/" + venueId);
+		logger.debug("Directory! " + dir);
+		if (dir.exists()) {
+			File[] list = dir.listFiles();
+			String[] listFiles = dir.list();
+			int len = dir.list().length;
+			if (len == 0) {
+				logger.debug("No images uploaded");
+				hotelImagesSmall.add("images/noImage.gif");
+			} else {
+				for (int i = 0; i < len; i++) {
+					logger.debug("listFiles[i] " + listFiles[i]);
+					logger.debug("listFiles[i] " + list[i].getAbsolutePath());
+					logger.debug("listFiles[i] " + list[i].getPath());
+					if (!list[i].isDirectory()) {
+						try {
+							String str = "http://" + url + "/venue/" + venueId + "/" + listFiles[i];
+							URL url1 = new URL(str);
+							HttpURLConnection huc = (HttpURLConnection) url1.openConnection();
+							huc.setRequestMethod("HEAD");
+							int responseCode = huc.getResponseCode();
+							if (responseCode == HttpURLConnection.HTTP_OK) {
+								hotelImagesSmall.add(str);
+							} else {
+								hotelImagesSmall.add("images/noImage.gif");
+							}
+						} catch (Exception ex) {
+							java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(
+									Level.SEVERE, null, ex);
+						}
+					}
+				}
+			}
+		} else {
+			logger.debug("No directory found");
+			hotelImagesSmall.add("images/noImage.gif");
+		}
+		return hotelImagesSmall;
+	}
+
+	public List<String> getServiceImagesSm(String id) {
+		logger.debug("ID SRVICE " + id);
+		serviceImagesSmall = new ArrayList<String>();
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		File dir = new File(path + "/vendors/" + id);
+		logger.debug("Directory! " + dir);
+		if (dir.exists()) {
+			File[] list = dir.listFiles();
+			String[] listFiles = dir.list();
+			int len = dir.list().length;
+			if (len == 0) {
+				logger.debug("No images uploaded");
+				serviceImagesSmall.add("images/noImage.gif");
+			} else {
+				for (int i = 0; i < len; i++) {
+					if (!list[i].isDirectory()) {
+						try {//
+							String str = "http://" + url + "/vendors/" + id + "/" + listFiles[i];
+							URL url1 = new URL(str);
+							HttpURLConnection huc = (HttpURLConnection) url1.openConnection();
+							huc.setRequestMethod("HEAD");
+							int responseCode = huc.getResponseCode();
+							if (responseCode == HttpURLConnection.HTTP_OK) {
+								serviceImagesSmall.add(str);
+							} else {
+								serviceImagesSmall.add("images/noImage.gif");
+							}
+
+							// serviceImagesSmall.add("http://" + url +
+							// "/vendors/" + id + "/" + listFiles[i]);
+						} catch (Exception ex) {
+							java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(
+									Level.SEVERE, null, ex);
+						}
+					}
+				}
+			}
+		} else {
+			logger.debug("No directory found");
+			serviceImagesSmall.add("images/noImage.gif");
+		}
+		return serviceImagesSmall;
+	}
+
+	public String getProjectedCost(BigDecimal cost, String strUnitOfCost) {
+		logger.debug("UnitOfCost::::" + strUnitOfCost);
+		if ("PER PLATE".equalsIgnoreCase(strUnitOfCost.trim()) || "PER HEAD".equalsIgnoreCase(strUnitOfCost.trim())) {
+			logger.debug("inside perplate::::" + cost);
+			logger.debug("inside perplate:::: " + cost.multiply(new BigDecimal(getTotalCount())));
+			pCost = cost.multiply(new BigDecimal(getTotalCount()));
+		} else {
+			logger.debug("else unite::::" + strUnitOfCost);
+			pCost = cost;
+		}
+		return pCost.stripTrailingZeros().toPlainString();
+	}
+
 	public List<ViewVenuePackage> getVenuePackages() {
 
 		logger.debug("getVenuePackges:1::venueId" + popupVenueId);
-		// List<VenuePackageInfo> list;
-
 		VenueInfo vi = new VenueInfo(Integer.parseInt(popupVenueId));
-
 		try {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
 			EntityManager em = emf.createEntityManager();
-			// Query query =
-			// em.createNamedQuery("VenuePackageInfo.findByVenueId");
-			// Query query =
-			// em.createNamedQuery("ViewVenuePackage.findByVenueId");
 			Query query = em.createNamedQuery("ViewVenuePackage.findByVenueIdEType");
 			query.setParameter("venueId", Integer.parseInt(popupVenueId));
 			query.setParameter("eventType", eventTypeId);
-
 			venuePackages = query.getResultList();
-
 		} finally {
 
 		}
-
-		// logger.debug("getVenuePackges:2::packageId" + packageId);
 		return venuePackages;
+	}
+
+	public String popupService(ServiceVO sv, String serviceProviderCode) {
+		logger.debug("popupService :: serviceProviderCode   -- " + serviceProviderCode);
+		popupServiceCode = serviceProviderCode;
+		chkServicePop = true;
+		setSelService(sv);
+		servicePkgImages = new ArrayList<String>();
+		File dirPkgSrv = null;
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		for (Iterator<ViewServiceProvider> iterator = viewServiceProviderList.iterator(); iterator.hasNext();) {
+			ViewServiceProvider type = (ViewServiceProvider) iterator.next();
+			if (String.valueOf(type.getServiceProviderCode()).equalsIgnoreCase(popupServiceCode)) {
+				logger.debug("getPopupViewServiceProvider   -" + type);
+				popupViewServiceProvider = type;
+				setServiceProviderId(type.getServiceProviderId());
+				servicesImages = new ArrayList<String>();
+				File dir = new File(path + "/vendors/" + type.getServiceProviderId());
+				srvcPrvdUrl = "/vendors/" + type.getServiceProviderId() + "/packages/";
+				srvcPrvdPkgPath = path + "/vendors/" + type.getServiceProviderId() + "/packages/";
+				logger.debug("Directory! " + dir);
+				if (dir.exists()) {
+					File[] list = dir.listFiles();
+					String[] listFiles = dir.list();
+					int len = dir.list().length;
+					if (len == 0) {
+						logger.debug("No images uploaded");
+						servicesImages.add("images/noImage.gif");
+					} else {
+						for (int i = 0; i < len; i++) {
+							if (!list[i].isDirectory()) {
+								try {
+									logger.debug("listFiles[i] " + listFiles[i]);
+									String str = "http://" + url + "/vendors/" + type.getServiceProviderId() + "/"
+											+ listFiles[i];
+									URL url1 = new URL(str);
+									HttpURLConnection huc = (HttpURLConnection) url1.openConnection();
+									huc.setRequestMethod("HEAD");
+									int responseCode = huc.getResponseCode();
+									if (responseCode == HttpURLConnection.HTTP_OK) {
+										servicesImages.add(str);
+									} else {
+										servicesImages.add("images/noImage.gif");
+									}
+								} catch (Exception ex) {
+									java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(
+											Level.SEVERE, null, ex);
+								}
+								logger.debug("listFiles[i] " + listFiles[i]);
+							}
+						}
+					}
+				} else {
+					logger.debug("No directory found");
+					servicesImages.add("images/noImage.gif");
+				}
+				try {
+					initMap(type.getServiceProviderName() + "," + type.getAreaName() + "," + type.getCityName(),
+							type.getServiceProviderName());
+				} catch (JsonSyntaxException ex) {
+					ex.printStackTrace();
+					java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(Level.SEVERE, null,
+							ex);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+					java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(Level.SEVERE, null,
+							ex);
+				}
+				break;
+			}
+		}
+		if (!getServicePackges().isEmpty()) {
+			ViewServiceProviderPackage srvProviderPkg = servicePackges.get(0);
+			setSrvcpkg(srvProviderPkg);
+			logger.debug("Printing the packages path:%%%%% " + srvcPrvdPkgPath);
+			dirPkgSrv = new File(srvcPrvdPkgPath + srvProviderPkg.getPackageId());
+			// String url = context.getInitParameter("imgurl");
+			if (dirPkgSrv.exists()) {
+				String[] listFiles = dirPkgSrv.list();
+				File[] list = dirPkgSrv.listFiles();
+				int len = dirPkgSrv.list().length;
+				if (len == 0) {
+					logger.debug("No images uploaded");
+					servicePkgImages.add("images/noImage.gif");
+				} else {
+					for (int i = 0; i < len; i++) {
+						if (!list[i].isDirectory()) {
+							try {
+								logger.debug("PkgSrvcPath: " + dirPkgSrv + " listFiles[i] " + listFiles[i]);
+								String str = "http://" + url + srvcPrvdUrl + srvProviderPkg.getPackageId() + "/"
+										+ listFiles[i];
+								// File f = new File(str);
+								URL url1 = new URL(str);
+								HttpURLConnection huc = (HttpURLConnection) url1.openConnection();
+								huc.setRequestMethod("HEAD");
+								int responseCode = huc.getResponseCode();
+								if (responseCode == HttpURLConnection.HTTP_OK) {
+									servicePkgImages.add(str);
+								} else {
+									servicePkgImages.add("images/noImage.gif");
+								}
+							} catch (Exception ex) {
+								java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(
+										Level.SEVERE, null, ex);
+							}
+						}
+					}
+					logger.debug(servicePkgImages);
+				}
+			} else {
+				logger.debug("No directory found");
+				servicePkgImages.add("images/noImage.gif");
+			}
+		} else {
+			setPackDesc(null);
+		}
+		return "newServiceDetail";
 	}
 
 	private void initMap(String address, String name) throws JsonSyntaxException, IOException {
 		circleModel = new DefaultMapModel();
-		// logger.debug("Initmap ***  "+address);
-		// List<String> tmp = new ArrayList<String>();
-		//
-		// tmp.add("500 Eubank Boulevard Southeast Albuquerque, NM 87123");
-		// tmp.add("6350 Peachtree Dunwoody Road Northeast Atlanta, GA 30328");
-		// tmp.add("1701 Dallas Parkway Plano, TX 75093");
 		try {
 			Gson gson = new Gson();
-			// for (String address : tmp) {
 			GoogleGeoCodeResponse result = gson.fromJson(jsonCoord(URLEncoder.encode(address, "UTF-8")),
 					GoogleGeoCodeResponse.class);
 			if (result.results.length != 0) {
 				double lat = Double.parseDouble(result.results[0].geometry.location.lat);
 				double lng = Double.parseDouble(result.results[0].geometry.location.lng);
 				center = String.valueOf(lat) + "," + String.valueOf(lng);
-				// logger.debug("lat: "+lat+"  lng: "+lng);
 				LatLng coord = new LatLng(lat, lng);
-				// Circle circle = new Circle(coord, 100300);
-				// Circle circle = new Circle(coord, 100300);
-				// circle.setStrokeColor("#00ff00");
-				// circle.setFillColor("#00ff00");
-				// circle.setStrokeOpacity(0.7);
-				// circle.setFillOpacity(0.7);
-				// circleModel.addOverlay(circle);
 				circleModel.addOverlay(new Marker(coord, name));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// }
 	}
 
 	private String jsonCoord(String address) throws IOException {
@@ -641,9 +1033,7 @@ public class EventsManagedBean implements Serializable {
 	}
 
 	public List<ViewVenue> getAllVenueList2() {
-
 		return null;
-
 		/*
 		 * List<ViewVenue> localVIList = new ArrayList<ViewVenue>();
 		 * logger.debug("getAllVenueList -- venueType -- " + venueType);
@@ -903,21 +1293,6 @@ public class EventsManagedBean implements Serializable {
 	 */
 	public void setSelectedServices(String[] selectedServices) {
 		this.selectedServices = selectedServices;
-	}
-
-	/**
-	 * @return the services
-	 */
-	public List<String> getServices() {
-		return services;
-	}
-
-	/**
-	 * @param services
-	 *            the services to set
-	 */
-	public void setServices(List<String> services) {
-		this.services = services;
 	}
 
 	/**
@@ -1406,6 +1781,335 @@ public class EventsManagedBean implements Serializable {
 	 */
 	public void setVenuePackages(List<ViewVenuePackage> venuePackages) {
 		this.venuePackages = venuePackages;
+	}
+
+	/**
+	 * @return the popupViewServiceProvider
+	 */
+	public ViewServiceProvider getPopupViewServiceProvider() {
+		for (Iterator<ViewServiceProvider> iterator = viewServiceProviderList.iterator(); iterator.hasNext();) {
+			ViewServiceProvider type = (ViewServiceProvider) iterator.next();
+			if (String.valueOf(type.getServiceProviderCode()).equalsIgnoreCase(popupServiceCode)) {
+				return type;
+			}
+		}
+		return new ViewServiceProvider();
+	}
+
+	/**
+	 * @param popupViewServiceProvider
+	 *            the popupViewServiceProvider to set
+	 */
+	public ViewServiceProvider setPopupViewServiceProvider(ViewServiceProvider popupViewServiceProvider) {
+		this.popupViewServiceProvider = popupViewServiceProvider;
+		return popupViewServiceProvider;
+	}
+
+	/**
+	 * @return the selectedSrvList
+	 */
+	public List<ServiceVO> getSelectedSrvList() {
+		return selectedSrvList;
+	}
+
+	/**
+	 * @param selectedSrvList
+	 *            the selectedSrvList to set
+	 */
+	public void setSelectedSrvList(List<ServiceVO> selectedSrvList) {
+		this.selectedSrvList = selectedSrvList;
+	}
+
+	/**
+	 * @return the disServiceTab
+	 */
+	public ArrayList<Boolean> getDisServiceTab() {
+		return disServiceTab;
+	}
+
+	/**
+	 * @param disServiceTab
+	 *            the disServiceTab to set
+	 */
+	public void setDisServiceTab(ArrayList<Boolean> disServiceTab) {
+		this.disServiceTab = disServiceTab;
+	}
+
+	/**
+	 * @return the allSelectedServicesMap
+	 */
+	public HashMap getAllSelectedServicesMap() {
+		return allSelectedServicesMap;
+	}
+
+	/**
+	 * @param allSelectedServicesMap
+	 *            the allSelectedServicesMap to set
+	 */
+	public void setAllSelectedServicesMap(HashMap allSelectedServicesMap) {
+		this.allSelectedServicesMap = allSelectedServicesMap;
+	}
+
+	/**
+	 * @return the area
+	 */
+	public Integer getArea() {
+		return area;
+	}
+
+	/**
+	 * @param area
+	 *            the area to set
+	 */
+	public void setArea(Integer area) {
+		this.area = area;
+	}
+
+	/**
+	 * @return the sortBy
+	 */
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	/**
+	 * @param sortBy
+	 *            the sortBy to set
+	 */
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
+	/**
+	 * @return the viewServiceProviderList
+	 */
+	public List<ViewServiceProvider> getViewServiceProviderList() {
+		return viewServiceProviderList;
+	}
+
+	/**
+	 * @param viewServiceProviderList
+	 *            the viewServiceProviderList to set
+	 */
+	public void setViewServiceProviderList(List<ViewServiceProvider> viewServiceProviderList) {
+		this.viewServiceProviderList = viewServiceProviderList;
+	}
+
+	/**
+	 * @return the popupServiceCode
+	 */
+	public String getPopupServiceCode() {
+		return popupServiceCode;
+	}
+
+	/**
+	 * @param popupServiceCode
+	 *            the popupServiceCode to set
+	 */
+	public void setPopupServiceCode(String popupServiceCode) {
+		this.popupServiceCode = popupServiceCode;
+	}
+
+	/**
+	 * @param allSelectedServices
+	 *            the allSelectedServices to set
+	 */
+	public void setAllSelectedServices(ArrayList allSelectedServices) {
+		this.allSelectedServices = allSelectedServices;
+	}
+
+	/**
+	 * @return the srvList
+	 */
+	public List<ServiceTypeMaster> getSrvList() {
+		return srvList;
+	}
+
+	/**
+	 * @param srvList
+	 *            the srvList to set
+	 */
+	public void setSrvList(List<ServiceTypeMaster> srvList) {
+		this.srvList = srvList;
+	}
+
+	/**
+	 * @return the hotelImagesSmall
+	 */
+	public List<String> getHotelImagesSmall() {
+		return hotelImagesSmall;
+	}
+
+	/**
+	 * @param hotelImagesSmall
+	 *            the hotelImagesSmall to set
+	 */
+	public void setHotelImagesSmall(List<String> hotelImagesSmall) {
+		this.hotelImagesSmall = hotelImagesSmall;
+	}
+
+	/**
+	 * @return the serviceImagesSmall
+	 */
+	public List<String> getServiceImagesSmall() {
+		return serviceImagesSmall;
+	}
+
+	/**
+	 * @param serviceImagesSmall
+	 *            the serviceImagesSmall to set
+	 */
+	public void setServiceImagesSmall(List<String> serviceImagesSmall) {
+		this.serviceImagesSmall = serviceImagesSmall;
+	}
+
+	/**
+	 * @return the pCost
+	 */
+	public BigDecimal getpCost() {
+		return pCost;
+	}
+
+	/**
+	 * @param pCost
+	 *            the pCost to set
+	 */
+	public void setpCost(BigDecimal pCost) {
+		this.pCost = pCost;
+	}
+
+	/**
+	 * @return the servicePackges
+	 */
+	public List<ViewServiceProviderPackage> getServicePackges() {
+		logger.debug("ServiceDetailsManagedBean::::serviceProviderId::::" + serviceProviderId);
+		List<ViewServiceProviderPackage> list;
+		try {
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
+			EntityManager em = emf.createEntityManager();
+			Query query = em.createNamedQuery("ViewServiceProviderPackage.findBySrvPrvdIdEType");
+			ServiceProviderInfo spInfo = new ServiceProviderInfo(new Integer(serviceProviderId).intValue());
+			query.setParameter("serviceProviderId", serviceProviderId);
+			query.setParameter("eventType", eventTypeId);
+			servicePackges = query.getResultList();
+			logger.debug("ServiceDetailsManagedBean::::list::::" + servicePackges);
+		} finally {
+
+		}
+		return servicePackges;
+	}
+
+	/**
+	 * @param servicePackges
+	 *            the servicePackges to set
+	 */
+	public void setServicePackges(List<ViewServiceProviderPackage> servicePackges) {
+		this.servicePackges = servicePackges;
+	}
+
+	/**
+	 * @return the chkServicePop
+	 */
+	public boolean isChkServicePop() {
+		return chkServicePop;
+	}
+
+	/**
+	 * @param chkServicePop
+	 *            the chkServicePop to set
+	 */
+	public void setChkServicePop(boolean chkServicePop) {
+		this.chkServicePop = chkServicePop;
+	}
+
+	/**
+	 * @return the selService
+	 */
+	public ServiceVO getSelService() {
+		return selService;
+	}
+
+	/**
+	 * @param selService
+	 *            the selService to set
+	 */
+	public void setSelService(ServiceVO selService) {
+		this.selService = selService;
+	}
+
+	/**
+	 * @return the servicesImages
+	 */
+	public List<String> getServicesImages() {
+		return servicesImages;
+	}
+
+	/**
+	 * @param servicesImages
+	 *            the servicesImages to set
+	 */
+	public void setServicesImages(List<String> servicesImages) {
+		this.servicesImages = servicesImages;
+	}
+
+	/**
+	 * @return the servicePkgImages
+	 */
+	public List<String> getServicePkgImages() {
+		return servicePkgImages;
+	}
+
+	/**
+	 * @param servicePkgImages
+	 *            the servicePkgImages to set
+	 */
+	public void setServicePkgImages(List<String> servicePkgImages) {
+		this.servicePkgImages = servicePkgImages;
+	}
+
+	/**
+	 * @return the serviceProviderId
+	 */
+	public int getServiceProviderId() {
+		return serviceProviderId;
+	}
+
+	/**
+	 * @param serviceProviderId
+	 *            the serviceProviderId to set
+	 */
+	public void setServiceProviderId(int serviceProviderId) {
+		this.serviceProviderId = serviceProviderId;
+	}
+
+	/**
+	 * @return the srvcpkg
+	 */
+	public ViewServiceProviderPackage getSrvcpkg() {
+		return srvcpkg;
+	}
+
+	/**
+	 * @param srvcpkg
+	 *            the srvcpkg to set
+	 */
+	public void setSrvcpkg(ViewServiceProviderPackage srvcpkg) {
+		this.srvcpkg = srvcpkg;
+	}
+
+	/**
+	 * @return the packDesc
+	 */
+	public String getPackDesc() {
+		return packDesc;
+	}
+
+	/**
+	 * @param packDesc
+	 *            the packDesc to set
+	 */
+	public void setPackDesc(String packDesc) {
+		this.packDesc = packDesc;
 	}
 
 }
