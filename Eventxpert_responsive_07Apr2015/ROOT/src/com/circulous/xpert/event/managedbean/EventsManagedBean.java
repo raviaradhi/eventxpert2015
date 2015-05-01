@@ -267,7 +267,8 @@ public class EventsManagedBean implements Serializable {
 
 	public String getTotalCount() {
 		tCount = Integer.parseInt(totalCount);
-		return totalCount;
+		//return totalCount;
+		return "300";
 	}
 
 	private void populateVenueList() {
@@ -404,7 +405,7 @@ public class EventsManagedBean implements Serializable {
 
 				for (Iterator<ViewVenue> iterator = viewVenueList.iterator(); iterator.hasNext();) {
 					ViewVenue type = (ViewVenue) iterator.next();
-					if (type.getVenueTypeId() == 2) {
+					if (type.getVenueTypeId() == 3) {
 						type.setVenueCost(type.getVenueCost().multiply(new BigDecimal(getTotalCount())));
 						type.setFinalCOST(type.getFinalCOST().multiply(new BigDecimal(getTotalCount())));
 					} else {
