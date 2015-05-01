@@ -1,265 +1,473 @@
-<html xmlns="http://www.w3c.org/1999/xhtml"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>EventXpert - Celebrations Home Delivered..</title>
 
+	<link rel="apple-touch-icon-precomposed" sizes="144x144"
+			href="/resources/images/ico/apple-touch-icon-144-precomposed.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="114x114"
+			href="/resources/images/ico/apple-touch-icon-114-precomposed.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="72x72"
+			href="/resources/images/ico/apple-touch-icon-72-precomposed.png" />
+		<link rel="apple-touch-icon-precomposed"
+			href="/resources/images/ico/apple-touch-icon-57-precomposed.png" />
+		<link rel="shortcut icon" href="/resources/images/ico/favicon.png" />
+		<link rel="stylesheet"
+			href="/resources/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet"
+			href="/resources/icons/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/resources/css/flexslider.css"
+			media="screen" />
+		<link
+			href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700'
+			rel='stylesheet' type='text/css' />
+		<link
+			href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
+			rel='stylesheet' type='text/css' />
+		<link rel="stylesheet"
+			href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+		<link rel="stylesheet" href="/resources/css/animate.min.css" />
+		<link rel="stylesheet" href="/resources/css/style.css" />
+		<script type="text/javascript"
+			src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<!-- <script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
+		<link href="/resources/bootstrap/css/bootstrap.min.css"
+			rel="stylesheet" type="text/css" />
+		<script type="text/javascript"
+			src="/resources/bootstrap/js/bootstrap.min.js" />
+		<link href="/resources/bootstrap/css/bootstrap-multiselect.css"
+			rel="stylesheet" type="text/css" />
+		<script type="text/javascript"
+			src="/resources/bootstrap/js/bootstrap-multiselect.js" />
+		<script type="text/javascript" src="/resources/js/device.min.js" />
+		<script type="text/javascript" src="/resources/js/plugins.js" />
+		<script type="text/javascript"
+			src="/resources/js/jquery.customSelect.js" />
+		<script type="text/javascript" src="/resources/js/customs.js" />
+		<script type="text/javascript"
+			src="/resources/js/bootstrap-multiselect.js" />
+</h:head>
 <h:body>
 
-	<ui:composition template="/template/common/commonLayout.xhtml">
-		<ui:define name="content">
+<div id="navbar-main">
+      <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top header-bg">
+      <div class="container">
 
-			<script type="text/javascript">
-		
-		data = [
-				[ "images/home/DecorOne.jpg" ],
-				[ "images/home/DecorTwo.jpg" ],
-				[ "images/home/DecorFour.jpg" ],
-				[ "images/home/DecorFive.jpg" ],
-				[ "images/home/DecorSix.jpg" ],
-				[ "images/home/DecorEight.jpg" ],
-				[ "images/home/DecorNine.jpg" ],
-				[ "images/home/DecorTen.jpg" ],
-				[ "images/home/DecorEleven.jpg" ],
-				[ "images/home/DecorTwelve.jpg" ],
-				[ "images/home/DecorThirteen.jpg" ]
-			]
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navbar-collapse">
+            <img src="/resources/images/logo_small.png"/>
+          </button>
+          <a class="navbar-brand hidden-xs" href="#home"><img src="/resources/images/logo.png"/></a>
+        </div>
 
-		imgPlaces = 3 // number of images visible
-		imgWidth = 450 // width of the images
-		imgHeight = 220 // height of the images
-		imgSpacer = 4 // space between the images
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav ">
+			<li> <a href="#" class="smoothScroll">Sign In</a></li>
+			<li> <a href="#" class="smoothScroll">Sign Up</a></li>
+			<li> <a href="#about-us" class="smoothScroll"> About Us</a></li>
+			<li> <a href="#contact" class="smoothScroll"> Contact Us</a></li>
+			</ul>
+        </div>
+      
+      </div>
+    </div>
+    
+</div>
 
-		dir = 0 // 0 = left, 1 = right
+	<section class="big-banner-wrapper">
+	<div id="main-slider" class="flex-set-height">
+		<div id="mainFlexSlider" class="flexslider flexslider-clear">
+			<ul class="slides">
+				<li class="slide">
+					<div class="flexslider-image-bg"
+						style="background: url('/resources/images/slider/flexslider-01.jpg') center top no-repeat;"></div>
+					<div class="flex-overlay"></div>
+					<div class="flex-caption center">
+						<h1
+							class="animation fromBottom transitionDelay2 transitionDuration6">Celebrations
+							Home Delivered.</h1>
+						<br />
+						<p
+							class="animation fromBottom transitionDelay4 transitionDuration10">Marriages,
+							Birthdays, Rituals..etc we offer easy customization</p>
+						<br />
+						<!--a href="home-page-with-flexslider.html#" class="btn animation fromBottom transitionDelay6 transitionDuration10">Discover Now!</a-->
+					</div>
+				</li>
+				<!-- slide1 end -->
 
-		moz = document.getElementById("his3container");
+				<li class="slide">
+					<div class="flexslider-image-bg"
+						style="background: url('/resources/images/slider/flexslider-02.jpg') center top no-repeat;"></div>
+					<div class="flex-overlay"></div>
+					<div class="flex-caption center">
+						<h1
+							class="animation fromBottom transitionDelay2 transitionDuration6">Celebrations
+							Home Delivered.</h1>
+						<br />
+						<p
+							class="animation fromBottom transitionDelay4 transitionDuration10">Marriages,
+							Birthdays, Rituals..etc we offer easy customization</p>
+						<br />
+						<!--a href="home-page-with-flexslider.html#" class="btn animation fromBottom transitionDelay6 transitionDuration10">Discover Now!</a-->
+					</div>
+				</li>
+				<!-- slide2 end -->
 
-		step = 1
-		timer = ""
-		speed = 20
-		nextPic = 0
-		initPos = new Array()
-		nowDivPos = new Array()
-		
-		$(function(){			
-			for ( var i = 0; i &lt; imgPlaces + 1; i++) {
-				newImg = document.createElement("IMG")
-				newImg.setAttribute("id", "pic_" + i)
-				newImg.setAttribute("src", "")
-				newImg.style.position = "absolute"
-				newImg.style.width = imgWidth + "px"
-				newImg.style.height = imgHeight + "px"
-				newImg.style.border = 0
-				newImg.alt = ""
-				newImg.i = i
-				document.getElementById("display_area").appendChild(newImg)
-			} 
-			
-			containerEL = document.getElementById("his3container")
-			displayArea = document.getElementById("display_area")
-			pic0 = document.getElementById("pic_0")
+				<li class="slide">
+					<div class="flexslider-image-bg"
+						style="background: url('/resources/images/slider/flexslider-03.jpg') center top no-repeat;"></div>
+					<div class="flex-overlay"></div>
+					<div class="flex-caption center">
+						<h1
+							class="animation fromBottom transitionDelay2 transitionDuration6">Celebrations
+							Home Delivered.</h1>
+						<br />
+						<p
+							class="animation fromBottom transitionDelay4 transitionDuration10">Marriages,
+							Birthdays, Rituals..etc we offer easy customization</p>
+						<br />
+						<!--a href="home-page-with-flexslider.html#" class="btn animation fromBottom transitionDelay6 transitionDuration10">Discover Now!</a-->
+					</div>
+				</li>
+				<!-- slide3 end -->
+			</ul>
+			<!-- slides end -->
+		</div>
+		<!-- flexslider end -->
+	</div>
+	</section>
 
-			containerBorder = (document.compatMode == "CSS1Compat" ? 0
-					: parseInt(containerEL.style.borderWidth) * 2)
-			containerWidth = (imgPlaces * imgWidth) + ((imgPlaces - 1) * imgSpacer)
-			containerEL.style.width = containerWidth
-					+ (!moz ? containerBorder : "") + "px"
-			containerEL.style.height = imgHeight + (!moz ? containerBorder : "")
-					+ "px"
+	<div id="find-room-form-wrapper" class="light-bg">
+		<div class="container">
+			<div class="inner">
+				<h:form class="row">
 
-			displayArea.style.width = containerWidth + "px"
-			displayArea.style.clip = "rect(0," + (containerWidth + "px") + ","
-					+ (imgHeight + "px") + ",0)"
-
-
-			imgPos = -pic0.width
-			for ( var i = 0; i &lt; imgPlaces + 1; i++) {
-				currentImage = document.getElementById("pic_" + i)
-
-				if (dir == 0) {
-					imgPos += pic0.width + imgSpacer
-				}
-
-				initPos[i] = imgPos
-				if (dir == 0) {
-					currentImage.style.left = initPos[i] + "px"
-				}
-
-				if (dir == 1) {
-					document.getElementById("pic_" + [ (imgPlaces - i) ]).style.left = initPos[i]
-							+ "px"
-					imgPos += pic0.width + imgSpacer
-				}
-
-				if (nextPic == data.length) {
-					nextPic = 0
-				}
-
-				currentImage.src = data[nextPic][0]
-				currentImage.alt = data[nextPic][1]
-				currentImage.i = nextPic
-				nextPic++
-			}
-
-			scrollHIS3()
-			
-		});
-		
-		timer = ""
-			function scrollHIS3() {
-			clearTimeout(timer)
-			for ( var i = 0; i &lt; imgPlaces + 1; i++) {
-				currentImage = document.getElementById("pic_" + i)
-
-				nowDivPos[i] = parseInt(currentImage.style.left)
-
-				if (dir == 0) {
-					nowDivPos[i] -= step
-				}
-				if (dir == 1) {
-					nowDivPos[i] += step
-				}
-
-				if (dir == 0 &amp;&amp; nowDivPos[i] &lt;= -(pic0.width + imgSpacer)
-						|| dir == 1 &amp;&amp; nowDivPos[i] &gt; containerWidth) {
-
-					if (dir == 0) {
-						currentImage.style.left = containerWidth + imgSpacer + "px"
-					}
-					if (dir == 1) {
-						currentImage.style.left = -pic0.width - (imgSpacer * 2)
-								+ "px"
-					}
-
-					if (nextPic &gt; data.length - 1) {
-						nextPic = 0
-					}
-
-					currentImage.src = data[nextPic][0]
-					currentImage.alt = data[nextPic][1]
-					currentImage.i = nextPic
-
-					nextPic++
-
-				} else {
-					currentImage.style.left = nowDivPos[i] + "px"
-				}
-
-			}
-			timer = setTimeout("scrollHIS3()", speed)
-
-		}
-			
-	</script>
-
-			<style type="text/css">
-</style>
-
-
-			<!--BODY CONTENT STARTS HERE-->
-			<div class="content-bg clear-both">
-				<div class="lt-flap">
-					<img src="images/left.png" alt="" />
-				</div>
-				<div class="flap-mid">
-					<div class="black-shade">&#160;</div>
-				</div>
-				<div class="rt-flap">
-					<img src="images/right.png" alt="" />
-				</div>
-				<!--phone and chat icon starts -->
-				<div style="float: right; width: 63px; margin-top: 30px;">
-					<a href="contact.jsf"><img src="images/icon2.png" width="63"
-						height="46" border="0" /></a>
-					<p:spacer width="50px" height="50px" />
-				</div>
-				<!--phone and chat icon ends -->
-				<h:form id="frm" prependId="false">
-					<!--step1, step2, step3 image starts -->
-
-					<div class="Easy-steps">
-						<div class="stepsContainer">
-							<div id="his3container"
-								style="position: relative; width: 0px; height: 0px; border: 1px solid white; overflow: hidden">
-								<div id="display_area"
-									style="position: absolute; left: 0; top: 0; width: 0px; height: 0px; clip: rect(0, 0, 0, 0)">
-
+					<div class="col-xs-12 col-sm-12 col-md-5">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<div class="form-group">
+									<p:selectOneMenu id="console" value="#{eventsManagedBean.selectedEvent}" name="custom-select-1" styleClass="form-control styled-select">
+										<f:selectItem itemLabel="Event Type" itemValue="" />
+										<f:selectItems value="#{eventsManagedBean.eventList}" />
+									</p:selectOneMenu>									
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<div class="form-group form-icon">
+									<p:calendar value="#{eventsManagedBean.eventDate}" placeholder="Date" styleClass="form-control styled-select" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<!--step1, step2, step3 image ends -->
-					<div class="BannerBG">
-						<!--Birthday Get started link starts -->
-						<ui:repeat value="#{eventManagedBean.eventDetails}" var="event"
-							varStatus="st">
-							<div>
-
-								<h:panelGroup rendered="#{userId.firstname==null}">
-									<p:commandLink styleClass="EventBanner"
-										style="background-color: white"
-										action="#{eventManagedBean.eventForm(eventManagedBean.eventTypeId,eventManagedBean.eventType)}">
-										<f:setPropertyActionListener value="#{event.eventType}"
-											target="#{eventManagedBean.eventTypeId}" />
-										<f:setPropertyActionListener value="#{event.eventDescription}"
-											target="#{eventManagedBean.eventType}" />
-										<f:param name="eventType" value="#{event.eventDescription}" />
-										<f:param name="eventTypeId" value="#{event.eventType}" />
-										<p:graphicImage alt="Plan a #{event.eventDescription}"
-											value="images/banner/#{event.eventDescription}Banner.png" />
-										<h:outputText styleClass="EventBannerTitleEvent"
-											value="#{event.eventDesc}" />
-										<br />
-										<br />
-										<p:commandButton value="Get Started"
-											style="position:absolute;margin-left: 0px;width:130px;color:white;background:#{event.color};">
-											<p:effect type="bounce" event="mouseover" />											
-										</p:commandButton>
-										<br />
-									</p:commandLink>
-								</h:panelGroup>
-
-								<h:panelGroup rendered="#{userId.firstname!=null}">
-									<p:commandLink styleClass="EventBanner"
-										style="background-color: white"
-										action="#{eventManagedBean.submitForm(event.eventType,event.eventDescription)}">
-										<p:graphicImage alt="Plan a #{event.eventDescription}"
-											value="images/banner/#{event.eventDescription}Banner.png" />
-										<h:outputText styleClass="EventBannerTitleEvent"
-											value="#{event.eventDesc}" />
-										<h:outputText styleClass="EventBannerTitleEvent"
-											value="#{event.eventDesc}" />
-										<br />
-										<br />
-										<p:commandButton value="Get Started"
-											style="position:absolute;margin-left: 0px;width:130px;color:white;background:#{event.color};">
-											<p:effect type="bounce" event="mouseover" />											
-										</p:commandButton><br />
-									</p:commandLink>
-								</h:panelGroup>
+					<div class="col-xs-12 col-sm-8 col-md-5">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4 col-md-4">
+								<div class="form-group">
+									<p:selectOneMenu value="#{eventsManagedBean.venueRadio}" name="custom-select-1" label="Venue" styleClass="form-control styled-select">
+										<f:selectItem itemLabel="Venue" itemValue="" />
+										<f:selectItems value="#{eventsManagedBean.venueList}" />										
+									</p:selectOneMenu>	
+								</div>
+							</div>							
+							<div class="col-xs-12 col-sm-4 col-md-4">
+								<div class="form-group">
+									<p:selectCheckboxMenu value="#{eventsManagedBean.selectedServices}" id="menu" label="Services" styleClass="form-control">
+										<f:selectItems value="#{eventsManagedBean.serviceList}" />
+									</p:selectCheckboxMenu>
+								</div>
 							</div>
-						</ui:repeat>
-						<p:confirmDialog widgetVar="confirmation" closable="false"
-							header="Register" message="Register before proceeding"
-							showEffect="fade" hideEffect="explode">
-							<p:commandButton id="btnYes" value="Yes"
-								action="#{eventManagedBean.loginForm}"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-							<p:commandButton id="btnNo" value="No#{eventType}"
-								action="#{eventManagedBean.eventForm(eventManagedBean.eventTypeId,eventManagedBean.eventType)}"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-						<br />
-						<p:graphicImage value="images/EventPartners.jpg" width="930px"></p:graphicImage>
 
-						<!--Birthday Get started link ends -->
+							<div class="col-xs-12 col-sm-4 col-md-4">
+								<div class="form-group">									
+									<p:selectOneMenu value="#{eventsManagedBean.selectedGuest}" name="custom-select-1" styleClass="form-control styled-select">
+										<f:selectItem itemLabel="Guests" itemValue="" />
+										<f:selectItems value="#{eventsManagedBean.guests}" />										
+									</p:selectOneMenu>	
+								</div>
+							</div>
+						</div>
 					</div>
-					<div style="clear: both;"></div>
+					<div class="col-xs-12 col-sm-4 col-md-2">
+						<p:commandButton value="Plan My Event" styleClass="btn-primary btn-block caps" action="#{eventsManagedBean.getResults}" />
+					</div>
+					<div class="clear"></div>
 				</h:form>
 			</div>
-			<!--BODY CONTENT ENDS HERE-->
-		</ui:define>
-	</ui:composition>
+		</div>
+	</div>
+
+	<section id="about-us"> 
+	
+	<!--div class="container">
+     <div class="row">
+			<div class="section-header-3 col-md-8 col-md-offset-2">
+
+				<h2 class="text-color-02">About Us</h2>
+				<p class="higher">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. </p>
+
+            </div> 
+        </div> 
+
+    </div>  -->
+
+
+	<div class="clear mb-50"></div>
+
+	<div class="tab-style-1">
+		<ul class="nav-tabs clearfix" role="tablist">
+			<li role="presentation" class="active"><a
+				href="home-page-with-flexslider.html#about-us-tab-1" role="tab"
+				data-toggle="tab">About Us</a></li>
+
+			<li role="presentation"><a
+				href="home-page-with-flexslider.html#about-us-tab-3" role="tab"
+				data-toggle="tab">Our Partners</a></li>
+		</ul>
+
+		<div class="clear"></div>
+
+		<div class="tab-content">
+
+			<div role="tabpanel" class="tab-pane fade in active"
+				id="about-us-tab-1">
+
+				<div class="tab-content-inner-about-us">
+					<!--div class="img-bg" style="background-image:url('images/about-us.jpg'); background-size:cover;">
+					</div-->
+
+
+					<div class="content-info">
+
+						<h3>We value your event as ours</h3>
+
+						<p>We are a group of professionals with a focus on making the
+							celebrations and events memorable for our customers. We provide
+							Event Management Solutions via both online and traditional
+							channels. We have entered into Event Management market space with
+							our unique proposition of providing customer-centeric solutions
+							that empower customers to plan, execute and manage their small
+							and big events in a hassle free and cost effective. These
+							approaches provide our customers a means to plan their
+							celebrations, events, ceremonies and functions and make them
+							truly memorable.</p>
+
+						<p>EventXpert is an arm of Circulos Technology Solutions
+							Private Limited - A registered company in India, is a privately
+							owned company started in 2012. The company has been established
+							with primary focus on the Hospitality Industry with Event
+							Management as its core competency.</p>
+
+						<p class="quote">Our team collaborates and partners with
+							different kinds of event vendors across multiple Cities in India
+							through a careful and well defined filtering procedure. Be it
+							hotels, banquets, function halls, caterers, florists, decorators,
+							performers or any other relevant vendors, we have the very best
+							on board with us.</p>
+
+						<p>At EventXpert, we conver Event Management and Technology.
+							We have a strong and highly experienced IT team that enables our
+							online system for e-Planning of events</p>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+
+			<div role="tabpanel" class="tab-pane fade" id="about-us-tab-3">
+
+				<div id="cd-timeline" class="cd-container customized-for-awards">
+
+					<div class="cd-timeline-block">
+						<div class="cd-timeline-icon">
+							<!--i class="fa fa-trophy"></i-->
+						</div>
+						<!-- cd-timeline-icon -->
+
+						<div class="cd-timeline-content">
+							<h3>SWAGATH GRAND HOTELS</h3>
+							<p>Swagath Grand Hotels offer patrons a wide range of
+								hospitality options to choose from – plush rooms, speciality
+								restaurants, coffee shops, bars, banquet halls, marriage halls,
+								outdoor catering and free home delivery. The delectable food and
+								value-for-money service come together to make this hospitality
+								group to be reckoned with.</p>
+							<span class="cd-date"></span>
+						</div>
+						<!-- cd-timeline-content -->
+					</div>
+					<!-- cd-timeline-block -->
+
+					<div class="cd-timeline-block">
+						<div class="cd-timeline-icon">
+							<!--i class="fa fa-trophy"></i-->
+						</div>
+						<!-- cd-timeline-icon -->
+
+						<div class="cd-timeline-content">
+							<h3>AKANSHA CATERERS</h3>
+							<p>Needed as or is enough points. Miles at smart ﻿no marry
+								whole linen mr. Was justice improve age article between. No
+								projection as up preference reasonably delightful celebrated.
+								Preserved and abilities assurance tolerably breakfast use saw.</p>
+							<span class="cd-date"></span>
+						</div>
+						<!-- cd-timeline-content -->
+					</div>
+					<!-- cd-timeline-block -->
+
+					<div class="cd-timeline-block">
+						<div class="cd-timeline-icon">
+							<!--i class="fa fa-trophy"></i-->
+						</div>
+						<!-- cd-timeline-icon -->
+
+						<div class="cd-timeline-content">
+							<h3>KRISHNA CATERERS</h3>
+							<p>Are sentiments apartments decisively the especially
+								alteration. Thrown shy denote ten ladies though ask saw. Or by
+								to he going think order event music. Incommode so intention
+								defective at convinced. Led income months itself and houses you.
+								After nor you leave might share court balls.</p>
+							<span class="cd-date"></span>
+						</div>
+						<!-- cd-timeline-content -->
+					</div>
+					<!-- cd-timeline-block -->
+
+					<div class="cd-timeline-block">
+						<div class="cd-timeline-icon">
+							<!--i class="fa fa-trophy"></i-->
+						</div>
+						<!-- cd-timeline-icon -->
+
+						<div class="cd-timeline-content">
+							<h3>ARUNA STUDIOS</h3>
+							<p>So feel been kept be at gate. Be september it extensive oh
+								concluded of certainty.</p>
+							<span class="cd-date"></span>
+						</div>
+						<!-- cd-timeline-content -->
+					</div>
+					<!-- cd-timeline-block -->
+
+
+				</div>
+				<!-- cd-timeline -->
+
+
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="clear"></div>
+	</section>
+	
+	<section id="contact" class="">
+	<div class="container clearfix">
+	
+		<div class="row">
+			<div class="section-header-3 col-md-8 col-md-offset-2">
+
+				<h2 class="text-color-02">GET IN TOUCH</h2>
+				<p>Virtually every kind of event can be planned through EventXpert. Contact us today!.</p>
+
+            </div> <!-- end of .section-header -->
+        </div> <!-- end of .row -->
+
+		<div class="row mt-20">
+					
+			<div class="col-xs-12 col-sm-6 col-md-6 xs-mb-50 wow fadeInLeft">
+			
+				<h:form id="contantForm" method="post" class="contact-form" action="#">
+				
+					<div class="alert alert-success" style="display: none;"></div>
+
+					<div class="form-group">
+						<p:inputText type="text" styleClass="form-control" name="conactName" placeholder="Your Name" />
+					</div>
+					
+					<div class="form-group">
+						<p:inputText type="email" styleClass="form-control" name="email" placeholder="Your Email" />
+					</div>
+					
+					<div class="form-group">
+						<p:inputText type="text" styleClass="form-control" name="subject" placeholder="Subject" />
+					</div>
+					<div class="form-group">
+						<p:inputTextarea styleClass="form-control" rows="4" name="messagetext" placeholder="Message" />
+					</div>
+					<div class="form-group">
+						<p:commandButton type="submit" styleClass="btn btn-primary" value="SEND" style="float: right; display: block;" />
+					</div>
+					
+				</h:form>
+
+			</div>
+			
+			
+			<div class="col-xs-12 col-sm-6 col-md-6 wow fadeInRight" data-wow-duration="1s">
+				
+				<p class="address-item">
+					<span class="icon"><i class="fa fa-map-marker"></i></span>
+					17-1-382/15, Nagarjuna Colony, Vysalinagar(PO), Champapet , Hyderabad, 500079, Telangana
+				</p>
+				<p class="address-item">
+					<span class="icon"><i class="glyphicon glyphicon-earphone"></i></span>
+					Phone: +91-92931-30333 <br />
+				</p>
+				<p class="address-item">
+					<span class="icon"><i class="fa fa-envelope"></i></span>
+					Support: <a href="mailto:dowebstation@gamil.com">care@eventxpert.in</a> <br/>
+					
+				</p>
+				
+				
+			</div>
+			
+		</div>
+		
+	</div>
+</section>
+
+<footer class="footer" id="footer">
+    <div id="footer-bottom">
+		<div class="container pt-50 pb-30">
+		
+			<div class="footer-social mb-20">
+				<a href="https://www.facebook.com/eventxpert.in" class="facebook-color wow fadeInUp" data-wow-offset="50" data-wow-delay="0s"><i class="fa fa-facebook"></i></a>
+				<a href="#" class="google-plus-color wow fadeInUp" data-wow-offset="50" data-wow-delay="0.2s"><i class="fa fa-google-plus"></i></a>
+			</div>
+			
+			<ul class="inline-menu mb-20">
+				<li><a href="#">Home</a></li>
+				<li><a href="#about-us">About Us</a></li>
+				<li><a href="#">Terms of Service</a></li>
+				<li><a href="#">Privacy Policy</a></li>
+			</ul>
+			
+			<p class="text-center">Copyright &#169; 2014 Circulos Technology Ltd. All right reserved.</p>
+		</div>
+	</div>
+</footer>
+<!-- /END FOOTER -->
+
+
+
+
+
 
 </h:body>
 </html>
