@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<f:facet name="first">
+		<meta name="description"
+			content="Event Management and Services Website" />
+		<meta name="keywords"
+			content="events, event, marriages, ceremonies, hyderabad, festivals, corporate events, booking, culture, catering, venues, function halls, banquet halls, hotels, entertainment, decoration, decorator, dj, photographer, rituals " />
+		<meta name="author" content="eventxpert" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<title>EventExpert Re-energized</title>
+		<link rel="apple-touch-icon-precomposed" sizes="144x144"
+			href="/resources/images/ico/apple-touch-icon-144-precomposed.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="114x114"
+			href="/resources/images/ico/apple-touch-icon-114-precomposed.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="72x72"
+			href="/resources/images/ico/apple-touch-icon-72-precomposed.png" />
+		<link rel="apple-touch-icon-precomposed"
+			href="/resources/images/ico/apple-touch-icon-57-precomposed.png" />
+		<link rel="shortcut icon" href="/resources/images/ico/favicon.png" />
+		<link rel="stylesheet"
+			href="/resources/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet"
+			href="/resources/icons/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/resources/css/flexslider.css"
+			media="screen" />
+		<link
+			href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700'
+			rel='stylesheet' type='text/css' />
+		<link
+			href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
+			rel='stylesheet' type='text/css' />
+		<link rel="stylesheet"
+			href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+		<link rel="stylesheet" href="/resources/css/animate.min.css" />
+		<link rel="stylesheet" href="/resources/css/style.css" />
+		<script type="text/javascript"
+			src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<!-- <script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
+		<link href="/resources/bootstrap/css/bootstrap.min.css"
+			rel="stylesheet" type="text/css" />
+		<script type="text/javascript"
+			src="/resources/bootstrap/js/bootstrap.min.js" />
+		<link href="/resources/bootstrap/css/bootstrap-multiselect.css"
+			rel="stylesheet" type="text/css" />
+		<script type="text/javascript"
+			src="/resources/bootstrap/js/bootstrap-multiselect.js" />
+		<script type="text/javascript" src="/resources/js/device.min.js" />
+		<script type="text/javascript" src="/resources/js/plugins.js" />
+		<script type="text/javascript"
+			src="/resources/js/jquery.customSelect.js" />
+		<script type="text/javascript" src="/resources/js/customs.js" />
+		<script type="text/javascript"
+			src="/resources/js/bootstrap-multiselect.js" />
+
+	</f:facet>
+
+</h:head>
+<h:body>
+
+	<div id="tap-wrapper" class="homePage">
+		<div id="wrapper">
+			<ui:insert name="header">
+				<div id="navbar-main">
+					<!-- Fixed navbar -->
+					<div class="navbar navbar-inverse navbar-fixed-top header-bg">
+						<div class="container">
+
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle"
+									data-toggle="collapse" data-target="navbar-collapse">
+									<img src="/resources/images/logo_small.png" />
+								</button>
+								<a class="navbar-brand hidden-xs" href="#home"><img
+									src="/resources/images/logo.png" /></a>
+							</div>
+
+							<div class="navbar-collapse collapse">
+								<ul class="nav navbar-nav ">
+									<li><a href="#" class="smoothScroll">Sign In</a></li>
+									<li><a href="#" class="smoothScroll">Sign Up</a></li>
+									<li><a href="#about-us" class="smoothScroll"> About Us</a></li>
+									<li><a href="#contact" class="smoothScroll"> Contact
+											Us</a></li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</ui:insert>
+			
+			<ui:insert name="content">
+				<ui:include src="newContent.xhtml" />
+			</ui:insert>
+			
+			<ui:insert name="footer">
+				<footer class="footer" id="footer">
+					<div id="footer-bottom">
+						<div class="container pt-50 pb-30">
+
+							<div class="footer-social mb-20">
+								<a href="https://www.facebook.com/eventxpert.in"
+									class="facebook-color wow fadeInUp" data-wow-offset="50"
+									data-wow-delay="0s"><i class="fa fa-facebook"></i></a> <a
+									href="#" class="google-plus-color wow fadeInUp"
+									data-wow-offset="50" data-wow-delay="0.2s"><i
+									class="fa fa-google-plus"></i></a>
+							</div>
+
+							<ul class="inline-menu mb-20">
+								<li><a href="#">Home</a></li>
+								<li><a href="#about-us">About Us</a></li>
+								<li><a href="#">Terms of Service</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul>
+
+							<p class="text-center">Copyright &#169; 2014 Circulos
+								Technology Ltd. All right reserved.</p>
+						</div>
+					</div>
+				</footer>
+			</ui:insert>
+		</div>
+	</div>
+</h:body>
+</html>
