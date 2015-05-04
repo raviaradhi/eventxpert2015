@@ -7,7 +7,13 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<title>EventXpert - Celebrations Home Delivered..</title>
-
+	<meta name="description"
+		content="Event Management and Services Website" />
+	<meta name="keywords"
+		content="events, event, marriages, ceremonies, hyderabad, festivals, corporate events, booking, culture, catering, venues, function halls, banquet halls, hotels, entertainment, decoration, decorator, dj, photographer, rituals " />
+	<meta name="author" content="eventxpert" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<link rel="apple-touch-icon-precomposed" sizes="144x144"
 		href="/resources/images/ico/apple-touch-icon-144-precomposed.png" />
 	<link rel="apple-touch-icon-precomposed" sizes="114x114"
@@ -29,8 +35,8 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
 		rel='stylesheet' type='text/css' />
-	<link rel="stylesheet"
-		href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+	<link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css"
+		type="text/css" />
 	<link rel="stylesheet" href="/resources/css/animate.min.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 	<script type="text/javascript"
@@ -295,7 +301,8 @@
 																alt="hotel room" />
 														</div>
 														<div class="content">
-															<p:commandLink action="#{eventsManagedBean.popupService(allS.key,service.serviceProviderCode)}">
+															<p:commandLink
+																action="#{eventsManagedBean.popupService(allS.key,service.serviceProviderCode)}">
 																<h3>#{service.serviceProviderName}</h3>
 															</p:commandLink>
 															<p>#{service.areaName}, #{service.cityName}</p>
@@ -316,7 +323,8 @@
 																	&nbsp;(43)
 																</div>
 															</div>
-															<h4>Rs #{eventsManagedBean.getProjectedCost(service.finalCost,service.unitOfCost)}</h4>
+															<h4>Rs
+																#{eventsManagedBean.getProjectedCost(service.finalCost,service.unitOfCost)}</h4>
 															<p>South Indian, North Indian, Continental
 																Specialists.</p>
 															<div class="row">
