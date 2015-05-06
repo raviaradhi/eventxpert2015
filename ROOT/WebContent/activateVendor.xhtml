@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+<h:body>
+<ui:composition template="/template/common/commonLayout.xhtml">  
+    
+<ui:define name="content">
+   <h:form id="frm">
+    <!-- <ui:fragment rendered="#{activationManagedBean.valid}">
+       <meta http-equiv="refresh" content="10;url=index.jsf" /> 
+    </ui:fragment>-->
+<div class="content-bg clear-both">
+<div class="lt-flap">
+        <img src="images/left.png" alt="" />
+</div>
+<div class="flap-mid">
+        <div class="black-shade">&#160;</div>
+</div>
+<div class="rt-flap">
+        <img src="images/right.png" alt="" />
+</div>
+<!--phone and chat icon starts -->
+ <div style="float: right; width: 63px; margin-top: 0px;">
+                       <a href="contact.jsf"><img
+                                src="images/icon2.png" width="63" height="46" border="0" /></a></div>
+
+    <div class="clear">
+    <div class="mid-content">
+       
+    <h:panelGroup  rendered="#{activationManagedBean.valid}">
+        <p>Your account is successfully activated now!</p>
+        <p>Please login</p>
+        <p:panel  id="loginPanelA"  widgetVar="loginPanelA" header="Login">
+                    <p:messages for="Invalid credentials" /> <p:messages for="Mismatch credentials" />
+                    <p:messages for="Password Sent" /><p:messages for="Email not registered" />
+                    <h:panelGrid columns="3">
+                    <h:outputLabel for="userIdLD" value="Email ID: *" />
+                    <p:inputText maxlength="21" id="userIdLD"  required="true" label="User ID"
+                                 value="#{activationManagedBean.eventxpertUser.emailaddr}" >                    
+                    </p:inputText>
+                    <p:message for="userIdLD" />
+                    <h:outputLabel for="passwordLD" value="Password: *" />
+                    <p:password maxlength="15" id="passwordLD"  required="true" label="Password"
+                                    value="#{activationManagedBean.eventxpertUser.password}" />                    
+                    <p:message for="passwordLD" />
+                    
+                    <h:outputLabel style="float: right" value="       " />
+                    <p:commandLink id="showDialogButton" style="color: blue; font-weight: bold; font-variant: small-caps; padding-left: 4px" value="Forgot Password" onclick="PF('dlg').show()" />
+                    
+                    </h:panelGrid>
+                       &#160;
+                    <div style="padding-left: 70px">
+                        <p:commandButton ajax="false" process="loginPanelA" update="loginPanelA" validateClient="true" value="Login" action="#{activationManagedBean.checkLogin}" >
+                        
+                        </p:commandButton>
+                    
+                    </div>                  
+            </p:panel>
+        <p:dialog id="dlg" header="Forgot Password" widgetVar="dlg" resizable="false">
+                        <p:message for="email" />
+                         <h:panelGrid columns="2" style="margin-bottom:10px">  
+                            <h:outputLabel for="email" value="Email *:" />  
+                            <p:inputText validatorMessage="Please enter a valid email id." requiredMessage="Please enter a valid email id." id="email" required="true" value="#{activationManagedBean.eventxpertUser.emailaddr}" >
+                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /> 
+                            </p:inputText>
+                        </h:panelGrid>  
+                        <p:commandButton validateClient="true" ajax="true" partialSubmit="true" value="Submit" process="dlg" action="#{activationManagedBean.forgotPswdVendor}" update="loginPanelA,dlg"  oncomplete="handleLoginRequestFP(xhr,status,args);" />
+                    </p:dialog>
+            
+    </h:panelGroup>
+    <h:panelGroup layout="block" rendered="#{!activationManagedBean.valid}">
+        <p>Activation failed! Please enter your email address to try once again.</p> 
+       
+    </h:panelGroup>
+        
+    </div>
+    </div>
+<div class="clear">&#160;</div>
+<div class="clear">&#160;</div>
+                <div class="clear">
+                    <center><img src="images/circulos-logo.png"  border="0" /></center>
+                </div>
+                </div>
+</h:form>
+</ui:define>
+</ui:composition>
+ </h:body>
+</html>
+

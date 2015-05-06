@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+		<!--HEADER STARTS HERE-->
+		<div id="header1">
+                    
+			<!--logo starts -->
+			<div class="logo">
+				
+                                <p:commandLink style="font-size: 15; font-family:'Century Gothic';" >
+                                <p:graphicImage  value="images/logo.png" />
+                                </p:commandLink>
+			</div>
+			<!--logo ends -->
+                        
+			<!--top menu starts -->
+			<h:form id="frmHeader">
+				<div class="menu">
+					<ul>
+					
+                                                <li><a href="costAdmin.jsf">Cost Admin</a></li>
+                                                <li><a href="taxMaster.jsf">Tax Admin</a></li>
+                                                <li><a href="allVendors.jsf">All Vendors</a></li>
+                                                 <li>
+                                                     <p:commandLink rendered="#{sessionScope['admin']}" immediate="true"  value="Load LatLng" action="#{adminManagedBean.loadLatAllLng()}" />                                                            
+                                                    </li>
+                                                <li>
+                                                     <p:commandLink rendered="#{sessionScope['admin']}" immediate="true"  value="Load Sel LatLng" action="#{adminManagedBean.loadLatLng()}" />                                                            
+                                                    </li>
+                                             <li class="border-right-none" style="padding-right: 25px">
+                                                        <p:commandLink rendered="#{sessionScope['admin']}" immediate="true"  value="Logout" action="#{adminManagedBean.logout}" />                                                            
+                                                    </li>
+					</ul>
+                                   
+				</div>
+                             
+				
+			
+			<!--top menu ends -->
+
+                        
+                        </h:form>
+		</div>
+		<!--HEADER ENDS HERE-->
+          <p:ajaxStatus onstart="PF('buiload').show();" onsuccess="PF('buiload').hide();"/>
+             
+<p:dialog modal="true" widgetVar="statusDialog" 
+        draggable="false" closable="false">
+    <p:graphicImage value="/images/loading.gif" />
+</p:dialog>
+     
+          <p:blockUI block="frm" widgetVar="buiload">
+    
+    <p:graphicImage value="/images/progress_bar.gif" />
+
+ </p:blockUI>
+	</ui:composition>
+</body>
+</html>
+
+

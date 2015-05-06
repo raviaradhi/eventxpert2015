@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Welcome To EventExpert</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
+    <link href="css/jquery/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="js/JQuery/jquery.min.js" type="text/javascript"></script>
+    <script src="js/msdropdown/jquery.dd.js" type="text/javascript"></script>
+    <script src="js/JQuery/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/JQuery/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="js/externaljs-eventdetails-page.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+<h:form>
+   
+    <div id="divAlertPopup" title='Alert'>
+    </div>
+	 <div id="divAlertPopup1" title='Alert'>
+    </div>
+     <div id="tap-wrapper">
+        <div id="wrapper">
+            <!--header starts-->
+            <div id="header">
+                <div class="logo">
+                    <a href="home.htm">
+                        <!--logo starts-->
+                        <img src="images/logo.png" border="0" alt="" /></a></div>
+                <!--logo ends-->
+                <!--menu starts-->
+                <div class="menu">
+                    <ul>
+                        <li><a href="about.htm">About Us</a></li>
+                        <li class="border-right-none"><a href="eventexpret.htm">EventXpert Team</a></li>
+						<li class="li-margin"><a href="login.jsf">Login</a></li>                        
+						<li><a href="logout.jsf">Logout</a></li>
+                        <li class="border-right-none"><a href="conatct.htm">Contact Us</a></li>
+                    </ul>
+                </div>
+                <!--menu ends-->
+            </div>
+            <!--header ends-->
+            <div class="content-bg clear-both">
+                <!--lt-flap starts-->
+                <div class="lt-flap">
+                    <img src="images/left.png" /></div>
+                <!--lt-flap ends-->
+                <!--messag-heart starts-->
+                <div class="flap-mid">
+                    <div class="black-shade">
+                        <div class="clear home">
+							</div>
+                    </div>
+                </div>
+                <!--messag-heart ends-->
+                <!--rt-flap starts-->
+                <div class="rt-flap">
+                    <img src="images/right.png" /></div>
+                <!--rt-flap ends-->
+                <div class="clear">
+                    <!--mid contents starts-->
+                 <div class="content-bg clear-both">
+				<font face="Century Gothic" size="1">
+				<center><table cellpadding='2' cellspacing='0' border='0' id='ap_table'>
+				<tr><td bgcolor="blue">
+				
+				<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td bgcolor="blue" align="center" style="padding:2;padding-bottom:4"><font size="1" color="white" face="Century Gothic"><b>Enter your login and password</b></font></td></tr>
+				<tr><td bgcolor="white" style="padding:5"><center><table>
+				<tr><td><font face="Century Gothic" size="1">Login:</font></td><td><h:inputText label="login" id="login" value="#{serviceProviderManagedBean.loginUser}" /></td></tr>
+				<tr><td><font face="Century Gothic" size="1">Password:</font></td><td><h:inputSecret lable="password" id="password" value="#{serviceProviderManagedBean.loginPassword}" /></td></tr>
+				<tr><td><font face="Century Gothic" size="1">&nbsp;</font></td><td><font face="Century Gothic" size="1"><h:commandButton value="Login" action="#{serviceProviderManagedBean.checkLogin}" /></font></td></tr>
+				<tr><td colspan="2"><font face="Century Gothic" size="1">&nbsp;</font></td></tr>
+				<tr><td colspan="2"><font face="Century Gothic" size="1">Lost your username or password? Find it <a href="http://www.authpro.com/auth/deluxe/?action=lost">here</a>!</font></td></tr>
+				<tr><td colspan="2"><font face="Century Gothic" size="1">Not member yet? Click <a href="http://www.authpro.com/auth/deluxe/?action=reg">here</a> to register.</font></td></tr>
+				</table></center>
+				
+				</td></tr></table></td></tr></table></center></font>
+ 			</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear-both pd-141">
+            <img src="images/bottom.jpg" /></div>
+        <div class="clear-both" align="center">
+            <!--footer area starts-->
+            <div id="footer" class="clear-both">
+                <div class="left mar-150" align="left">
+                    &copy; 2012 - 2013 | Circulos Technologies Pvt Ltd | Registered in India.</div>
+                <!--footer icons starts-->
+                <div class="right">
+                    <a href="#">
+                        <img src="images/face-icon.png" border="0" /></a>&nbsp;&nbsp;<a href="#"><img src="images/twitter-icon.png"
+                            width="31" height="32" border="0" /></a></div>
+                <!--footer icons ends-->
+            </div>
+            <!--footer area ends-->
+        </div>
+    </div>
+  
+    <div id="divMessageContainer">
+    </div>
+  
+</h:form>
+</h:body>
+</html>

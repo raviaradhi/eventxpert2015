@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+		<!--HEADER STARTS HERE-->
+                <div id="header" class="header">
+                    
+			<!--logo starts -->
+			<div class="logo">
+				<!--<a href="index.jsf?faces-redirect=true"> <img src="images/logo.png" border="0"
+					alt="" /></a>-->
+                                <p:commandLink  action="#{customerManagedBean.goLoginPage}">
+                                <p:graphicImage  value="images/logo.png" />
+                                </p:commandLink>
+			</div>
+			<!--logo ends -->
+                        
+			<!--top menu starts -->
+			<h:form id="frmHeader">
+				<div class="menu">
+					<ul>
+						
+						<!--<li class="border-right-none"><a href="eventexpert.jsf">EventXpert
+								Team</a></li> -->
+                                                <h:panelGroup rendered="#{sessionScope['userId'].email==null}">
+                                                <li class="border-right-none">
+                                                    <p:commandLink  rendered="#{sessionScope['serviceProviderManagedBean'].loginUser==null}" value="Login" onclick="loginDialog.show()" />
+                                                </li>
+                                                <li class="li-margin-loggedin border-right-none">
+                                                    <a href="contact.jsf">Contact Us</a></li>
+                                                <li class="li-margin-loggedin">
+                                                    <a href="aboutUs.jsf">About Us</a>
+                                                </li>    
+                                                </h:panelGroup>
+                                                
+                                                <h:panelGroup rendered="#{sessionScope['userId'].email!=null}">                                                    
+                                                    
+                                                    <li  style="padding-right: 20px">
+                                                        <h:panelGroup rendered="#{sessionScope['userId'].firstname!=null}">
+                                                       <blue>#{sessionScope['userId'].firstname}</blue>
+                                                   </h:panelGroup>
+                                                    </li>
+                                                    <li>
+                                                        <p:commandLink immediate="true"  value="History" action="#{customerManagedBean.history}" />
+                                                    </li> 
+                                                    <li style="display: #{sessionScope['eventDetailsManagedBean'].show_summary ? '' : 'none'};" >
+                                                        <p:commandLink immediate="true" rendered="#{sessionScope['eventDetailsManagedBean'].show_summary}"  value="Event Summary" action="#{customerManagedBean.eventSummary}" />
+                                                    </li>
+                                                    <li >
+                                                        <p:commandLink immediate="true"  value="Profile" action="#{customerManagedBean.editProfile}" />
+                                                    </li>
+                                                     <li style="display: #{!sessionScope['customerManagedBean'].showChangePassword ? '' : 'none'};">
+                                                        <p:commandLink immediate="true"  value="Change Password" action="#{customerManagedBean.chngPswd}" />
+                                                    </li>
+                                                    <li class="border-right-none" style="padding-right: 25px">
+                                                        <p:commandLink immediate="true"  value="Logout" action="#{customerManagedBean.logout}" />                                                            
+                                                    </li>
+                                                     
+                                                    
+                                                    
+                                                    <li class=" li-margin-loggedin border-right-none"><a href="contact.jsf">Contact Us</a></li>
+                                                     <li class="li-margin-loggedin"><a href="aboutUs.jsf">About Us</a></li>
+                                                    <li class="li-margin-loggedin">
+                                                        <p:commandLink immediate="true"  styleClass="homeBtn" action="#{customerManagedBean.goLoginPage}" />                                                          
+                                                    </li>
+                                                </h:panelGroup> 
+                                                
+                                                <h:panelGroup rendered="#{sessionScope['serviceProviderManagedBean'].loginUser!=null}">
+                                                   <li  style="padding-right: 20px">
+                                                        <h:panelGroup rendered="#{sessionScope['serviceProviderManagedBean'].loginUser!=null}">
+                                                       <blue>#{sessionScope['serviceProviderManagedBean'].loginUser}</blue>
+                                                   </h:panelGroup>
+                                                   </li>
+                                                     <li >
+                                                        <p:commandLink immediate="true"  value="Change Password" action="#{serviceProviderManagedBean.chngPswd}" />
+                                                    </li>
+                                                    <li class="border-right-none" style="padding-right: 25px">
+                                                        <p:commandLink immediate="true"  value="Logout" action="#{serviceProviderManagedBean.logout}" />                                                            
+                                                    </li>
+                                                </h:panelGroup>
+						
+                                        </ul>
+                                   
+				</div>
+                               
+                                    <p:dialog  resizable="false" dynamic="true" model="true" 
+                                                    position="400,90" id="servicePopup" widgetVar="loginDialog" 
+                                                    width="570" height="470" >
+                                                    <p:ajax event="close" listener="#{customerManagedBean.handleClose}" update="group" />
+                                                    <ui:include src="../../loginDlg.xhtml" />
+                                            </p:dialog>
+                                       
+                            <p:outputPanel  id="panel1">
+                                <p:dialog resizable="false" modal="true" dynamic="true"
+                                          position="400,90"  id="eventDialog" widgetVar="eventDialog" 
+                                    width="570" height="490">
+                                    <ui:include src="../../customerRegDlg.xhtml" />
+                            </p:dialog>
+                            </p:outputPanel>
+                            
+				<!--<p:dialog modal="true" resizable="true" dynamic="true"
+					position="center" id="popup" widgetVar="logindialog">
+					<h:panelGrid id="loginForm" width="800" height="400">
+						<div id="dialoglogin" title="Login" onclick="clearText();">
+							<table width="100%" cellpadding="2" cellspacing="2" border="0">
+								<tr>
+									<td>Username:</td>
+									<td><input id="txtUserName" type="text" /></td>
+								</tr>
+								<tr>
+									<td>Password:</td>
+									<td><input id="txtPassword" type="password" /></td>
+								</tr>
+								<tr>
+									<td colspan="2"><div id="divMessage"
+											style="font-style: italic; color: Red;"></div></td>
+
+								</tr>
+								<tr>
+									<td colspan="2"><p:commandButton value="Login" /> <p:commandButton value="Cancel" /></td>
+								</tr>
+							</table>
+							<p></p>
+						</div>
+
+					</h:panelGrid>
+				</p:dialog>-->
+			
+			<!--top menu ends -->
+
+                        
+                        </h:form>
+		</div>
+		<!--HEADER ENDS HERE-->
+              <!--  <p:ajaxStatus onstart="PF('buiload').show();" oncomplete="PF('buiload').hide();" onsuccess="PF('buiload').hide();"/>
+             -->
+<p:dialog modal="true" widgetVar="statusDialog" 
+        draggable="false" closable="false">
+    <p:graphicImage value="/images/loading.gif" />
+</p:dialog>
+<p:blockUI  block="frm" widgetVar="buiload"/>
+   
+	</ui:composition>
+</body>
+</html>
+
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="ROOT" transaction-type="RESOURCE_LOCAL">
+    <!--  <persistence-unit name="ROOT" transaction-type="JTA">
+     <jta-data-source>java:/comp/env/jdbc/eventDB</jta-data-source> -->
+    <class>com.circulous.xpert.jpa.entities.AreaTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.BudgetCurrencyTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.BudgetTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.CityTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.CountryTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.CurrencyTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.ServiceTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.StateTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.VenueTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.EventTypeMaster</class>
+    <class>com.circulous.xpert.jpa.entities.VenueInfo</class>
+    <class>com.circulous.xpert.jpa.entities.ServiceProviderInfo</class>
+    <class>com.circulous.xpert.jpa.entities.VenuePackageInfo</class>
+    <class>com.circulous.xpert.jpa.entities.views.ViewVenue</class>
+    <class>com.circulous.xpert.jpa.entities.views.ViewServiceProviderPackage</class>
+    <class>com.circulous.xpert.jpa.entities.PackageInfo</class>
+    <class>com.circulous.xpert.jpa.entities.views.ViewServiceProvider</class>
+    <class>com.circulous.xpert.jpa.entities.AddressInfo</class>
+    <class>com.circulous.xpert.jpa.entities.ItemMaster</class>
+    <class>com.circulous.xpert.jpa.entities.ItemCategoryMaster</class>
+    <class>com.circulous.xpert.jpa.entities.ProviderItemInfo</class>
+    <class>com.circulous.xpert.jpa.entities.UnitCosts</class>
+    <class>com.circulous.xpert.jpa.entities.CustomerInfo</class>
+    <!-- <class>com.circulous.xpert.jpa.entities.EventDate</class> -->
+    <class>com.circulous.xpert.jpa.entities.EventDates</class>
+    <class>com.circulous.xpert.jpa.entities.VenueHallInfo</class>
+    <class>com.circulous.xpert.jpa.entities.EventServiceProviderInfo</class>
+    <class>com.circulous.xpert.jpa.entities.EventInfo</class>
+    <class>com.circulous.xpert.jpa.entities.VenueCostinfo</class>
+    <class>com.circulous.xpert.jpa.entities.ServiceProviderCostinfo</class>
+    <class>com.circulous.xpert.jpa.entities.VenueCostInfo</class>
+    <class>com.circulous.xpert.jpa.entities.ServiceProviderCostInfo</class>
+    <class>com.circulous.xpert.jpa.entities.views.ViewVenuePackage</class>
+    <class>com.circulous.xpert.jpa.entities.TaxMaster</class>
+    <class>com.circulous.xpert.jpa.entities.VenueTaxMaster</class>
+    <class>com.circulous.xpert.jpa.entities.EventxpertUser</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <validation-mode>NONE</validation-mode>
+ <!--   <properties>
+      <property name="eclipselink.target-database" value="MySQL"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/event12_alpha?zeroDateTimeBehavior=convertToNull&amp;ssl=true"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+        </properties> -->
+      <!--  EclipseLink should create the database schema automatically -->
+        <properties>
+    <property name="eclipselink.target-database" value="MySQL"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/event12_alpha?zeroDateTimeBehavior=convertToNull&amp;ssl=true"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+         
+      <property name="eclipselink.weaving" value="static" />
+      <!-- <property name="eclipselink.session.customizer" value="com.circulous.xpert.jpa.entities.MySessionCustomizer"/>
+       <property name="eclipselink.logging.level" value="FINEST" />
+       <property name="eclipselink.logging.file" value="output.log"/> -->
+    </properties>
+  </persistence-unit>
+</persistence>

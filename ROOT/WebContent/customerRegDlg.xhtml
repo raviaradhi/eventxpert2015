@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Customer Registration</title>
+</h:head>
+<h:body>
+
+	<!--  <p:ajaxStatus onstart="PF('builoadC').show();" oncomplete="PF('builoadC').hide();" onsuccess="PF('builoadC').hide();"/>
+        -->
+	<p:dialog modal="true" widgetVar="statusDialog" draggable="false"
+		closable="false">
+		<p:graphicImage value="/images/loading.gif" />
+	</p:dialog>
+	<p:blockUI block="frmC" widgetVar="builoadC">
+		<!-- <p:graphicImage value="/images/progress_bar.gif" />-->
+	</p:blockUI>
+	<h:form id="frmC">
+		<!--<ui:composition template="/template/common/commonLayout.xhtml">
+		<ui:define name="content"> -->
+		<!--BODY CONTENT STARTS HERE-->
+		<div>
+			<div>
+				<h:panelGrid>
+					<div>
+						<p:panel id="panel" widgetVar="panel"
+							style="width:450px;padding-left:60px;border:none;">
+							<h:outputText styleClass="login" value="SIGN UP"></h:outputText>
+							<br />
+							<h:outputText styleClass="loginText" value="Already a member? "></h:outputText>
+							<p:commandLink styleClass="loginJoin" value="Login"
+								immediate="true"
+								onclick="eventDialog.hide();loginDialog.show();" />
+							<br />
+							<h:outputText styleClass="loginMandatory" value="All fields are mandatory" ></h:outputText>
+							<br />							
+							<p:message for="firstname" />
+							<p:message for="surname" />
+							<p:message id="usernameMessage" for="userId" />
+							<p:message for="password" />
+							<p:message for="password1" />
+							<p:message for="phone" />
+							<p:message for="email" />
+
+							<h:panelGrid columns="2" style="padding-top:5px;">
+								<h:outputLabel for="firstname" value="First Name "
+									styleClass="loginFields" />
+								<p:inputText id="firstname" required="true" label="First Name"
+									value="#{customerManagedBean.customerInfo.firstname}"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;">
+									<f:validateLength minimum="2" maximum="50" />
+								</p:inputText>
+								<h:outputLabel for="surname" value="Surname "
+									styleClass="loginFields" />
+								<p:inputText id="surname" required="true" label="Surname"
+									value="#{customerManagedBean.customerInfo.lastname}"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;">
+									<f:validateLength minimum="2" maximum="50" />
+								</p:inputText>
+								<h:outputLabel for="userId" value="User Id "
+									styleClass="loginFields" />
+								<p:inputText id="userId" required="true" label="User Id"
+									value="#{customerManagedBean.customerInfo.userId}"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;">
+									<f:validator validatorId="usernameValidator" />
+									<f:validateLength minimum="6" />
+									<p:ajax event="keyup" update="usernameMessage" />
+								</p:inputText>
+								<h:outputLabel for="password" value="Password "
+									styleClass="loginFields" />
+								<p:password
+									promptLabel="Should be a combination of alphabets and numbers and special characters"
+									feedback="true" maxlength="20" id="password" required="true"
+									label="Password"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;"
+									value="#{customerManagedBean.customerInfo.password}"
+									match="password1" inline="true">
+									<f:validateLength minimum="8" maximum="20" />
+								</p:password>
+								<h:outputLabel for="password1" value="Re-Enter Password "
+									styleClass="loginFields" />
+								<p:password
+									promptLabel="Should be a combination of alphabets and numbers and special characters"
+									feedback="true" maxlength="20" id="password1" required="true"
+									label="Password"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;"
+									value="#{customerManagedBean.customerInfo.password}"
+									inline="true">
+									<f:validateLength minimum="8" maximum="20" />
+								</p:password>
+								<h:outputLabel for="phone" value="Contact No "
+									styleClass="loginFields" />
+								<p:inputText id="phone" onkeypress="return isNumberKey(event)"
+									required="true" label="Contact No." maxlength="10"
+									value="#{customerManagedBean.customerInfo.phone}"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;" />
+								<h:outputLabel for="email" value="Email "
+									styleClass="loginFields" />
+								<p:inputText id="email" required="true" label="Email"
+									value="#{customerManagedBean.customerInfo.email}"
+									style="padding: 4px;width:210px;background: none repeat scroll 0 0 #ffffff;"
+									validatorMessage="Invalid email format  (or)  Email is already registered. Please try to login">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									<f:validator validatorId="emailValidator" />
+									<p:ajax event="change" update="email" />
+								</p:inputText>
+							</h:panelGrid>
+							<br />
+							<h:selectBooleanCheckbox value="#{customerManagedBean.selectBoolean}">
+								<p:ajax update="cmdButton" listener="#{customerManagedBean.showBtn}" />
+							</h:selectBooleanCheckbox>
+							 &#160;<a class="loginJoin" href="terms.jsf">Accept terms of use</a>
+							<br />
+							<br />
+							<div style="float: right" id="btns">
+								<p:commandButton value="SIGN UP" process="panel" id="cmdButton"
+									disabled="#{!(customerManagedBean.enableBtn)}"
+									action="#{customerManagedBean.saveCustomer}" update="panel"
+									styleClass="loginButton buttonStyle"
+									oncomplete="if (args &amp;&amp; !args.validationFailed){ eventDialog.hide()}" />
+							</div>
+						</p:panel>
+					</div>
+				</h:panelGrid>
+
+
+			</div>
+		</div>
+		<!--</ui:define>
+</ui:composition> -->
+	</h:form>
+</h:body>
+<script type="text/javascript">
+	function handleLoginRequest(xhr, status, args) {
+		if (args.validationFailed) {
+			PF('eventDialog').jq.effect("shake", {
+				times : 5
+			}, 100);
+		} else {
+			PF('eventDialog').hide();
+
+		}
+	}
+</script>
+<script type="text/javascript">
+	function handleComplete(xhr, status, args) {
+		if (args.validationFailed) {
+			alert("Validation Failed");
+		}
+	}
+</script>
+</html>
+
+

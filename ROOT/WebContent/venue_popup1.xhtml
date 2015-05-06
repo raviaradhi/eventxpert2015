@@ -1,0 +1,230 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+<h:form id="venueForm">
+			<div id="maxiHotel" class="rewPopContainer">
+				<div class="cxPopCommonContent">
+					<div class="clear">
+						<div class="wd-627">
+							<h1>
+								#{eventDetailsManagedBean.popupViewVenue.venueName}
+							</h1>
+							<span class="txt4"><span id="spnHotelAddress"></span></span> <br />
+							<div class="pd-30">
+								<img src="images/face-like.jpg" />
+							</div>
+						</div>
+						<div class="wd-108">
+							<div class="wd-108">
+								<div align="left" class="Rs">
+									<img src="images/rs.jpg" />#{eventDetailsManagedBean.popupViewVenue.venueCost}
+								</div>
+								<!-- <div class="compare mar-top-45">Book Now</div> -->
+							</div>
+						</div>
+					</div>
+					<div class="hr-line mar-10-only"></div>
+					<div class="clear pd-20">
+						<div class="wd-332">
+							<img id="imgHotelImage" src="images/taj-img.jpg" />
+						</div>
+						<div class="wd-166">
+							<div class="services-bg">Services</div>
+							<div class="services-bottom">
+								<div class="clear-both pd-20">
+									<div class="float-left pd-lt-10">
+										<img src="images/service-bar.jpg" />
+									</div>
+									<div class="float-left pd-10">
+										<span class="txt1">Free Bar</span>
+									</div>
+								</div>
+								<div class="pd-top-15 clear-both">
+									<div class="pd-lt-10 float-left">
+										<img src="images/service-car.jpg" width="37" height="38" />
+									</div>
+									<div class="float-left pd-10">
+										<span class="txt1">Free Carpark</span>
+									</div>
+								</div>
+								<div class="pd-top-15 clear-both">
+									<div class="pd-10-5">
+										<img src="images/service-Clinic.jpg" />
+									</div>
+									<div class="float-left pd-10">
+										<span class="txt1">Clinic</span>
+									</div>
+								</div>
+								<div class="clear-both">&#160;</div>
+							</div>
+						</div>
+						<div class="wd-229">
+							<img src="images/map.jpg" />
+						</div>
+					</div>
+					<div class="clear-both ht-10"></div>
+					<div class="hr-line"></div>
+				</div>
+				<ul id="popTab">
+					<li id="popTab1" class="activeTab"><span>Description</span></li>
+				</ul>
+				<!-- popup details starts -->
+				<div id="popTab1-content" class="clwrapper popUpTabContents">
+					<div class="clabout">
+						<h2>About #{eventDetailsManagedBean.popupViewVenue.venueName}</h2>
+						<p>#{eventDetailsManagedBean.popupViewVenue.venueDesc}</p>
+					</div>
+					<div class="cldetails">
+						<p:selectOneMenu id="ddlPackage" valueChangeListener="#{venueDetailsManagedBean.listenPackage}">
+							<f:selectItems value="#{venueDetailsManagedBean.getVenuePackges(eventDetailsManagedBean.popupVenueId)}"/>
+							<p:ajax update="@this,venueForm"/>
+							
+						</p:selectOneMenu>
+						<h3>
+							<span>Package Details</span>
+						</h3>
+						<p>#{venueDetailsManagedBean.pkgDetails.packageName}/150 Guests/Rs: 50,000.00</p>
+
+						<div class="clmenu">
+							<p>Menu</p>
+							<div class="clapp">
+								<p>Appetizers</p>
+								<ul>
+									<li><a href="#">1 Vegeterian Appetizer Entry</a></li>
+									<li><a href="#">1 Non-Veg Appetizer Entry</a></li>
+								</ul>
+							</div>
+							<div class="clmain_course">
+								<p>Main Course</p>
+								<ul>
+									<li><a href="#">Choice of 2 vegeterian entrees</a></li>
+									<li><a href="#">Choice of 1 Dessert entree</a></li>
+									<li><a href="#">Choice of 1 chicken or 1 lamb entrees</a></li>
+									<li><a href="#">Naan Bread</a></li>
+									<li><a href="#">Choice of 1 rice entree</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="clcs_menu">
+						<h3>
+							<span>Customize Menu</span>
+						</h3>
+						<div class="clappL">
+							<h4>Appetizers</h4>
+							<p>
+								<input type="checkbox" name="" /> <label>Vegetable
+									Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Vegetable
+									Samosa</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Bullet Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Allu Tikka</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chana Dal</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chat Papri</label>
+							</p>
+						</div>
+
+						<div class="clappL">
+							<h4>Non-Vegetarian</h4>
+							<p>
+								<input type="checkbox" name="" /> <label>Vegetable
+									Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Vegetable
+									Samosa</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Bullet Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Allu Tikka</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chana Dal</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chat Papri</label>
+							</p>
+						</div>
+
+						<div class="clappL">
+							<h4>Rice</h4>
+							<p>
+								<input type="checkbox" name="" /> <label>Vegetable
+									Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Vegetable
+									Samosa</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Bullet Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Allu Tikka</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chana Dal</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chat Papri</label>
+							</p>
+						</div>
+
+						<div class="clappL">
+							<h4>Desserts</h4>
+							<p>
+								<input type="checkbox" name="" /> <label>Ras Malaiora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Gulab Jamoon</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Bullet Pakora</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Allu Tikka</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chana Dal</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Chat Papri</label>
+							</p>
+						</div>
+
+						<div class="clappL">
+							<h4>Salad</h4>
+							<p>
+								<input type="checkbox" name="" /> <label>Mixed veg
+									salad</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Cucumber salad</label>
+							</p>
+							<p>
+								<input type="checkbox" name="" /> <label>Onion Fry
+									Chilli</label>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			</h:form>
+</h:body>
+</html>

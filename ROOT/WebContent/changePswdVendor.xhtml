@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <h:head>
+        <title>Customer Registration</title>
+        </h:head>
+    <h:body>
+   
+	<ui:composition template="/template/common/commonLayout.xhtml">
+		<ui:define name="content"> 
+			<!--BODY CONTENT STARTS HERE-->
+			<div class="content-bg clear-both">
+				<div class="lt-flap">
+					<img src="images/left.png" alt="" />
+				</div>
+				<div class="flap-mid">
+					<div class="black-shade">&#160;</div>
+				</div>
+				<div class="rt-flap">
+					<img src="images/right.png" alt="" />
+				</div>
+				<!--phone and chat icon starts -->
+				<div class="icon-1-top">
+					<a href="#"> <img src="images/icon2.png" border="0" alt="" /></a>
+				</div>
+				<!--phone and chat icon ends -->
+				
+        <div class="mid-content">
+            <h:form id="frm" prependId="false">
+            <div>	
+                <p:panel rendered="#{sessionScope['venueManagedBean'].loginUser!=null}" id="loginPanelV" header="Login">
+                <p:messages  />
+                <h:panelGrid columns="3">
+                <h:outputLabel for="passwordOLDV" value="Old Password: *" />
+                <p:password maxlength="15" id="passwordOLDV"  required="true" label="Old Password"
+                                value="#{venueManagedBean.oldPassword}" />
+                <p:message for="passwordOLDV" />
+                <h:outputLabel for="passwordLV" value="Password: *" />
+                <p:password maxlength="15" id="passwordLV"  required="true" label="Password"
+                                value="#{venueManagedBean.newPassword}" feedback="true" inline="true" >
+                    <f:validateLength minimum="8"  maximum="20"/>
+                 </p:password>
+                <p:message for="passwordLV" />
+                </h:panelGrid>                
+                <p:commandButton value="Submit" ajax="false" onclick="PF('buiload').show()" validateClient="true" action="#{venueManagedBean.updatePassword()}" /><p:commandButton ajax="false" onclick="PF('buiload').show()" immediate="true" value="Cancel" action="#{venueManagedBean.cancelHome}" />
+            </p:panel>
+           <p:panel rendered="#{sessionScope['serviceProviderManagedBean'].loginUser!=null}" id="loginPanel" header="Login">
+                <p:messages  />
+                <h:panelGrid columns="3">
+                <h:outputLabel for="passwordOLD" value="Old Password: *" />
+                <p:password maxlength="15" id="passwordOLD"  required="true" label="Old Password"
+                                value="#{serviceProviderManagedBean.oldPassword}" />
+                <p:message for="passwordOLD" />
+                <h:outputLabel for="passwordL" value="Password: *" />
+                <p:password maxlength="15" id="passwordL"  required="true" label="Password"
+                                value="#{serviceProviderManagedBean.newPassword}" feedback="true" inline="true" >
+                    <f:validateLength minimum="8"  maximum="20"/>
+                 </p:password>
+                <p:message for="passwordL" />
+                </h:panelGrid>                
+                <p:commandButton value="Submit" ajax="false" onclick="PF('buiload').show()" validateClient="true" action="#{serviceProviderManagedBean.updatePassword}" /><p:commandButton ajax="false" onclick="PF('buiload').show()" immediate="true" value="Cancel" action="#{serviceProviderManagedBean.cancelHome}" />
+            </p:panel>
+        </div>
+</h:form>
+     
+	
+</div>
+</div>
+</ui:define>
+</ui:composition> 
+</h:body>
+</html>
+
+

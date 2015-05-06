@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:c="http://java.sun.com/jsp/jstl/core"
+		xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Welcome To EventExpert</title>
+</head>
+<h:body>
+    <div id="divAlertPopup" title='Alert'>
+    </div>
+    <div id="tap-wrapper">
+        <div id="wrapper">
+            <!--header starts-->
+            <div id="header">
+                <div class="logo">
+                    <a href="home.htm">
+                        <!--logo starts-->
+                        <img src="images/logo.png" border="0" alt="" /></a></div>
+                <!--logo ends-->
+                <!--menu starts-->
+                
+                <!--menu ends-->
+            </div>
+            <!--header ends-->
+			<ui:composition template="/template/user/commonLayout.xhtml">
+					<ui:define name="content">
+					<h:form id="frm" enctype="multipart/form-data">
+					<script type="text/javascript"> 
+						function calendarShowCallback(date)
+						{
+							var selectedDays = new Array(#{fn:join(serviceProviderManagedBean.oldEventDates, ',')});
+							
+							var m = ("0" + (date.getMonth() + 1)).slice(-2), d = ("0" + date.getDate()).slice(-2), y = date.getFullYear();   
+							if($.inArray(y + '-' + m + '-' + d,selectedDays) != -1) 
+								{               
+									return [false];
+								}   
+							return [true];
+						}
+					</script>
+            <div class="content-bg clear-both">
+                <!--lt-flap starts-->
+                <div class="lt-flap">
+                    <img src="images/left.png" /></div>
+                <!--lt-flap ends-->
+                <!--messag-heart starts-->
+                <div class="flap-mid">
+                    <div class="black-shade">
+                        <div class="clear home">
+							</div>
+                    </div>
+                </div>
+               
+                <div class="clear">
+                    <!--mid contents starts-->
+                    <div class="mid-content">
+					
+				
+					
+                   <h:outputLabel for="Services" value="Select Service" style="font-size:0.875em;color:navy;"/> 
+					<p:panelGrid id="register" columns="2" style="width:80%;font-size:0.875em;color:navy;">
+						<p:selectOneRadio id="services" value="#{serviceProviderManagedBean.spCode}" style="font-size:0.875em;color:navy;" >
+							<f:selectItems value="#{serviceProviderManagedBean.servicesInfo}"></f:selectItems>
+						</p:selectOneRadio>
+						<p:commandButton  id="Go" value="Go" icon="ui-icon-check"  action="#{serviceProviderManagedBean.selectedService}" ajax="false" onclick="PF('buiload').show()" />
+					</p:panelGrid>	
+				</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+			</h:form>
+			</ui:define>
+			</ui:composition>
+			<div class="clear-both" align="center">
+            <!--footer area starts-->
+            <div id="footer" class="clear-both">
+                <div class="left mar-150" align="left">
+                    &copy; 2012 - 2013 | Circulos Technologies Pvt Ltd | Registered in India.
+				</div>
+                <!--footer icons starts-->
+                <div class="right">
+                    <a href="#">
+                        <img src="images/face-icon.png" border="0" /></a>&nbsp;&nbsp;<a href="#"><img src="images/twitter-icon.png"
+                            width="31" height="32" border="0" /></a>
+				</div>
+                <!--footer icons ends-->
+            </div>
+            <!--footer area ends-->
+        </div>
+        </div>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<tomcat-users>
+
+    <role rolename="admin"/>
+    <role rolename="member"/>
+
+    <user username="neale" password="mango" roles="admin"/>
+    <user username="cassie" password="grape" roles="member"/>
+    <user username="oliver" password="apple" roles="member"/>
+
+</tomcat-users>
