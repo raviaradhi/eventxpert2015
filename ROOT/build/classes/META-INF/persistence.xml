@@ -50,22 +50,25 @@
  <!--   <properties>
       <property name="eclipselink.target-database" value="MySQL"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/event12_alpha?zeroDateTimeBehavior=convertToNull&amp;ssl=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eventxpert_2015?zeroDateTimeBehavior=convertToNull&amp;ssl=true"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.password" value="root"/>
         </properties> -->
       <!--  EclipseLink should create the database schema automatically -->
-        <properties>
+         
+  <properties>
     <property name="eclipselink.target-database" value="MySQL"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eventxpert_2015?zeroDateTimeBehavior=convertToNull&amp;ssl=true"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
-      <property name="javax.persistence.jdbc.password" value="root"/>
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://eventxpertdb.coq5jugr1wsr.us-west-2.rds.amazonaws.com:3306/eventxpertdb2015?zeroDateTimeBehavior=convertToNull&amp;"/>
+      <property name="javax.persistence.jdbc.user" value="eventxpertaws"/>
+      <property name="javax.persistence.jdbc.password" value="xpert2015"/>
          
       <property name="eclipselink.weaving" value="static" />
-      <!-- <property name="eclipselink.session.customizer" value="com.circulous.xpert.jpa.entities.MySessionCustomizer"/>
+      <!-- 
+      <property name="eclipselink.session.customizer" value="com.circulous.xpert.jpa.entities.MySessionCustomizer"/>
        <property name="eclipselink.logging.level" value="FINEST" />
        <property name="eclipselink.logging.file" value="output.log"/> -->
     </properties>
+     
   </persistence-unit>
 </persistence>

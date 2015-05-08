@@ -3,7 +3,7 @@
 #   instructional comments and can be safely left in the file or 
 #   ignored.
 # For help completing this file, see the "AppSpec File Reference" in the  
-#   "AWS CodeDeploy User Guide" at
+#   "AWS CodeDeploy User Guide" at test
 #   http://docs.aws.amazon.com/codedeploy/latest/userguide/app-spec-ref.html
 version: 0.0
 # Specify "os: linux" if this revision targets Amazon Linux or Ubuntu Server  
