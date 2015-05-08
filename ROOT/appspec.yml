@@ -22,8 +22,8 @@ os: linux
 #   "files" section altogether. A blank or incomplete "files" section
 #   may cause associated deployments to fail.
 files:
-  - source: 
-    destination:
+  - source: /
+    destination: /tmp/deployment/application
   - source:
     destination:
 # For deployments to Amazon Linux and Ubuntu Server instances,
