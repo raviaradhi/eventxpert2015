@@ -52,18 +52,6 @@
 	<script type="text/javascript" src="../resources/js/customs.js" />
 	<script type="text/javascript"
 		src="../resources/js/bootstrap-multiselect.js" />
-	<script type="text/javascript">
-		$('.carousel-sync').on(
-				'slide.bs.carousel',
-				function(ev) {
-					var dir = ev.direction == 'right' ? 'prev' : 'next';
-					$('.carousel-sync').not('.sliding').addClass('sliding')
-							.carousel(dir);
-				});
-		$('.carousel-sync').on('slid.bs.carousel', function(ev) {
-			$('.carousel-sync').removeClass('sliding');
-		});
-	</script>
 </h:head>
 <h:body>
 
@@ -96,119 +84,214 @@
 		</div>
 	</div>
 
-	<section id="contact" class="get-in-wrapper">
+	<section class="section-sresults vertical-align-content-summary">
+	<div class="clear mb-50"></div>
+
 	<div class="container clearfix">
-		<div class="row mt-20">
-			<h2 class="text-color-02">
-				<a href="newResults.jsf" class="text-color-02">&nbsp;&lt;&nbsp;</a>#{eventsManagedBean.popupViewServiceProvider.serviceProviderName}
-			</h2>
-		</div>
-		<div class="tab-style-1">
-			<div class="tab-content">
-				<div class="tab-content-inner-vendor">
-					<div class="content-info">
-						<ul class="srv-pkg-list">
-							<c:forEach items="#{eventsManagedBean.servicePackges}"
-								var="service" varStatus="stat">
-								<li class="wow fadeIn clearfix">
-									<div class="vendor">
-										<div class="item">
-											<div class="img">
-												<div id="carousel-#{service.packageId}"
-													class="carousel slide carousel-sync" data-ride="carousel"
-													data-pause="false">
-													<div class="carousel-inner">
-														<div class="item active">
-															<img src="#{eventsManagedBean.populateServiceImages(service.packageId)}" />
-														</div>
-														<c:forEach id="foreachNew"
-															items="#{eventsManagedBean.servicePkgImages}"
-															var="imag">
-															<div class="item">
-																<img src="#{imag}" />
-															</div>
-														</c:forEach>
-													</div>
-													<a class="left carousel-control"
-														href="#carousel-#{service.packageId}" data-slide="prev">
-														<span class="glyphicon glyphicon-chevron-left"></span>
-													</a> <a class="right carousel-control"
-														href="#carousel-#{service.packageId}" data-slide="next">
-														<span class="glyphicon glyphicon-chevron-right"></span>
-													</a>
-												</div>
-											</div>
-											<div class="content">
-												<h3>#{service.packageName}</h3>
-												<p>#{eventsManagedBean.popupViewServiceProvider.areaName},
-													#{eventsManagedBean.popupViewServiceProvider.cityName}</p>
-												<div class="row">
-													<div class="col-sm-6 col-xs-12">
-														<fieldset class="rating">
-															<input type="radio" id="star5" name="rating" value="5" /><label
-																for="star5" title="Rocks!">5 stars</label> <input
-																type="radio" id="star4" name="rating" value="4" /><label
-																for="star4" title="Pretty good">4 stars</label> <input
-																type="radio" id="star3" name="rating" value="3" /><label
-																for="star3" title="Meh">3 stars</label> <input
-																type="radio" id="star2" name="rating" value="2" /><label
-																for="star2" title="Kinda bad">2 stars</label> <input
-																type="radio" id="star1" name="rating" value="1" /><label
-																for="star1" title="Sucks big time">1 star</label>
-														</fieldset>
-													</div>
-												</div>
-												<h4>Rs #{service.finalAmount}</h4>
-												<h4 class="text-color-02">DESCRIPTION</h4>
-												<div class="section-header-5">
-													<p>#{service.description}</p>
-												</div>
-												<div class="row" style="margin-top: 10px;">
-													<div class="col-sm-6 col-xs-12">
-														<p:commandButton style="float:right"
-															action="#{eventsManagedBean.selectedFinalServicePackage(service.packageId)}"
-															styleclass="btn btn-primary btn-block caps"
-															value="Book Now" />
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</section>
 
 
-	<section id="contact" class="">
-	<div class="container clearfix">
 		<div class="row">
 			<div class="section-header-3 col-md-8 col-md-offset-2">
-				<h2 class="text-color-02">GET IN TOUCH</h2>
-				<p>Virtually every kind of event can be planned through
-					EventXpert. Contact us today!.</p>
+				<h2 class="text-color-02">Summary</h2>
+				<p>Did not find a matching vendor? Please don't hesitate to call
+					us anytime on +91-92931-30333</p>
 			</div>
 			<!-- end of .section-header -->
 		</div>
 		<!-- end of .row -->
+
+
+		<div class="row">
+
+			<div class="container">
+				<table id="cart" class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th style="width: 60%">Vendor</th>
+							<th style="width: 10%">Rate/pax</th>
+							<th style="width: 10%">Price</th>
+							<th style="width: 10%"></th>
+						</tr>
+					</thead>
+					<c:forEach
+						items="#{eventsManagedBean.finalVenueMap.entrySet().toArray()}"
+						var="venue" varStatus="stVenue">
+						<c:forEach items="#{venue.value}" var="finalVenueD">
+							<tbody>
+								<tr>
+									<td data-th="Vendor">
+										<div class="row">
+											<div class="col-sm-4 ">
+												<img
+													src="#{eventsManagedBean.getHotelImagesSm(finalVenueD.value.venueId).get(0)}"
+													alt="profile image" class="img-responsive" />
+											</div>
+											<div class="col-sm-8">
+												<h4 class="nomargin">#{finalVenueD.key}</h4>
+												<div>
+													<strong>Vendor:</strong> Venue
+												</div>
+												<div>
+													<strong>Event:</strong> Event Type
+												</div>
+												<div>
+													<strong>Date:</strong> #{eventsManagedBean.eventDate}
+												</div>
+												<div>
+													<strong>Guests:</strong> Count
+												</div>
+											</div>
+										</div>
+									</td>
+									<td data-th="Price " class="price-alignment">Rs.
+										#{eventsManagedBean.getCost(finalVenueD.value.finalAmount)}</td>
+
+									<td data-th="Subtotal " class="price-alignment">Rs.
+										#{eventsManagedBean.getCost(finalVenueD.value.finalAmount)}</td>
+									<td class="actions price-alignment" data-th="">
+										<button class="btn btn-info btn-sm">
+											<i class="fa fa-pencil-square-o"></i>
+										</button>
+										<button class="btn btn-danger btn-sm">
+											<i class="fa fa-trash-o"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</c:forEach>
+					</c:forEach>
+					<c:forEach items="#{eventsManagedBean.allSelectedServicesMap}"
+						varStatus="stat" var="allS">
+						<c:forEach
+							items="#{eventsManagedBean.finalServicesMap.entrySet().toArray()}"
+							var="finalV">
+							<c:if test="#{allS.key.getId() == finalV.key}">
+								<tbody>
+									<tr>
+										<td data-th="Vendor">
+											<div class="row">
+												<div class="col-sm-4 ">
+													<img src="images/features/featured-img-thumb-01.jpg"
+														alt="profile image" class="img-responsive" />
+												</div>
+												<div class="col-sm-8">
+													<h4 class="nomargin">#{finalV.value.serviceProviderName}</h4>
+													<div>
+														<strong>Vendor:</strong> #{allS.key.getId() eq finalV.key}
+													</div>
+													<div>
+														<strong>Package:</strong> #{finalV.value.packageName}
+													</div>
+													<div>
+														<strong>Event:</strong> Type Event
+													</div>
+													<div>
+														<strong>Date:</strong> #{eventsManagedBean.eventDate}
+													</div>
+													<div>
+														<strong>Guests:</strong> Count
+													</div>
+												</div>
+											</div>
+										</td>
+										<td data-th="Price " class="price-alignment">Rs.
+											#{eventsManagedBean.getProjectedCost(service.value.finalAmount,
+											service.value.unitOfCost)}</td>
+
+										<td data-th="Subtotal " class="price-alignment">Rs.
+											#{eventsManagedBean.getProjectedCost(service.value.finalAmount,
+											service.value.unitOfCost)}</td>
+										<td class="actions price-alignment" data-th="">
+											<button class="btn btn-info btn-sm">
+												<i class="fa fa-pencil-square-o"></i>
+											</button>
+											<button class="btn btn-danger btn-sm">
+												<i class="fa fa-trash-o"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
+					<tfoot>
+						<tr class="visible-xs">
+							<td class="text-center"></td>
+						</tr>
+						<tr>
+							<td></td>
+
+							<td colspan="2" class="text-right">Total <strong>Rs.
+									Total Amount</strong></td>
+							<td><a href="#" class="btn btn-primary btn-block caps">Block
+									Now (5%/total) <i class="fa fa-angle-right"></i>
+							</a></td>
+
+
+						</tr>
+						<tr class="visible-xs">
+							<td></td>
+						</tr>
+						<tr>
+							<td><a href="#" class="btn btn-warning"><i
+									class="fa fa-angle-left"></i> Continue Shopping</a></td>
+
+							<td colspan="2"></td>
+
+							<td><a href="#" class="btn btn-warning btn-block">Confirm
+									by 5th June <i class="fa fa-angle-right"></i>
+							</a></td>
+
+						</tr>
+
+
+					</tfoot>
+				</table>
+			</div>
+
+		</div>
+		<!-- end of .row -->
+
+	</div>
+
+	</section>
+
+
+
+	<section id="contact" class="">
+	<div class="container clearfix">
+
+		<div class="row">
+			<div class="section-header-3 col-md-8 col-md-offset-2">
+
+				<h2 class="text-color-02">GET IN TOUCH</h2>
+				<p>Virtually every kind of event can be planned through
+					EventXpert. Contact us today!.</p>
+
+			</div>
+			<!-- end of .section-header -->
+		</div>
+		<!-- end of .row -->
+
 		<div class="row mt-20">
+
 			<div class="col-xs-12 col-sm-6 col-md-6 xs-mb-50 wow fadeInLeft">
+
 				<h:form id="contantForm" method="post" class="contact-form"
 					action="#">
+
 					<div class="alert alert-success" style="display: none;"></div>
+
 					<div class="form-group">
 						<p:inputText type="text" styleClass="form-control"
 							name="conactName" placeholder="Your Name" />
 					</div>
+
 					<div class="form-group">
 						<p:inputText type="email" styleClass="form-control" name="email"
 							placeholder="Your Email" />
 					</div>
+
 					<div class="form-group">
 						<p:inputText type="text" styleClass="form-control" name="subject"
 							placeholder="Subject" />
@@ -221,12 +304,15 @@
 						<p:commandButton type="submit" styleClass="btn btn-primary"
 							value="SEND" style="float: right; display: block;" />
 					</div>
+
 				</h:form>
+
 			</div>
 
 
 			<div class="col-xs-12 col-sm-6 col-md-6 wow fadeInRight"
 				data-wow-duration="1s">
+
 				<p class="address-item">
 					<span class="icon"><i class="fa fa-map-marker"></i></span>
 					17-1-382/15, Nagarjuna Colony, Vysalinagar(PO), Champapet ,
@@ -239,9 +325,14 @@
 				<p class="address-item">
 					<span class="icon"><i class="fa fa-envelope"></i></span> Support: <a
 						href="mailto:dowebstation@gamil.com">care@eventxpert.in</a> <br />
+
 				</p>
+
+
 			</div>
+
 		</div>
+
 	</div>
 	</section>
 
