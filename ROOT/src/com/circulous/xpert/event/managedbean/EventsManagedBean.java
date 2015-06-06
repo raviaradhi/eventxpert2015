@@ -42,6 +42,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -77,7 +78,7 @@ import com.google.gson.JsonSyntaxException;
 public class EventsManagedBean implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -201,6 +202,16 @@ public class EventsManagedBean implements Serializable {
 
 	private String packDesc;
 
+	private HashMap finalVenueMap = new HashMap();
+
+	private HashMap finalServicesMap = new HashMap();
+
+	private int selHall = 0;
+
+	private String toSelectTab = "Venue";
+
+	private Date minDate;
+
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
 	EntityManager em = emf.createEntityManager();
 
@@ -228,6 +239,7 @@ public class EventsManagedBean implements Serializable {
 		hallLocalMap = new HashMap();
 		Properties prop = new Properties();
 		InputStream input = null;
+		minDate = new Date();
 
 		try {
 
@@ -267,8 +279,7 @@ public class EventsManagedBean implements Serializable {
 
 	public String getTotalCount() {
 		tCount = Integer.parseInt(totalCount);
-		//return totalCount;
-		return "300";
+		return totalCount;
 	}
 
 	private void populateVenueList() {
@@ -333,7 +344,7 @@ public class EventsManagedBean implements Serializable {
 			ServiceTypeMaster srvTypeMaster = iterator.next();
 			serviceList.add(srvTypeMaster.getServiceName());
 		}
-		
+
 		Query qryViewServiceProviderList = em.createNamedQuery("ViewServiceProvider.findAll");
 		viewServiceProviderList = qryViewServiceProviderList.getResultList();
 	}
@@ -405,7 +416,7 @@ public class EventsManagedBean implements Serializable {
 
 				for (Iterator<ViewVenue> iterator = viewVenueList.iterator(); iterator.hasNext();) {
 					ViewVenue type = (ViewVenue) iterator.next();
-					if (type.getVenueTypeId() == 3) {
+					if (type.getVenueTypeId() == 2) {
 						type.setVenueCost(type.getVenueCost().multiply(new BigDecimal(getTotalCount())));
 						type.setFinalCOST(type.getFinalCOST().multiply(new BigDecimal(getTotalCount())));
 					} else {
@@ -427,7 +438,7 @@ public class EventsManagedBean implements Serializable {
 				 * Double.valueOf(atm.getLatitude()); double lng =
 				 * Double.valueOf(atm.getLongitude()); current = new
 				 * LatitudeLongitude(lat, lng);
-				 * 
+				 *
 				 * PlacesLatitudes sample = new PlacesLatitudes(); try {
 				 * localVIList = sample.calculateDistances(current,
 				 * localVIList); } catch (Exception ex) { ex.printStackTrace();
@@ -450,6 +461,8 @@ public class EventsManagedBean implements Serializable {
 		System.out.println(selectedServices);
 
 		System.out.println(selectedGuest);
+
+		System.out.println(venueRadio);
 
 		selectedSrvList = new ArrayList<ServiceVO>();
 
@@ -615,7 +628,6 @@ public class EventsManagedBean implements Serializable {
 	}
 
 	public String selectedVenueVals(int venueId) {
-
 		setPopupVenueId(String.valueOf(venueId));
 		logger.debug("getPopupViewVenue :: popupVenueId   -- " + popupVenueId);
 		logger.debug("getPopupViewVenue :: venueId   -- " + venueId);
@@ -767,6 +779,12 @@ public class EventsManagedBean implements Serializable {
 
 	}
 
+	public String showHallPackages() {
+		toSelectTab = "Catering";
+		return "newResults";
+	}
+
+
 	public List<String> getHotelImagesSm(String venueId) {
 		hotelImagesSmall = new ArrayList<String>();
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -854,6 +872,69 @@ public class EventsManagedBean implements Serializable {
 		return serviceImagesSmall;
 	}
 
+	public String populateServiceImages(int id) {
+		servicePkgImages = new ArrayList<String>();
+		File dirPkgSrv = new File(srvcPrvdPkgPath + id);
+		if (dirPkgSrv.exists()) {
+			String[] listFiles = dirPkgSrv.list();
+			int len = dirPkgSrv.list().length;
+			if (len == 0) {
+				logger.debug("No images uploaded");
+				servicePkgImages.add("images/noImage.gif");
+			} else {
+				for (int i = 0; i < len; i++) {
+					logger.debug("listFiles[i] " + listFiles[i]);
+					servicePkgImages.add("http://" + url + srvcPrvdUrl + id + "/" + listFiles[i]);
+				}
+			}
+		} else {
+			logger.debug("No directory found");
+			servicePkgImages.add("images/noImage.gif");
+		}
+		return servicePkgImages.get(0);
+	}
+
+	public String populateHallImages(int id) {
+		hotelHallImages = new ArrayList<String>();
+		File dir = new File(path + "/venue/" + popupViewVenue.getVenueId() + "/" + id);
+		if (dir.exists()) {
+			File[] list = dir.listFiles();
+			String[] listFiles = dir.list();
+			int len = dir.list().length;
+			if (len == 0) {
+				logger.debug("No images uploaded");
+				hotelHallImages.add("images/noImage.gif");
+			} else {
+				for (int i = 0; i < len; i++) {
+					logger.debug("listFiles[i] " + listFiles[i]);
+					if (!list[i].isDirectory()) {
+						try {
+							String str = "http://" + url + "/venue/" + popupViewVenue.getVenueId() + "/" + id + "/"
+									+ listFiles[i];
+							URL url1 = new URL(str);
+							HttpURLConnection huc = (HttpURLConnection) url1.openConnection();
+							huc.setRequestMethod("HEAD");
+							int responseCode = huc.getResponseCode();
+							if (responseCode == HttpURLConnection.HTTP_OK) {
+								hotelHallImages.add(str);
+							} else {
+								hotelHallImages.add("images/noImage.gif");
+							}
+						} catch (Exception ex) {
+							java.util.logging.Logger.getLogger(EventDetailsManagedBean.class.getName()).log(
+									Level.SEVERE, null, ex);
+						}
+					}
+
+				}
+			}
+		} else {
+			logger.debug("No directory found");
+			hotelHallImages.add("images/noImage.gif");
+		}
+		return hotelHallImages.get(0);
+	}
+
 	public String getProjectedCost(BigDecimal cost, String strUnitOfCost) {
 		logger.debug("UnitOfCost::::" + strUnitOfCost);
 		if ("PER PLATE".equalsIgnoreCase(strUnitOfCost.trim()) || "PER HEAD".equalsIgnoreCase(strUnitOfCost.trim())) {
@@ -882,6 +963,149 @@ public class EventsManagedBean implements Serializable {
 
 		}
 		return venuePackages;
+	}
+
+	public void selectFinalVenueBookNow(int venueId) {
+		logger.debug("selectedFinalVenue :: venueId   -- " + venueId);
+		logger.debug("selectedFinalVenue :: hallid   -- " + hallId);
+		// selHall = Integer.parseInt(hallId);
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
+		EntityManager em = emf.createEntityManager();
+
+		// Query query = em.createNamedQuery("VenuePackageInfo.findByPkgId");
+		// Query query =
+		// em.createNamedQuery("VenuePackageInfo.findByPackageId");
+		// Query query =
+		// em.createNamedQuery("ViewVenuePackage.findByPackageId");
+		Query query = em
+				.createQuery("SELECT v FROM ViewVenuePackage v WHERE v.venueId = :venueId order by v.packageId");
+		query.setParameter("venueId", venueId);
+
+		// VenuePackageInfo vpInfo = (VenuePackageInfo) query.getSingleResult();
+		ViewVenuePackage vpInfo = (ViewVenuePackage) query.getResultList().get(0);
+
+		Query query1 = em.createNamedQuery("VenueInfo.findByVenueId");
+		// query1.setParameter("venueId", vpInfo.getVenueId());
+		query1.setParameter("venueId", venueId);
+		VenueInfo vInfo = (VenueInfo) query1.getResultList().get(0);
+
+		Query query12 = em.createNamedQuery("VenueHallInfo.findByVenueID");
+		// query1.setParameter("venueId", vpInfo.getVenueId());
+		query12.setParameter("venueID", venueId);
+		VenueHallInfo vhInfo = (VenueHallInfo) query12.getResultList().get(0);
+
+		selHall = vhInfo.getHallID();
+
+		// VenueInfo vInfo = vpInfo.getVenueId();
+		// VenueInfo vInfo = new VenueInfo(vpInfo.getVenueId());
+
+		// Query query2 =
+		// em.createNamedQuery("VenueTypeMaster.findByVenueType");
+		// query2.setParameter("venueTypeId", vInfo.getVenueTypeId());
+		// Query query2 =
+		// em.createNamedQuery("VenueTypeMaster.findByVenueTypeId");
+		// query2.setParameter("venueTypeId",
+		// vInfo.getVenueTypeId().getVenueTypeId());
+		// VenueTypeMaster vtypeInfo = (VenueTypeMaster)
+		// query2.getSingleResult();
+		logger.debug("vInfo****** " + vInfo.getVenueTypeId());
+		VenueTypeMaster vtypeInfo = vInfo.getVenueTypeId();
+		if (vInfo.getVenueTypeId().getVenueTypeId() == 3) {
+			vpInfo.setCost(vpInfo.getCost().multiply(new BigDecimal(getTotalCount())));
+			vpInfo.setFinalAmount(vpInfo.getFinalAmount().multiply(new BigDecimal(getTotalCount())));
+		}
+
+		setFinalVenueInfo(vpInfo);
+		// finalServicesMap.put(vpInfo.getVenueId(), vpInfo);
+
+		HashMap venueDtls = new HashMap();
+		venueDtls.put(vInfo.getVenueName(), vpInfo);
+		finalVenueMap.put(vtypeInfo.getVenueType(), venueDtls);
+
+		logger.debug("finalVenueMap$$$$$$$$$$$$$$$$$$$$$$$  " + finalVenueMap);
+
+	}
+
+	public String selectedFinalVenuePopup(int packageId) {
+		logger.debug("selectedFinalVenue :: packageId   -- " + packageId);
+		logger.debug("selectedFinalVenue :: hallid   -- " + hallId);
+		selHall = Integer.parseInt(hallId);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
+		EntityManager em = emf.createEntityManager();
+
+		// Query query = em.createNamedQuery("VenuePackageInfo.findByPkgId");
+		// Query query =
+		// em.createNamedQuery("VenuePackageInfo.findByPackageId");
+		Query query = em.createNamedQuery("ViewVenuePackage.findByPackageId");
+		query.setParameter("packageId", Integer.valueOf(packageId).intValue());
+
+		// VenuePackageInfo vpInfo = (VenuePackageInfo) query.getSingleResult();
+		ViewVenuePackage vpInfo = (ViewVenuePackage) query.getSingleResult();
+
+		Query query1 = em.createNamedQuery("VenueInfo.findByVenueId");
+		// query1.setParameter("venueId", vpInfo.getVenueId());
+		query1.setParameter("venueId", vpInfo.getVenueId());
+		VenueInfo vInfo = (VenueInfo) query1.getSingleResult();
+
+		// VenueInfo vInfo = vpInfo.getVenueId();
+		// VenueInfo vInfo = new VenueInfo(vpInfo.getVenueId());
+
+		// Query query2 =
+		// em.createNamedQuery("VenueTypeMaster.findByVenueType");
+		// query2.setParameter("venueTypeId", vInfo.getVenueTypeId());
+		// Query query2 =
+		// em.createNamedQuery("VenueTypeMaster.findByVenueTypeId");
+		// query2.setParameter("venueTypeId",
+		// vInfo.getVenueTypeId().getVenueTypeId());
+		// VenueTypeMaster vtypeInfo = (VenueTypeMaster)
+		// query2.getSingleResult();
+		logger.debug("vInfo****** " + vInfo.getVenueTypeId());
+		VenueTypeMaster vtypeInfo = vInfo.getVenueTypeId();
+		if (vInfo.getVenueTypeId().getVenueTypeId() == 3) {
+			vpInfo.setCost(vpInfo.getCost().multiply(new BigDecimal(getTotalCount())));
+			vpInfo.setFinalAmount(vpInfo.getFinalAmount().multiply(new BigDecimal(getTotalCount())));
+		}
+
+		setFinalVenueInfo(vpInfo);
+		// finalServicesMap.put(vpInfo.getVenueId(), vpInfo);
+
+		HashMap venueDtls = new HashMap();
+		venueDtls.put(vInfo.getVenueName(), vpInfo);
+		finalVenueMap.put(vtypeInfo.getVenueType(), venueDtls);
+
+		logger.debug("finalVenueMap$$$$$$$$$$$$$$$$$$$$$$$  " + finalVenueMap);
+		return "newResults";
+
+	}
+
+	public void selectedFinalServicePopup(ServiceVO sv, String serviceProviderCode) {
+		logger.debug("serviceProviderCode :: serviceProviderCode   -- " + serviceProviderCode);
+		// logger.debug("selectedFinalVenue :: hallid   -- " + hallId);
+		// selHall = Integer.parseInt(hallId);
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
+		EntityManager em = emf.createEntityManager();
+
+		// Query query = em.createNamedQuery("VenuePackageInfo.findByPkgId");
+		// Query query =
+		// em.createNamedQuery("VenuePackageInfo.findByPackageId");
+		// Query query =
+		// em.createNamedQuery("ViewVenuePackage.findByPackageId");
+		Query query = em
+				.createQuery("SELECT v FROM ViewServiceProviderPackage v WHERE v.serviceProviderCode = :serviceProviderCode order by v.packageId");
+		query.setParameter("serviceProviderCode", serviceProviderCode);
+
+		// VenuePackageInfo vpInfo = (VenuePackageInfo) query.getSingleResult();
+		ViewServiceProviderPackage vsppackage = (ViewServiceProviderPackage) query.getResultList().get(0);
+
+		Query query1 = em.createNamedQuery("ServiceProviderInfo.findByServiceProviderId");
+		// query1.setParameter("venueId", vpInfo.getVenueId());
+		query1.setParameter("serviceProviderId", vsppackage.getServiceProviderId());
+		ServiceProviderInfo vInfo = (ServiceProviderInfo) query1.getResultList().get(0);
+
+		finalServicesMap.put(vsppackage.getServiceTypeCode(), vsppackage);
+
 	}
 
 	public String popupService(ServiceVO sv, String serviceProviderCode) {
@@ -1001,6 +1225,23 @@ public class EventsManagedBean implements Serializable {
 		return "newServiceDetail";
 	}
 
+	public String selectedFinalServicePackage(int packageId) {
+		logger.debug("selectedFinalServicePackage :: packageId   -- " + packageId);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
+		EntityManager em = emf.createEntityManager();
+		Query query = em.createNamedQuery("ViewServiceProviderPackage.findByPackageId");
+		query.setParameter("packageId", new Integer(packageId).intValue());
+		ViewServiceProviderPackage vsppackage = (ViewServiceProviderPackage) query.getSingleResult();
+		finalServicesMap.put(vsppackage.getServiceTypeCode(), vsppackage);
+		logger.debug(finalServicesMap);
+		return "newResults";
+	}
+
+	public String showSummary() {
+		logger.debug("showSummary::::::::");
+		return "newSummary";
+	}
+
 	private void initMap(String address, String name) throws JsonSyntaxException, IOException {
 		circleModel = new DefaultMapModel();
 		try {
@@ -1039,33 +1280,33 @@ public class EventsManagedBean implements Serializable {
 		 * List<ViewVenue> localVIList = new ArrayList<ViewVenue>();
 		 * logger.debug("getAllVenueList -- venueType -- " + venueType);
 		 * logger.debug("getAllVenueList -- venueRadio -- " + venueRadio);
-		 * 
+		 *
 		 * VenueTypeMaster vtm = new
 		 * VenueTypeMaster(Integer.parseInt(venueRadio)); vPkgDtls = new
 		 * HashMap();
-		 * 
+		 *
 		 * for (Iterator<VenueVO> iterator = venueList.iterator();
 		 * iterator.hasNext();) { VenueVO venueVO = iterator.next();
-		 * 
+		 *
 		 * if (venueVO.getId().equals(venueRadio)) { // if
 		 * (venueVO.getHeading().equals(venueType)){
 		 * logger.debug("selected Venue  " + venueVO.getHeading()); //
 		 * logger.debug("Found --"); selectedVenueVO = venueVO; break; } }
-		 * 
+		 *
 		 * // logger.debug(selectedVenueVO); if (null != selectedVenueVO) {
 		 * logger.debug("*********########****** " + eventDate); //
 		 * SimpleDateFormat writeFormat = new // SimpleDateFormat("dd-MM-YYYY");
 		 * // String str = writeFormat.format(eventDate);
-		 * 
+		 *
 		 * EntityManagerFactory emf =
 		 * Persistence.createEntityManagerFactory("ROOT"); EntityManager em =
 		 * emf.createEntityManager();
-		 * 
+		 *
 		 * Query qryList1 = em.createQuery(
 		 * "select  e1 from  VenueInfo e1 where  e1.venueTypeId = :vt");
 		 * qryList1.setParameter("vt", vtm); List espList =
 		 * qryList1.getResultList();
-		 * 
+		 *
 		 * if (espList.size() == 0) { haveRecords = false; } else { haveRecords
 		 * = true; CriteriaBuilder cb = em.getCriteriaBuilder(); //
 		 * CriteriaQuery<EventServiceProviderInfo> cq = //
@@ -1084,15 +1325,15 @@ public class EventsManagedBean implements Serializable {
 		 * ); // qryList.setParameter("edate", eventDate); //
 		 * qryList.setParameter("vt", 'Y'); // List espList =
 		 * qryList.getResultList();
-		 * 
+		 *
 		 * // logger.debug("((((   " + qryList); //
 		 * logger.debug("(((((((((((!**********  " + espList);
-		 * 
+		 *
 		 * // cb = em.getCriteriaBuilder(); CriteriaQuery<ViewVenue>
 		 * criteriaQuery = cb.createQuery(ViewVenue.class); Root<ViewVenue>
 		 * vVenue = criteriaQuery.from(ViewVenue.class);
 		 * CriteriaQuery<ViewVenue> select = criteriaQuery.select(vVenue);
-		 * 
+		 *
 		 * Subquery<EventServiceProviderInfo> cq =
 		 * criteriaQuery.subquery(EventServiceProviderInfo.class);
 		 * Root<EventServiceProviderInfo> at =
@@ -1100,39 +1341,39 @@ public class EventsManagedBean implements Serializable {
 		 * cq.where(cb.and( cb.equal(at.get(EventServiceProviderInfo_.
 		 * eventServiceProviderEffectiveDate), eventDate),
 		 * cb.equal(at.get(EventServiceProviderInfo_.venue), 'Y')));
-		 * 
+		 *
 		 * Expression<String> exp = vVenue.get("venueId"); Predicate predicate =
 		 * exp.in(cq); select.where(cb.not(predicate)); //
 		 * select.where(cb.not(cb.exists(cq)));
-		 * 
+		 *
 		 * TypedQuery<ViewVenue> qryList = em.createQuery(select);
-		 * 
+		 *
 		 * viewVenueList = qryList.getResultList(); logger.debug("(((( hjjkh   "
 		 * + qryList.toString());
-		 * 
-		 * 
+		 *
+		 *
 		 * String qry = "select v from ViewVenue v"; for (int j = 0; j <
 		 * espList.size(); j++) { EventServiceProviderInfo esp =
 		 * (EventServiceProviderInfo) espList.get(j);
-		 * 
+		 *
 		 * if (j == 0) { qry = qry + " where v.venueId<>" +
 		 * esp.getServiceProviderId() + " and "; }
-		 * 
+		 *
 		 * qry = qry + "v.venueId<>" + esp.getServiceProviderId() + " and ";
-		 * 
+		 *
 		 * if (j == (espList.size() - 1)) { qry = qry + "v.venueId<>" +
 		 * esp.getServiceProviderId(); } }
-		 * 
+		 *
 		 * logger.debug("((((   " + qry); Query qryViewVenueList =
 		 * em.createQuery(qry);
-		 * 
+		 *
 		 * // viewVenueList = qryViewVenueList.getResultList(); boolean
 		 * getAddress = false; String firstAddress = ""; LatitudeLongitude
 		 * current = null;
-		 * 
+		 *
 		 * List<ViewVenue> viewVenueList1 = viewVenueList; List<ViewVenue>
 		 * templist = new ArrayList<ViewVenue>();
-		 * 
+		 *
 		 * for (Iterator<ViewVenue> iterator = viewVenueList.iterator();
 		 * iterator.hasNext();) { ViewVenue type = (ViewVenue) iterator.next();
 		 * Query qryList11 =
@@ -1141,13 +1382,13 @@ public class EventsManagedBean implements Serializable {
 		 * qryList11.setParameter("eventType", eventTypeId);
 		 * System.out.println("qryList11***  " + qryList11); List vList =
 		 * qryList11.getResultList();
-		 * 
+		 *
 		 * if (vList.size() > 0) { System.out.println("Records exists");
 		 * templist.add(type); } else { System.out.println("No Records exists");
 		 * // viewVenueList1.remove(type); } }
-		 * 
+		 *
 		 * viewVenueList = templist;
-		 * 
+		 *
 		 * for (Iterator<ViewVenue> iterator = viewVenueList.iterator();
 		 * iterator.hasNext();) { ViewVenue type = (ViewVenue) iterator.next();
 		 * if (type.getVenueTypeId() == 3) {
@@ -1157,34 +1398,34 @@ public class EventsManagedBean implements Serializable {
 		 * BigDecimal(getTotalCount()))); } else {
 		 * type.setVenueCost(type.getVenueCost());
 		 * type.setFinalCOST(type.getFinalCOST()); }
-		 * 
+		 *
 		 * // logger.debug("type.getVenueTypeId() --" + //
 		 * type.getVenueTypeId()); //
 		 * logger.debug(Integer.parseInt(selectedVenueVO.getId())); if
 		 * (type.getVenueTypeId() == Integer.parseInt(selectedVenueVO.getId()))
 		 * {
-		 * 
+		 *
 		 * localVIList.add(type);
-		 * 
+		 *
 		 * }
-		 * 
+		 *
 		 * vPkgDtls.put(type.getVenueId(), type); // if(getAddress==false && //
 		 * type.getAreaName().equals(areaName)) // { // getAddress = true; //
 		 * firstAddress = type.getAddress(); // double lat =
 		 * Double.valueOf(type.getLatitude()); // double lng =
 		 * Double.valueOf(type.getLongitude()); // current = new
 		 * LatitudeLongitude(lat, lng); // } }
-		 * 
+		 *
 		 * Query arQry = em.createNamedQuery("AreaTypeMaster.findByAreaId");
 		 * arQry.setParameter("areaId", area); AreaTypeMaster atm =
 		 * (AreaTypeMaster) arQry.getSingleResult();
-		 * 
+		 *
 		 * System.out.println("area  " + area);
-		 * 
+		 *
 		 * double lat = Double.valueOf(atm.getLatitude()); double lng =
 		 * Double.valueOf(atm.getLongitude()); current = new
 		 * LatitudeLongitude(lat, lng);
-		 * 
+		 *
 		 * PlacesLatitudes sample = new PlacesLatitudes(); try { //
 		 * System.out.println("address "+firstAddress); // localVIList = //
 		 * sample
@@ -1194,14 +1435,14 @@ public class EventsManagedBean implements Serializable {
 		 * Collections.sort(localVIList, new VenueComparatorByAmount()); } //
 		 * else end } // logger.debug("localVIList size -- " +
 		 * localVIList.size());
-		 * 
+		 *
 		 * if ("Amount".equals(sortBy)) { Collections.sort(localVIList, new
 		 * VenueComparatorByAmount()); } else if ("Area".equals(sortBy)) {
-		 * 
+		 *
 		 * Collections.sort(localVIList, new VenueComparatorByArea()); } else if
 		 * ("Name".equals(sortBy)) { Collections.sort(localVIList, new
 		 * VenueComparatorByName()); } return localVIList;
-		 * 
+		 *
 		 * // } else { // return new ArrayList<ViewVenue>(); // }
 		 */
 	}
@@ -2111,6 +2352,79 @@ public class EventsManagedBean implements Serializable {
 	 */
 	public void setPackDesc(String packDesc) {
 		this.packDesc = packDesc;
+	}
+
+	/**
+	 * @return the finalVenueMap
+	 */
+	public HashMap getFinalVenueMap() {
+		return finalVenueMap;
+	}
+
+	/**
+	 * @param finalVenueMap
+	 *            the finalVenueMap to set
+	 */
+	public void setFinalVenueMap(HashMap finalVenueMap) {
+		this.finalVenueMap = finalVenueMap;
+	}
+
+	/**
+	 * @return the selHall
+	 */
+	public int getSelHall() {
+		return selHall;
+	}
+
+	/**
+	 * @param selHall
+	 *            the selHall to set
+	 */
+	public void setSelHall(int selHall) {
+		this.selHall = selHall;
+	}
+
+	/**
+	 * @return the finalServicesMap
+	 */
+	public HashMap getFinalServicesMap() {
+		return finalServicesMap;
+	}
+
+	/**
+	 * @param finalServicesMap
+	 *            the finalServicesMap to set
+	 */
+	public void setFinalServicesMap(HashMap finalServicesMap) {
+		this.finalServicesMap = finalServicesMap;
+	}
+
+	/**
+	 * @return the toSelectTab
+	 */
+	public String getToSelectTab() {
+		return toSelectTab;
+	}
+
+	/**
+	 * @param toSelectTab the toSelectTab to set
+	 */
+	public void setToSelectTab(String toSelectTab) {
+		this.toSelectTab = toSelectTab;
+	}
+
+	/**
+	 * @return the minDate
+	 */
+	public Date getMinDate() {
+		return minDate;
+	}
+
+	/**
+	 * @param minDate the minDate to set
+	 */
+	public void setMinDate(Date minDate) {
+		this.minDate = minDate;
 	}
 
 }
