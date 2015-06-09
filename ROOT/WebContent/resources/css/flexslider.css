@@ -113,7 +113,7 @@ html[xmlns] .slides {display: block;}
 *******************************************************************************/
 .flexslider-image-bg { background-size:cover !important; background-position:top center; height: 680px; }
 .flexslider-image-bg.flex-parallax { background-attachment:fixed !important }
-
+.fslider-image-bg { background-size:cover !important; background-position:top center; height: 500px;}
 
 
 
@@ -138,6 +138,7 @@ html[xmlns] .slides {display: block;}
 	.flexslider .slides .flex-caption h1  { font-size: 28px; margin-top: 20px;  line-height: 32px; }
 	.flexslider .slides .flex-caption p { font-size: 16px; }
 	.flexslider .slides .flex-caption .btn { margin: 15px 0 0; }
+	.fslider-image-bg { background-size:cover !important; background-position:top center; height: 200px; }
 }
 
 @media (max-width: 479px) {

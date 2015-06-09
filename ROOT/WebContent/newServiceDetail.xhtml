@@ -4,8 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<title>EventXpert - Celebrations Home Delivered..</title>
 	<meta name="description"
@@ -36,8 +35,8 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
 		rel='stylesheet' type='text/css' />
-	<link rel="stylesheet"
-		href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+	<link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css"
+		type="text/css" />
 	<link rel="stylesheet" href="/resources/css/animate.min.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 	<script type="text/javascript"
@@ -59,172 +58,197 @@
 	<script type="text/javascript" src="/resources/js/customs.js" />
 	<script type="text/javascript"
 		src="/resources/js/bootstrap-multiselect.js" />
+	<script type="text/javascript">
+		$('.carousel-sync').on(
+				'slide.bs.carousel',
+				function(ev) {
+					var dir = ev.direction == 'right' ? 'prev' : 'next';
+					$('.carousel-sync').not('.sliding').addClass('sliding')
+							.carousel(dir);
+				});
+		$('.carousel-sync').on('slid.bs.carousel', function(ev) {
+			$('.carousel-sync').removeClass('sliding');
+		});
+	</script>
 </h:head>
 <h:body>
+	<div id="qLoverlay"></div>
 
 	<div id="navbar-main">
 		<!-- Fixed navbar -->
 		<div class="navbar navbar-inverse navbar-fixed-top header-bg">
 			<div class="container">
-
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="navbar-collapse">
+						data-target=".navbar-collapse">
 						<img src="/resources/images/logo_small.png" />
 					</button>
-					<a class="navbar-brand hidden-xs" href="#home"><img
-						src="/resources/images/logo.png" /></a>
+					<a class="navbar-brand hidden-xs" href="#home"> <img
+						src="/resources/images/logo.png" />
+					</a>
 				</div>
 
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav ">
 						<li><a href="#" class="smoothScroll">Sign In</a></li>
 						<li><a href="#" class="smoothScroll">Sign Up</a></li>
-						<li><a href="#about-us" class="smoothScroll"> About Us</a></li>
+						<li><a href="#" class="smoothScroll"> About Us</a></li>
 						<li><a href="#contact" class="smoothScroll"> Contact Us</a></li>
 					</ul>
 				</div>
-
+				<!--/.nav-collapse -->
 			</div>
 		</div>
-
 	</div>
 
 	<section id="contact" class="get-in-wrapper">
 	<div class="container clearfix">
 		<div class="row mt-20">
 			<h2 class="text-color-02">
-				<a href="sresults.html"> &lt; </a>SWAGATH GRAND
+				<a href="newResults.jsf" class="text-color-02">&nbsp;&lt;&nbsp;</a>#{eventsManagedBean.popupViewServiceProvider.serviceProviderName}
 			</h2>
 		</div>
 		<div class="tab-style-1">
-			<ul class="nav-tabs clearfix" role="tablist">
-				<c:forEach id="foreachNew"
-					items="#{eventsManagedBean.servicePackges}"
-					var="srvc">
-					<li role="presentation"><a
-						href="home-page-with-flexslider.html##{srvc.packageName}" role="tab"
-						data-toggle="tab">#{srvc.packageName}</a></li>
-				</c:forEach>
-			</ul>
-
 			<div class="tab-content">
-				<c:forEach id="foreachNew"
-					items="#{eventsManagedBean.servicePackges}" var="srvc">
-					<div role="tabpanel" class="tab-pane fade" id="#{srvc.packageName}">
-						<div class="tab-content-inner-vendor">
-							<div class="content-info">
-								<div class="vendor">
-									<div class="item">
-										<div class="img">
-											<div id="main-slider" class="flex-set-height">
-												<div id="mainFlexSlider" class="flexslider flexslider-clear">
-													<ul class="slides">
-														<li class="slide"
-															data-thumb="http://devimg.circulostech.com/venue/2/4/IMG_9635.JPG">
-															<div class="fslider-image-bg"
-																style="background: url('http://devimg.circulostech.com/venue/2/4/IMG_9635.JPG') center top no-repeat;"></div>
-														</li>
-														<li class="slide"
-															data-thumb="images/slider/flexslider-02.jpg">
-															<div class="fslider-image-bg"
-																style="background: url('images/slider/flexslider-02.jpg') center top no-repeat;"></div>
-														</li>
-														<li class="slide"
-															data-thumb="images/slider/flexslider-03.jpg">
-															<div class="fslider-image-bg"
-																style="background: url('images/slider/flexslider-03.jpg') center top no-repeat;"></div>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="content">
-											<h3>#{eventsManagedBean.srvcpkg.packageName}</h3>
-											
-											<div class="row">
-												<div class="col-sm-6 col-xs-12">
-													<fieldset class="rating">
-														<input type="radio" id="star5" name="rating" value="5" /><label
-															for="star5" title="Rocks!">5 stars</label> <input
-															type="radio" id="star4" name="rating" value="4" /><label
-															for="star4" title="Pretty good">4 stars</label> <input
-															type="radio" id="star3" name="rating" value="3" /><label
-															for="star3" title="Meh">3 stars</label> <input
-															type="radio" id="star2" name="rating" value="2" /><label
-															for="star2" title="Kinda bad">2 stars</label> <input
-															type="radio" id="star1" name="rating" value="1" /><label
-															for="star1" title="Sucks big time">1 star</label>
-													</fieldset>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-6 col-xs-12">
-													<a>Link Review </a>&nbsp;&nbsp;&nbsp;<a>Read Review</a>
-												</div>
-											</div>
-											<h4>Rs. #{eventsManagedBean.getProjectedCost(eventsManagedBean.srvcpkg.finalAmount, eventsManagedBean.srvcpkg.unitOfCost)}</h4>
-											<p>South Indian, North Indian, Continental Specialists.</p>
-
-											<h4>Capacity : 500</h4>
-
-											<div class="cal">
-												<!-- Responsive calendar - START -->
-												<div class="responsive-calendar">
-													<div class="controls">
-														<a class="pull-left" data-go="prev"><div
-																class="btn btn-primary">&lt;-</div></a>
-														<h4>Availability</h4>
-														<a class="pull-right" data-go="next"><div
-																class="btn btn-primary">-&gt;</div></a>
+				<div class="tab-content-inner-vendor">
+					<div class="content-info">
+						<ul class="srv-pkg-list">
+							<c:forEach items="#{eventsManagedBean.servicePackges}"
+								var="service" varStatus="stat">
+								<li class="wow fadeIn clearfix">
+									<div class="vendor">
+										<div class="item">
+											<div class="img">
+												<div id="carousel-#{service.packageId}"
+													class="carousel slide carousel-sync" data-ride="carousel"
+													data-pause="false">
+													<div class="carousel-inner">
+														<div class="item active">
+															<img src="#{eventsManagedBean.populateServiceImages(service.packageId)}" />
+														</div>
+														<c:forEach id="foreachNew"
+															items="#{eventsManagedBean.servicePkgImages}"
+															var="imag">
+															<div class="item">
+																<img src="#{imag}" />
+															</div>
+														</c:forEach>
 													</div>
-													<hr />
-													<div class="day-headers">
-														<div class="day header">Mon</div>
-														<div class="day header">Tue</div>
-														<div class="day header">Wed</div>
-														<div class="day header">Thu</div>
-														<div class="day header">Fri</div>
-														<div class="day header">Sat</div>
-														<div class="day header">Sun</div>
-													</div>
-													<div class="days" data-group="days"></div>
+													<a class="left carousel-control"
+														href="#carousel-#{service.packageId}" data-slide="prev">
+														<span class="glyphicon glyphicon-chevron-left"></span>
+													</a> <a class="right carousel-control"
+														href="#carousel-#{service.packageId}" data-slide="next">
+														<span class="glyphicon glyphicon-chevron-right"></span>
+													</a>
 												</div>
-												<!-- Responsive calendar - END -->
 											</div>
-
-										</div>
-									</div>
-								</div>
-
-
-								<div class="container clearfix">
-									<div class="row">
-										<div class="">
-											<div class="inner">
-												<div class="content space-ltm-30">
-
-													<div class="section-header-3 col-md-7 col-md-offset-2">
-														<h2 class="text-color-02">DESCRIPTION</h2>
-														<p>#{eventsManagedBean.srvcpkg.packageName}</p>
+											<div class="content">
+												<h3>#{service.packageName}</h3>
+												<p>#{eventsManagedBean.popupViewServiceProvider.areaName},
+													#{eventsManagedBean.popupViewServiceProvider.cityName}</p>
+												<div class="row">
+													<div class="col-sm-6 col-xs-12">
+														<fieldset class="rating">
+															<input type="radio" id="star5" name="rating" value="5" /><label
+																for="star5" title="Rocks!">5 stars</label> <input
+																type="radio" id="star4" name="rating" value="4" /><label
+																for="star4" title="Pretty good">4 stars</label> <input
+																type="radio" id="star3" name="rating" value="3" /><label
+																for="star3" title="Meh">3 stars</label> <input
+																type="radio" id="star2" name="rating" value="2" /><label
+																for="star2" title="Kinda bad">2 stars</label> <input
+																type="radio" id="star1" name="rating" value="1" /><label
+																for="star1" title="Sucks big time">1 star</label>
+														</fieldset>
 													</div>
-													
+												</div>
+												<h4>Rs #{service.finalAmount}</h4>
+												<h4 class="text-color-02">DESCRIPTION</h4>
+												<div class="section-header-5">
+													<p>#{service.description}</p>
+												</div>
+												<div class="row" style="margin-top: 10px;">
+													<div class="col-sm-6 col-xs-12">
+														<p:commandButton style="float:right"
+															action="#{eventsManagedBean.selectedFinalServicePackage(service.packageId)}"
+															styleclass="btn btn-primary btn-block caps"
+															value="Book Now" />
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
+								</li>
+							</c:forEach>
+						</ul>
 					</div>
-				</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>
 	</section>
 
 
+	<section id="contact" class="">
+	<div class="container clearfix">
+		<div class="row">
+			<div class="section-header-3 col-md-8 col-md-offset-2">
+				<h2 class="text-color-02">GET IN TOUCH</h2>
+				<p>Virtually every kind of event can be planned through
+					EventXpert. Contact us today!.</p>
+			</div>
+			<!-- end of .section-header -->
+		</div>
+		<!-- end of .row -->
+		<div class="row mt-20">
+			<div class="col-xs-12 col-sm-6 col-md-6 xs-mb-50 wow fadeInLeft">
+				<h:form id="contantForm" method="post" class="contact-form"
+					action="#">
+					<div class="alert alert-success" style="display: none;"></div>
+					<div class="form-group">
+						<p:inputText type="text" styleClass="form-control"
+							name="conactName" placeholder="Your Name" />
+					</div>
+					<div class="form-group">
+						<p:inputText type="email" styleClass="form-control" name="email"
+							placeholder="Your Email" />
+					</div>
+					<div class="form-group">
+						<p:inputText type="text" styleClass="form-control" name="subject"
+							placeholder="Subject" />
+					</div>
+					<div class="form-group">
+						<p:inputTextarea styleClass="form-control" rows="4"
+							name="messagetext" placeholder="Message" />
+					</div>
+					<div class="form-group">
+						<p:commandButton type="submit" styleClass="btn btn-primary"
+							value="SEND" style="float: right; display: block;" />
+					</div>
+				</h:form>
+			</div>
 
+
+			<div class="col-xs-12 col-sm-6 col-md-6 wow fadeInRight"
+				data-wow-duration="1s">
+				<p class="address-item">
+					<span class="icon"><i class="fa fa-map-marker"></i></span>
+					17-1-382/15, Nagarjuna Colony, Vysalinagar(PO), Champapet ,
+					Hyderabad, 500079, Telangana
+				</p>
+				<p class="address-item">
+					<span class="icon"><i class="glyphicon glyphicon-earphone"></i></span>
+					Phone: +91-92931-30333 <br />
+				</p>
+				<p class="address-item">
+					<span class="icon"><i class="fa fa-envelope"></i></span> Support: <a
+						href="mailto:dowebstation@gamil.com">care@eventxpert.in</a> <br />
+				</p>
+			</div>
+		</div>
+	</div>
+	</section>
 
 	<footer class="footer" id="footer">
 	<div id="footer-bottom">
@@ -252,10 +276,9 @@
 	</footer>
 	<!-- /END FOOTER -->
 
-
-
-
-
+	<div id="back-to-top">
+		<a href="home-page-with-flexslider.html#">Back to Top</a>
+	</div>
 
 </h:body>
 </html>

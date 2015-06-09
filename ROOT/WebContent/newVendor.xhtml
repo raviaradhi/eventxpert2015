@@ -36,8 +36,8 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
 		rel='stylesheet' type='text/css' />
-	<link rel="stylesheet"
-		href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+	<link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css"
+		type="text/css" />
 	<link rel="stylesheet" href="/resources/css/animate.min.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 	<script type="text/javascript"
@@ -59,6 +59,18 @@
 	<script type="text/javascript" src="/resources/js/customs.js" />
 	<script type="text/javascript"
 		src="/resources/js/bootstrap-multiselect.js" />
+	<script type="text/javascript">
+		$('.carousel-sync').on(
+				'slide.bs.carousel',
+				function(ev) {
+					var dir = ev.direction == 'right' ? 'prev' : 'next';
+					$('.carousel-sync').not('.sliding').addClass('sliding')
+							.carousel(dir);
+				});
+		$('.carousel-sync').on('slid.bs.carousel', function(ev) {
+			$('.carousel-sync').removeClass('sliding');
+		});
+	</script>
 </h:head>
 <h:body>
 
@@ -90,133 +102,138 @@
 
 	</div>
 
-	<section id="contact" class="get-in-wrapper">
-	<div class="container clearfix">
-		<div class="row mt-20">
-			<h2 class="text-color-02">
-				<a href="sresults.html"> &lt; </a>SWAGATH GRAND
-			</h2>
-		</div>
-		<div class="tab-style-1">
-			<ul class="nav-tabs clearfix" role="tablist">
-				<c:forEach id="foreachNew"
-					rendered="#{not empty eventsManagedBean.hallMap}"
-					items="#{eventsManagedBean.hallMap.entrySet().toArray()}"
-					varStatus="stat" var="allS">
-					<li role="presentation"><a
-						href="home-page-with-flexslider.html##{allS.key}" role="tab"
-						data-toggle="tab">#{allS.key}#{allS.value}</a></li>
-				</c:forEach>
-			</ul>
-
-			<div class="tab-content">
-				<c:forEach id="foreachNew"
-					rendered="#{not empty eventsManagedBean.hallMap}"
-					items="#{eventsManagedBean.hallMap.entrySet().toArray()}"
-					varStatus="stat" var="allS">
-					<div role="tabpanel" class="tab-pane fade" id="#{allS.key}">
-						<div class="tab-content-inner-vendor">
-							<div class="content-info">
-								<div class="vendor">
-									<div class="item">
-										<div class="img">
-											<div id="main-slider" class="flex-set-height">
-												<div id="mainFlexSlider" class="flexslider flexslider-clear">
-													<ul class="slides">
-														<li class="slide"
-															data-thumb="http://devimg.circulostech.com/venue/2/4/IMG_9635.JPG">
-															<div class="fslider-image-bg"
-																style="background: url('http://devimg.circulostech.com/venue/2/4/IMG_9635.JPG') center top no-repeat;"></div>
-														</li>
-														<li class="slide"
-															data-thumb="images/slider/flexslider-02.jpg">
-															<div class="fslider-image-bg"
-																style="background: url('images/slider/flexslider-02.jpg') center top no-repeat;"></div>
-														</li>
-														<li class="slide"
-															data-thumb="images/slider/flexslider-03.jpg">
-															<div class="fslider-image-bg"
-																style="background: url('images/slider/flexslider-03.jpg') center top no-repeat;"></div>
-														</li>
-													</ul>
+	<h:form>
+			<section id="contact" class="get-in-wrapper">
+			<div class="container clearfix">
+				<div class="row mt-20">
+					<h2 class="text-color-02">
+						<a href="newResults.jsf" class="text-color-02">&nbsp;&lt;&nbsp;</a>#{eventsManagedBean.popupViewVenue.venueName}
+					</h2>
+				</div>
+				<div class="tab-style-1">
+					<ul class="nav-tabs clearfix" role="tablist">
+						<c:forEach id="foreachNew"
+							rendered="#{not empty eventsManagedBean.hallMap}"
+							items="#{eventsManagedBean.hallMap.entrySet().toArray()}"
+							varStatus="stat" var="allS">
+							<li role="presentation"><a
+								href="home-page-with-flexslider.html##{allS.key}" role="tab"
+								data-toggle="tab">#{allS.value}</a></li>
+						</c:forEach>
+						<li role="presentation"><a class="active"
+							href="home-page-with-flexslider.html#profile" role="tab"
+							data-toggle="tab">#{eventsManagedBean.popupViewVenue.venueName}</a></li>
+					</ul>
+	
+					<div class="tab-content">
+						<c:forEach id="foreachNew"
+							rendered="#{not empty eventsManagedBean.hallMap}"
+							items="#{eventsManagedBean.hallMap.entrySet().toArray()}"
+							varStatus="stat" var="allS">
+							<div role="tabpanel" class="tab-pane fade" id="#{allS.key}">
+								<div class="tab-content-inner-vendor">
+									<div class="content-info">
+										<div class="vendor">
+											<div class="item">
+												<div class="img">
+													<div id="carousel-#{allS.key}"
+														class="carousel slide carousel-sync" data-ride="carousel"
+														data-pause="false">
+														<div class="carousel-inner">
+															<div class="item active">
+																<img
+																	src="#{eventsManagedBean.populateHallImages(allS.key)}" />
+															</div>
+															<c:forEach id="foreachNew"
+																items="#{eventsManagedBean.hotelHallImages}" var="imag">
+																<div class="item">
+																	<img src="#{imag}" />
+																</div>
+															</c:forEach>
+														</div>
+														<a class="left carousel-control"
+															href="#carousel-#{allS.key}" data-slide="prev"> <span
+															class="glyphicon glyphicon-chevron-left"></span>
+														</a> <a class="right carousel-control"
+															href="#carousel-#{allS.key}" data-slide="next"> <span
+															class="glyphicon glyphicon-chevron-right"></span>
+														</a>
+													</div>
+												</div>
+												<div class="content">
+													<h3>#{eventsManagedBean.popupViewVenue.venueName}</h3>
+													<p>#{eventsManagedBean.popupViewVenue.areaName},
+														#{eventsManagedBean.popupViewVenue.cityName}</p>
+													<div class="row">
+														<div class="col-sm-6 col-xs-12">
+															<fieldset class="rating">
+																<input type="radio" id="star5" name="rating" value="5" /><label
+																	for="star5" title="Rocks!">5 stars</label> <input
+																	type="radio" id="star4" name="rating" value="4" /><label
+																	for="star4" title="Pretty good">4 stars</label> <input
+																	type="radio" id="star3" name="rating" value="3" /><label
+																	for="star3" title="Meh">3 stars</label> <input
+																	type="radio" id="star2" name="rating" value="2" /><label
+																	for="star2" title="Kinda bad">2 stars</label> <input
+																	type="radio" id="star1" name="rating" value="1" /><label
+																	for="star1" title="Sucks big time">1 star</label>
+															</fieldset>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-sm-6 col-xs-12">
+															<a>Link Review </a>&nbsp;&nbsp;&nbsp;<a>Read Review</a>
+														</div>
+													</div>
+													<h4>Rs.
+														#{eventsManagedBean.getCost(eventsManagedBean.popupViewVenue.finalCOST)}</h4>
+													<h4>Capacity : 500</h4>
+													<div class="cal">
+														<!-- Responsive calendar - START -->
+														<div class="responsive-calendar">
+															<div class="controls">
+																<a class="pull-left" data-go="prev"><div
+																		class="btn btn-primary">&lt;-</div></a>
+																<h4>Availability</h4>
+																<a class="pull-right" data-go="next"><div
+																		class="btn btn-primary">-&gt;</div></a>
+															</div>
+															<hr />
+															<div class="day-headers">
+																<div class="day header">Mon</div>
+																<div class="day header">Tue</div>
+																<div class="day header">Wed</div>
+																<div class="day header">Thu</div>
+																<div class="day header">Fri</div>
+																<div class="day header">Sat</div>
+																<div class="day header">Sun</div>
+															</div>
+															<div class="days" data-group="days"></div>
+														</div>
+														<!-- Responsive calendar - END -->
+													</div>
+													<p:commandButton
+														action="#{eventsManagedBean.showHallPackages}"
+														styleclass="btn btn-primary btn-block caps"
+														value="Select Hall &amp; Proceed to Book Package" />
 												</div>
 											</div>
 										</div>
-										<div class="content">
-											<h3>#{eventsManagedBean.popupViewVenue.venueName}</h3>
-											<p>#{eventsManagedBean.popupViewVenue.areaName},
-												#{eventsManagedBean.popupViewVenue.cityName}</p>
+										<div class="container clearfix">
 											<div class="row">
-												<div class="col-sm-6 col-xs-12">
-													<fieldset class="rating">
-														<input type="radio" id="star5" name="rating" value="5" /><label
-															for="star5" title="Rocks!">5 stars</label> <input
-															type="radio" id="star4" name="rating" value="4" /><label
-															for="star4" title="Pretty good">4 stars</label> <input
-															type="radio" id="star3" name="rating" value="3" /><label
-															for="star3" title="Meh">3 stars</label> <input
-															type="radio" id="star2" name="rating" value="2" /><label
-															for="star2" title="Kinda bad">2 stars</label> <input
-															type="radio" id="star1" name="rating" value="1" /><label
-															for="star1" title="Sucks big time">1 star</label>
-													</fieldset>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-6 col-xs-12">
-													<a>Link Review </a>&nbsp;&nbsp;&nbsp;<a>Read Review</a>
-												</div>
-											</div>
-											<h4>Rs.
-												#{eventsManagedBean.getCost(eventsManagedBean.popupViewVenue.finalCOST)}</h4>
-											<p>South Indian, North Indian, Continental Specialists.</p>
-
-											<h4>Capacity : 500</h4>
-
-											<div class="cal">
-												<!-- Responsive calendar - START -->
-												<div class="responsive-calendar">
-													<div class="controls">
-														<a class="pull-left" data-go="prev"><div
-																class="btn btn-primary">&lt;-</div></a>
-														<h4>Availability</h4>
-														<a class="pull-right" data-go="next"><div
-																class="btn btn-primary">-&gt;</div></a>
-													</div>
-													<hr />
-													<div class="day-headers">
-														<div class="day header">Mon</div>
-														<div class="day header">Tue</div>
-														<div class="day header">Wed</div>
-														<div class="day header">Thu</div>
-														<div class="day header">Fri</div>
-														<div class="day header">Sat</div>
-														<div class="day header">Sun</div>
-													</div>
-													<div class="days" data-group="days"></div>
-												</div>
-												<!-- Responsive calendar - END -->
-											</div>
-
-										</div>
-									</div>
-								</div>
-
-
-								<div class="container clearfix">
-									<div class="row">
-										<div class="">
-											<div class="inner">
-												<div class="content space-ltm-30">
-
-													<div class="section-header-3 col-md-7 col-md-offset-2">
-														<h2 class="text-color-02">DESCRIPTION</h2>
-														<p>#{eventsManagedBean.hallLocalMap.get(allS.key).description}</p>
-													</div>
-													<div class="section-header-3 col-md-7 col-md-offset-2">
-														<h2 class="text-color-02">Other Facilities</h2>
-														<p>Air Condition</p>
-														<p>Stage</p>
+												<div class="">
+													<div class="inner">
+														<div class="content space-ltm-30">
+															<div class="section-header-3 col-md-7 col-md-offset-2">
+																<h2 class="text-color-02">DESCRIPTION</h2>
+																<p>#{eventsManagedBean.hallLocalMap.get(allS.key).description}</p>
+															</div>
+															<div class="section-header-3 col-md-7 col-md-offset-2">
+																<h2 class="text-color-02">Other Facilities</h2>
+																<p>Air Condition</p>
+																<p>Stage</p>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -224,16 +241,53 @@
 									</div>
 								</div>
 							</div>
+						</c:forEach>
+						<div role="tabpanel" class="tab-pane fade in active" id="profile">
+							<div class="tab-content-inner-vendor">
+								<div class="content-info">
+									<div class="vendor">
+										<div class="item">
+											<div class="img">
+												<div id="carousel-profile"
+													class="carousel slide carousel-sync" data-ride="carousel"
+													data-pause="false">
+													<div class="carousel-inner">
+														<div class="item active">
+															<img src="#{eventDetailsManagedBean.hotelImages.get(0)}" />
+														</div>
+														<c:forEach id="foreachNew"
+															items="#{eventDetailsManagedBean.hotelImages}" var="imag">
+															<div class="item">
+																<img src="#{imag}" />
+															</div>
+														</c:forEach>
+													</div>
+													<a class="left carousel-control"
+														href="#carousel-#{allS.key}" data-slide="prev"> <span
+														class="glyphicon glyphicon-chevron-left"></span>
+													</a> <a class="right carousel-control"
+														href="#carousel-#{allS.key}" data-slide="next"> <span
+														class="glyphicon glyphicon-chevron-right"></span>
+													</a>
+												</div>
+											</div>
+											<div class="content">
+												<h3>#{eventsManagedBean.popupViewVenue.venueName}</h3>
+												<p>#{eventsManagedBean.popupViewVenue.areaName},
+													#{eventsManagedBean.popupViewVenue.cityName}</p>
+												<h4>Description</h4>
+												<p>#{eventsManagedBean.popupViewVenue.venueDesc}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</c:forEach>
+				</div>
 			</div>
-		</div>
-	</div>
-	</section>
-
-
-
+			</section>
+	</h:form>
 
 	<footer class="footer" id="footer">
 	<div id="footer-bottom">
