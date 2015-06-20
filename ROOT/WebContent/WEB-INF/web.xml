@@ -146,10 +146,6 @@
   <location>/errorPage.jsf</location>   
 </error-page>
 
-<error-page>  
-    <location>/errorPage.jsf</location>   
-</error-page>
-
  <error-page>  
   <error-code>400</error-code>  
   <location>/errorPage.jsf</location>   
