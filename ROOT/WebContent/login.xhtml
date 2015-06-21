@@ -1,0 +1,223 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id="navbar-main">
+		<div class="navbar navbar-inverse navbar-fixed-top header-bg">
+			<div class="container">
+
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="navbar-collapse">
+						<img src="/resources/images/logo_small.png" />
+					</button>
+					<a class="navbar-brand" href="#home"><img
+						src="/resources/images/logo.png" /></a>
+				</div>
+
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav ">
+						<h:panelGroup rendered="#{sessionScope['userId'].email!=null}">
+							<li><a href="#" class="smoothScroll">#{sessionScope['userId'].firstname}</a></li>
+							<li><a href="#" class="smoothScroll">#{sessionScope['userId'].email}</a></li>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{sessionScope['userId'].email==null}">
+							<li><a id="myBtn" href="#" class="smoothScroll">Sign In</a></li>
+							<li><a href="#" class="smoothScroll">Sign Up</a></li>
+						</h:panelGroup>
+						<li><a href="#about-us" class="smoothScroll"> About Us</a></li>
+						<li><a href="#contact" class="smoothScroll"> Contact Us</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<div id="find-room-form-wrapper" class="light-bg">
+		<div class="container">
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+					<h:form role="form" prependId="false">
+						<h:panelGroup>
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<div class="section-header-3">
+										<div class="collapse in" id="login_head">
+											<h2 class="text-color-02">
+												<span class="glyphicon glyphicon-lock"></span>SIGN
+												INTO YOUR ACCOUNT
+											</h2>
+										</div>
+										<div class="collapse" id="register_head">
+											<h2 class="text-color-02">
+												<span class="glyphicon glyphicon-lock"></span>SIGN UP
+											</h2>
+										</div>
+									</div>
+								</div>
+								<div class="modal-body" style="padding: 0px 50px;">
+									<div class="row">
+										<p:messages autoUpdate="true" />
+										<div id="login_form" class="collapse in">
+											<a href="#{customerManagedBean.facebookUrlAuth}"> <p:graphicImage
+													height="60px" width="300px" value="/images/facebook.jpg" />
+											</a> <a href="#{customerManagedBean.googleUrlAuth}"
+												id="signInButton"> <p:graphicImage height="60px"
+													width="300px" value="/images/Google.jpg" />
+											</a>
+											<p:graphicImage value="/images/orimage.jpg" />
+											<br />
+											<h:panelGroup id="loginPanel">
+												<div id="login_fields_form" class="collapse in">
+													<div class="form-group">
+														<p:inputText id="userIdLD" required="true" label="Email"
+															styleClass="form-control" placeholder="Your Email"
+															value="#{customerManagedBean.customerInfo.email}" />
+													</div>
+													<div class="form-group">
+														<p:password maxlength="15" id="passwordLD" required="true"
+															styleClass="form-control" label="Password"
+															placeholder="Password"
+															value="#{customerManagedBean.customerInfo.password}" />
+													</div>
+													<div class="section-header-3 col-md-8 col-md-offset-2">
+														<p>
+															<a href="#" id="forget_fields_click"
+																data-toggle="collapse">Forgot Password?</a>
+														</p>
+													</div>
+													<div class="row">
+														<div class="col-sm-4 pull-right">
+															<p:commandButton ajax="true" validateClient="true"
+																process="loginPanel"
+																styleClass="btn btn-success btn-block" value="SIGN IN"
+																action="#{customerManagedBean.loginDlg}"></p:commandButton>
+														</div>
+													</div>
+													<div class="row">
+														<p class="pull-right">
+															Not a member? <a href="#" id="register_click"
+																data-toggle="collapse">Join</a>
+														</p>
+													</div>
+												</div>
+											</h:panelGroup>
+											<h:panelGroup id="forgotPanel">
+												<div id="forgot_fields_form" class="collapse">
+													<div class="form-group">
+														<p:inputText required="true" label="Email"
+															styleClass="form-control" placeholder="Your Email"
+															value="#{customerManagedBean.customerInfo.email}" />
+													</div>
+													<div class="section-header-3 col-md-8 col-md-offset-2">
+														<p>
+															<a href="#" id="login_fields_click"
+																data-toggle="collapse">Return to Login</a>
+														</p>
+													</div>
+													<div class="row">
+														<div class="col-sm-4 pull-right">
+															<p:commandButton ajax="true" process="forgotPanel"
+																styleClass="btn btn-success btn-block"
+																partialSubmit="true" value="SUBMIT"
+																action="#{customerManagedBean.forgotPswd}" />
+														</div>
+													</div>
+												</div>
+											</h:panelGroup>
+										</div>
+										<h:panelGroup id="registerPanel">
+											<div id="register_form" class="collapse">
+												<div class="row">
+													<div class="section-header-3 col-md-8 col-md-offset-2">
+														<p>
+															Already a member? <a href="#" id="login_click"
+																data-toggle="collapse">Login</a>
+														</p>
+													</div>
+												</div>
+												<div class="form-group">
+													<p:inputText id="email" required="true" label="Email"
+														value="#{customerManagedBean.customerInfo.email}"
+														styleClass="form-control" placeholder="Email"
+														validatorMessage="Invalid email format  (or)  Email is already registered. Please try to login">
+														<f:validateRegex
+															pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+														<f:validator validatorId="emailValidator" />
+														<p:ajax event="change" update="email" />
+													</p:inputText>
+												</div>
+												<div class="form-group">
+													<p:password placeholder="Password"
+														promptLabel="Should be a combination of alphabets and numbers and special characters"
+														feedback="true" maxlength="20" id="password"
+														required="true" label="Password" styleClass="form-control"
+														value="#{customerManagedBean.customerInfo.password}"
+														match="password1" inline="true">
+														<f:validateLength minimum="8" maximum="20" />
+													</p:password>
+												</div>
+												<div class="form-group">
+													<p:password placeholder="Confirm Password"
+														promptLabel="Should be a combination of alphabets and numbers and special characters"
+														feedback="true" maxlength="20" id="password1"
+														required="true" label="Confirm Password"
+														styleClass="form-control"
+														value="#{customerManagedBean.customerInfo.password}"
+														inline="true">
+														<f:validateLength minimum="8" maximum="20" />
+													</p:password>
+												</div>
+												<div class="row">
+													<div class="col-sm-4 pull-right">
+														<p:commandButton ajax="true" process="registerPanel"
+															styleClass="btn btn-success btn-block" value="SIGN UP"
+															action="#{customerManagedBean.saveCustomer}"></p:commandButton>
+													</div>
+												</div>
+											</div>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</h:panelGroup>
+					</h:form>
+				</div>
+			</div>
+
+			<script>
+				$(document).ready(function() {
+					$("#myBtn").click(function() {
+						$("#myModal").modal();
+					});
+				});
+			</script>
+			<script>
+				$('#login_click').on('click', function() {
+					$('#register_form').toggle();
+					$('#login_form').toggle();
+					$('#login_head').toggle();
+					$('#register_head').toggle();
+				});
+				$('#register_click').on('click', function() {
+					$('#login_form').toggle();
+					$('#register_form').toggle();
+					$('#login_head').toggle();
+					$('#register_head').toggle();
+				});
+				$('#login_fields_click').on('click', function() {
+					$('#forgot_fields_form').toggle();
+					$('#login_fields_form').toggle();
+				});
+				$('#forget_fields_click').on('click', function() {
+					$('#forgot_fields_form').toggle();
+					$('#login_fields_form').toggle();
+				});
+			</script>
+
+		</div>
+	</div>
+</ui:composition>
