@@ -4,13 +4,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>EventXpert - Celebrations Home Delivered..</title>
 	<meta name="description"
-		content="Event Management and Services Website" />
+			content="Event Management and Services Website" />
 	<meta name="keywords"
-		content="events, event, marriages, ceremonies, hyderabad, festivals, corporate events, booking, culture, catering, venues, function halls, banquet halls, hotels, entertainment, decoration, decorator, dj, photographer, rituals " />
+			content="events, event, marriages, ceremonies, hyderabad, festivals, corporate events, booking, culture, catering, venues, function halls, banquet halls, hotels, entertainment, decoration, decorator, dj, photographer, rituals " />
 	<meta name="author" content="eventxpert" />
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -35,8 +36,8 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
 		rel='stylesheet' type='text/css' />
-	<link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css"
-		type="text/css" />
+	<link rel="stylesheet"
+		href="/resources/css/bootstrap-multiselect.css" type="text/css" />
 	<link rel="stylesheet" href="/resources/css/animate.min.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 	<script type="text/javascript"
@@ -45,19 +46,13 @@
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
 	<link href="/resources/bootstrap/css/bootstrap.min.css"
 		rel="stylesheet" type="text/css" />
-	<script type="text/javascript"
-		src="/resources/bootstrap/js/bootstrap.min.js" />
-	<link href="/resources/bootstrap/css/bootstrap-multiselect.css"
-		rel="stylesheet" type="text/css" />
-	<script type="text/javascript"
-		src="/resources/bootstrap/js/bootstrap-multiselect.js" />
+	<script type="text/javascript" src="/resources/js/device.min.js" />
+	
+	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>	
 	<script type="text/javascript" src="/resources/js/device.min.js" />
 	<script type="text/javascript" src="/resources/js/plugins.js" />
-	<script type="text/javascript"
-		src="/resources/js/jquery.customSelect.js" />
+	<script type="text/javascript" src="/resources/js/jquery.customSelect.js" />
 	<script type="text/javascript" src="/resources/js/customs.js" />
-	<script type="text/javascript"
-		src="/resources/js/bootstrap-multiselect.js" />
 	<script type="text/javascript">
 		$('.carousel-sync').on(
 				'slide.bs.carousel',
@@ -71,35 +66,12 @@
 		});
 	</script>
 </h:head>
+	
 <h:body>
+
 	<div id="qLoverlay"></div>
 
-	<div id="navbar-main">
-		<!-- Fixed navbar -->
-		<div class="navbar navbar-inverse navbar-fixed-top header-bg">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-collapse">
-						<img src="/resources/images/logo_small.png" />
-					</button>
-					<a class="navbar-brand hidden-xs" href="#home"> <img
-						src="/resources/images/logo.png" />
-					</a>
-				</div>
-
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav ">
-						<li><a href="#" class="smoothScroll">Sign In</a></li>
-						<li><a href="#" class="smoothScroll">Sign Up</a></li>
-						<li><a href="#" class="smoothScroll"> About Us</a></li>
-						<li><a href="#contact" class="smoothScroll"> Contact Us</a></li>
-					</ul>
-				</div>
-				<!--/.nav-collapse -->
-			</div>
-		</div>
-	</div>
+	<ui:include src="login.xhtml" />
 
 	<section id="contact" class="get-in-wrapper">
 	<div class="container clearfix">

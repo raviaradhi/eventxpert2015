@@ -5369,3 +5369,27 @@ ul.featured-img-list li .inner .contentInr {
 /******* SUMMARY PAGE STYLES **************/
 
 /***************************************************************************/
+
+
+.modal-header,.close {
+	color: #000000 !important;
+	font-size: 30px;
+	border-bottom: 0px solid #ffffff !important;
+	padding: 15px 15px 0 15px !important;
+}
+
+.modal-footer {
+	background-color: #f9f9f9;
+}
+
+.hidden {
+	display: none;
+}
+
+/******* STYLE EDITS - VJ **************/
+
+/***************************************************************************/
+
+.navbar-nav {
+float: right;
+}
