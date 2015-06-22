@@ -44,11 +44,11 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">X</button>
-									<div class="section-header-3">
+									<div class="login-header-3 col-md-offset-1">
 										<div class="collapse in" id="login_head">
 											<h2 class="text-color-02">
-												<span class="glyphicon glyphicon-lock"></span>SIGN
-												INTO YOUR ACCOUNT
+												<span class="glyphicon glyphicon-lock"></span>SIGN INTO YOUR
+												ACCOUNT
 											</h2>
 										</div>
 										<div class="collapse" id="register_head">
@@ -62,34 +62,38 @@
 									<div class="row">
 										<p:messages autoUpdate="true" />
 										<div id="login_form" class="collapse in">
-											<a href="#{customerManagedBean.facebookUrlAuth}"> <p:graphicImage
-													height="60px" width="300px" value="/images/facebook.jpg" />
-											</a> <a href="#{customerManagedBean.googleUrlAuth}"
-												id="signInButton"> <p:graphicImage height="60px"
-													width="300px" value="/images/Google.jpg" />
-											</a>
-											<p:graphicImage value="/images/orimage.jpg" />
-											<br />
+											<div class="col-md-8 col-md-offset-2">
+												<a href="#{customerManagedBean.facebookUrlAuth}"> <p:graphicImage
+														height="60px" width="300px" value="/images/facebook.jpg" />
+												</a> <a href="#{customerManagedBean.googleUrlAuth}"
+													id="signInButton"> <p:graphicImage height="60px"
+														width="300px" value="/images/Google.jpg" />
+												</a>
+												<p:graphicImage value="/images/orimage.jpg" />
+												<br />
+											</div>
 											<h:panelGroup id="loginPanel">
 												<div id="login_fields_form" class="collapse in">
-													<div class="form-group">
-														<p:inputText id="userIdLD" required="true" label="Email"
-															styleClass="form-control" placeholder="Your Email"
-															value="#{customerManagedBean.customerInfo.email}" />
+													<div class="col-md-8 col-md-offset-2">
+														<div class="form-group">
+															<p:inputText id="userIdLD" required="true" label="Email"
+																styleClass="form-control" placeholder="Your Email"
+																value="#{customerManagedBean.customerInfo.email}" />
+														</div>
+														<div class="form-group">
+															<p:password maxlength="15" id="passwordLD"
+																required="true" styleClass="form-control"
+																label="Password" placeholder="Password"
+																value="#{customerManagedBean.customerInfo.password}" />
+														</div>
+														<div class="form-group">
+															<p>
+																<a href="#" id="forget_fields_click"
+																	data-toggle="collapse">Forgot Password?</a>
+															</p>
+														</div>
 													</div>
-													<div class="form-group">
-														<p:password maxlength="15" id="passwordLD" required="true"
-															styleClass="form-control" label="Password"
-															placeholder="Password"
-															value="#{customerManagedBean.customerInfo.password}" />
-													</div>
-													<div class="section-header-3 col-md-8 col-md-offset-2">
-														<p>
-															<a href="#" id="forget_fields_click"
-																data-toggle="collapse">Forgot Password?</a>
-														</p>
-													</div>
-													<div class="row">
+													<div class="row form-group">
 														<div class="col-sm-4 pull-right">
 															<p:commandButton ajax="true" validateClient="true"
 																process="loginPanel"
@@ -97,8 +101,8 @@
 																action="#{customerManagedBean.loginDlg}"></p:commandButton>
 														</div>
 													</div>
-													<div class="row">
-														<p class="pull-right">
+													<div class="row form-group">
+														<p class="col-sm-4 pull-right">
 															Not a member? <a href="#" id="register_click"
 																data-toggle="collapse">Join</a>
 														</p>
@@ -107,18 +111,20 @@
 											</h:panelGroup>
 											<h:panelGroup id="forgotPanel">
 												<div id="forgot_fields_form" class="collapse">
-													<div class="form-group">
-														<p:inputText required="true" label="Email"
-															styleClass="form-control" placeholder="Your Email"
-															value="#{customerManagedBean.customerInfo.email}" />
+													<div class="col-md-8 col-md-offset-2">
+														<div class="form-group">
+															<p:inputText required="true" label="Email"
+																styleClass="form-control" placeholder="Your Email"
+																value="#{customerManagedBean.customerInfo.email}" />
+														</div>
+														<div class="form-group">
+															<p>
+																<a href="#" id="login_fields_click"
+																	data-toggle="collapse">Return to Login</a>
+															</p>
+														</div>
 													</div>
-													<div class="section-header-3 col-md-8 col-md-offset-2">
-														<p>
-															<a href="#" id="login_fields_click"
-																data-toggle="collapse">Return to Login</a>
-														</p>
-													</div>
-													<div class="row">
+													<div class="row form-group">
 														<div class="col-sm-4 pull-right">
 															<p:commandButton ajax="true" process="forgotPanel"
 																styleClass="btn btn-success btn-block"
@@ -128,50 +134,52 @@
 													</div>
 												</div>
 											</h:panelGroup>
+
 										</div>
 										<h:panelGroup id="registerPanel">
 											<div id="register_form" class="collapse">
-												<div class="row">
-													<div class="section-header-3 col-md-8 col-md-offset-2">
+												<div class="col-md-8 col-md-offset-2">
+													<div class="form-group">
 														<p>
 															Already a member? <a href="#" id="login_click"
 																data-toggle="collapse">Login</a>
 														</p>
 													</div>
+													<div class="form-group">
+														<p:inputText id="email" required="true" label="Email"
+															value="#{customerManagedBean.customerInfo.email}"
+															styleClass="form-control" placeholder="Email"
+															validatorMessage="Invalid email format  (or)  Email is already registered. Please try to login">
+															<f:validateRegex
+																pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+															<f:validator validatorId="emailValidator" />
+															<p:ajax event="change" update="email" />
+														</p:inputText>
+													</div>
+													<div class="form-group">
+														<p:password placeholder="Password"
+															promptLabel="Should be a combination of alphabets and numbers and special characters"
+															feedback="true" maxlength="20" id="password"
+															required="true" label="Password"
+															styleClass="form-control"
+															value="#{customerManagedBean.customerInfo.password}"
+															match="password1" inline="true">
+															<f:validateLength minimum="8" maximum="20" />
+														</p:password>
+													</div>
+													<div class="form-group">
+														<p:password placeholder="Confirm Password"
+															promptLabel="Should be a combination of alphabets and numbers and special characters"
+															feedback="true" maxlength="20" id="password1"
+															required="true" label="Confirm Password"
+															styleClass="form-control"
+															value="#{customerManagedBean.customerInfo.password}"
+															inline="true">
+															<f:validateLength minimum="8" maximum="20" />
+														</p:password>
+													</div>
 												</div>
-												<div class="form-group">
-													<p:inputText id="email" required="true" label="Email"
-														value="#{customerManagedBean.customerInfo.email}"
-														styleClass="form-control" placeholder="Email"
-														validatorMessage="Invalid email format  (or)  Email is already registered. Please try to login">
-														<f:validateRegex
-															pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-														<f:validator validatorId="emailValidator" />
-														<p:ajax event="change" update="email" />
-													</p:inputText>
-												</div>
-												<div class="form-group">
-													<p:password placeholder="Password"
-														promptLabel="Should be a combination of alphabets and numbers and special characters"
-														feedback="true" maxlength="20" id="password"
-														required="true" label="Password" styleClass="form-control"
-														value="#{customerManagedBean.customerInfo.password}"
-														match="password1" inline="true">
-														<f:validateLength minimum="8" maximum="20" />
-													</p:password>
-												</div>
-												<div class="form-group">
-													<p:password placeholder="Confirm Password"
-														promptLabel="Should be a combination of alphabets and numbers and special characters"
-														feedback="true" maxlength="20" id="password1"
-														required="true" label="Confirm Password"
-														styleClass="form-control"
-														value="#{customerManagedBean.customerInfo.password}"
-														inline="true">
-														<f:validateLength minimum="8" maximum="20" />
-													</p:password>
-												</div>
-												<div class="row">
+												<div class="row form-group">
 													<div class="col-sm-4 pull-right">
 														<p:commandButton ajax="true" process="registerPanel"
 															styleClass="btn btn-success btn-block" value="SIGN UP"

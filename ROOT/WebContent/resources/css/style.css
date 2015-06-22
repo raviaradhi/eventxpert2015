@@ -909,7 +909,7 @@ ul.border-bottom li:last-child {
 	padding: 20px 30px 5px;
 	position: absolute;
 	top: -110px;
-	z-index: 9999;
+	z-index: 999 !important;
 	width: 100%;
 }
 
@@ -5391,5 +5391,30 @@ ul.featured-img-list li .inner .contentInr {
 /***************************************************************************/
 
 .navbar-nav {
-float: right;
+	float: right;
+}
+
+@media ( min-width : 768px) {
+.modal-content {
+	width: 85% !important;
+}
+}
+
+
+.login-header-3 {
+	text-align: center;
+	text-align: center;
+}
+
+.login-header-3 h2 {
+	font-weight: 600;
+	margin: 20px 0 20px;
+	display: inline-block;
+	text-transform: uppercase;
+	font-size: 24px;
+	color: #777;
+	line-height: 24px;
+	border-top: 1px solid #EC4979;
+	border-bottom: 1px solid #EC4979;
+	padding: 5px 0 4px;
 }
