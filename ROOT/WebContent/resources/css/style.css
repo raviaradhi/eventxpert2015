@@ -957,54 +957,60 @@ ul.border-bottom li:last-child {
 /***************************************************************************/
 /* REATING */
 /***************************************************************************/
+
 .rating {
-	float: left;
+    float:left;
 }
 
-/* :not(:checked) is a filter, so that browsers that donâ€™t support :checked donâ€™t 
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
    follow these rules. Every browser that supports :checked also supports :not(), so
-   it doesnâ€™t make the test unnecessarily selective */
-.rating:not  (:checked  ) >input {
-	position: absolute;
-	top: -9999px;
-	clip: rect(0, 0, 0, 0);
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
 }
 
-.rating:not  (:checked  ) >label {
-	float: right;
-	width: 1em;
-	padding: 0 .1em;
-	overflow: hidden;
-	white-space: nowrap;
-	cursor: pointer;
-	font-size: 150%;
-	line-height: 1.2;
-	color: #ddd;
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:150%;
+    line-height:1.2;
+    color:#ddd;
 }
 
-.rating:not  (:checked  ) >label:before {
-	content: 'â˜… ';
+.rating:not(:checked) > label:before {
+    content: '★ ';
 }
 
-.rating>input:checked   ~ label {
-	color: #e52b8b;
+.rating > input:checked ~ label {
+    color: #e52b8b;
+    
 }
 
-.rating:not  (:checked  ) >label:hover,.rating:not  (:checked  ) >label:hover 
-	 ~ label {
-	color: #e52b8b;
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #e52b8b;
+    
 }
 
-.rating>input:checked+label:hover,.rating>input:checked+label:hover   ~
-	label,.rating>input:checked   ~ label:hover,.rating>input:checked   ~
-	label:hover   ~ label,.rating>label:hover   ~ input:checked   ~ label {
-	color: #e52b8b;
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #e52b8b;
+    
 }
 
-.rating>label:active {
-	position: relative;
-	top: 2px;
-	left: 2px;
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
 }
 
 .get-in-wrapper {

@@ -9,9 +9,9 @@
 <h:head>
 	<title>EventXpert - Celebrations Home Delivered..</title>
 	<meta name="description"
-			content="Event Management and Services Website" />
+		content="Event Management and Services Website" />
 	<meta name="keywords"
-			content="events, event, marriages, ceremonies, hyderabad, festivals, corporate events, booking, culture, catering, venues, function halls, banquet halls, hotels, entertainment, decoration, decorator, dj, photographer, rituals " />
+		content="events, event, marriages, ceremonies, hyderabad, festivals, corporate events, booking, culture, catering, venues, function halls, banquet halls, hotels, entertainment, decoration, decorator, dj, photographer, rituals " />
 	<meta name="author" content="eventxpert" />
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -36,8 +36,8 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
 		rel='stylesheet' type='text/css' />
-	<link rel="stylesheet"
-		href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+	<link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css"
+		type="text/css" />
 	<link rel="stylesheet" href="/resources/css/animate.min.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 	<script type="text/javascript"
@@ -47,12 +47,16 @@
 	<link href="/resources/bootstrap/css/bootstrap.min.css"
 		rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/resources/js/device.min.js" />
-	
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>	
+	<script type="text/javascript"
+		src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/resources/js/device.min.js" />
 	<script type="text/javascript" src="/resources/js/plugins.js" />
-	<script type="text/javascript" src="/resources/js/jquery.customSelect.js" />
+	<script type="text/javascript"
+		src="/resources/js/jquery.customSelect.js" />
 	<script type="text/javascript" src="/resources/js/customs.js" />
+	<link href="/resources/css/responsive-calendar.css" rel="stylesheet"
+		type="text/css" />
+	<script src="/resources/js/responsive-calendar.js"></script>
 	<script type="text/javascript">
 		$('.carousel-sync').on(
 				'slide.bs.carousel',
@@ -65,8 +69,24 @@
 			$('.carousel-sync').removeClass('sliding');
 		});
 	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".responsive-calendar").responsiveCalendar({
+				time : '2015-06',
+				events : {
+					"2015-06-30" : {
+						"number" : 5
+					},
+					"2015-07-03" : {
+						"number" : 1
+					},
+					"2013-06-12" : {}
+				}
+			});
+		});
+	</script>
 </h:head>
-	
+
 <h:body>
 
 	<ui:include src="login.xhtml" />
@@ -160,11 +180,9 @@
 													<!-- Responsive calendar - START -->
 													<div class="responsive-calendar">
 														<div class="controls">
-															<a class="pull-left" data-go="prev"><div
-																	class="btn btn-primary">&lt;-</div></a>
-															<h4>Availability</h4>
-															<a class="pull-right" data-go="next"><div
-																	class="btn btn-primary">-&gt;</div></a>
+															<a class="pull-left" data-go="prev"><div class="btn btn-primary">Prev</div></a>
+															<h4>June</h4>
+															<a class="pull-right" data-go="next"><div class="btn btn-primary">Next</div></a>
 														</div>
 														<hr />
 														<div class="day-headers">
