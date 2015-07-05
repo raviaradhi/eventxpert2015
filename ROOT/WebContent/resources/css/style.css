@@ -5400,21 +5400,12 @@ ul.featured-img-list li .inner .contentInr {
 	float: right;
 }
 
-@media (min-width: 768px)
-.navbar-nav {
-  float: right;
-  margin: 0;
-}
-
-@media ( min-width : 768px) 
+@media ( min-width : 768px) {
 .modal-content {
 	width: 85% !important;
 }
-
-@media only screen and (max-width: 992px)
-#find-room-form-wrapper .inner {
-  top: 0px;
 }
+
 
 .login-header-3 {
 	text-align: center;
