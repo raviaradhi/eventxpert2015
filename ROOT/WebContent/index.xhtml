@@ -134,16 +134,21 @@
 									<p:selectOneMenu id="console"
 										value="#{eventsManagedBean.selectedEvent}"
 										name="custom-select-1" styleClass="form-control styled-select">
-										<f:selectItem itemLabel="Event Type" itemValue="" />
+										<f:selectItem itemLabel="Event Type" itemDisabled="true" />
 										<f:selectItems value="#{eventsManagedBean.eventList}" />
 									</p:selectOneMenu>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6">
 								<div class="form-group form-icon">
-									<p:calendar value="#{eventsManagedBean.eventDate}"
-										placeholder="Date" styleClass="form-control styled-select"
-										widgetVar="myCalendar" />
+									<p:calendar widgetVar="myCalendar" value="#{eventsManagedBean.eventDate}"
+										placeholder="Date" styleClass="form-control styled-select" />
+									<script type="text/javascript">
+										jQuery(document).ready(
+												function() {
+													myCalendar.jqEl.datepicker("option", "minDate", +0);
+												});
+									</script>
 								</div>
 							</div>
 						</div>
@@ -155,7 +160,7 @@
 									<p:selectOneMenu value="#{eventsManagedBean.venueRadio}"
 										name="custom-select-1" label="Venue"
 										styleClass="form-control styled-select">
-										<f:selectItem itemLabel="Venue" itemValue="" />
+										<f:selectItem itemLabel="Venue" itemDisabled="true" />
 										<f:selectItems value="#{eventsManagedBean.venueList}" />
 									</p:selectOneMenu>
 								</div>
@@ -174,7 +179,7 @@
 								<div class="form-group">
 									<p:selectOneMenu value="#{eventsManagedBean.selectedGuest}"
 										name="custom-select-1" styleClass="form-control styled-select">
-										<f:selectItem itemLabel="Guests" itemValue="" />
+										<f:selectItem itemLabel="Guests" itemDisabled="true" />
 										<f:selectItems value="#{eventsManagedBean.guests}" />
 									</p:selectOneMenu>
 								</div>
@@ -467,15 +472,23 @@
 <!-- /END FOOTER -->
 
 
-<script type="text/javascript">
-		jQuery(document).ready(function() {
+	<script type="text/javascript">
+		$(function() {
 			myCalendar.jqEl.datepicker("option", "minDate", +1);
-			myCalendar.jqEl.datepicker("option", "maxDate", +180);
 		});
 	</script>
-<style type="text/css">
-.ui-selectcheckboxmenu-header { 
-	display: none; 
+	<style type="text/css">
+.ui-selectcheckboxmenu-header {
+	display: none;
+}
+
+.ui-selectonemenu.with-placeholder .ui-selectonemenu-label {
+	color: #ccc;
+}
+
+.ui-selectonemenu-panel.hide-disabled .ui-selectonemenu-list-item.ui-state-disabled
+	{
+	display: none;
 }
 </style>
 </h:body>

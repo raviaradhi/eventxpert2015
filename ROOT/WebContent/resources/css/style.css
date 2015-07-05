@@ -594,7 +594,7 @@ ul.border-bottom li:last-child {
 	-moz-transition: all 0.10s linear 0.10s;
 	-o-transition: all 0.10s linear 0.10s;
 	transition: all 0.10s linear 0.10s;
-	margin-top: 10px;
+	margin-top: -5px;
 }
 
 .btn:hover {
@@ -919,7 +919,7 @@ ul.border-bottom li:last-child {
 	padding: 20px 30px 5px;
 	position: absolute;
 	top: 60px;
-	z-index: 9999;
+	z-index: 999;
 	width: 100%;
 }
 
@@ -5432,4 +5432,11 @@ ul.featured-img-list li .inner .contentInr {
 	border-top: 1px solid #EC4979;
 	border-bottom: 1px solid #EC4979;
 	padding: 5px 0 4px;
+}
+
+.badge-warning {
+	background:green !important;
+   	position:relative;
+   	top: -20px;
+   	left: -35px;
 }
