@@ -36,8 +36,8 @@
 	<link
 		href='http://fonts.googleapis.com/css?family=Roboto:700,400,300,300italic'
 		rel='stylesheet' type='text/css' />
-	<link rel="stylesheet"
-		href="/resources/css/bootstrap-multiselect.css" type="text/css" />
+	<link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css"
+		type="text/css" />
 	<link rel="stylesheet" href="/resources/css/animate.min.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 	<script type="text/javascript"
@@ -47,11 +47,13 @@
 	<link href="/resources/bootstrap/css/bootstrap.min.css"
 		rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/resources/js/device.min.js" />
-	
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>	
+
+	<script type="text/javascript"
+		src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/resources/js/device.min.js" />
 	<script type="text/javascript" src="/resources/js/plugins.js" />
-	<script type="text/javascript" src="/resources/js/jquery.customSelect.js" />
+	<script type="text/javascript"
+		src="/resources/js/jquery.customSelect.js" />
 	<script type="text/javascript" src="/resources/js/customs.js" />
 </h:head>
 <h:body>
@@ -84,6 +86,7 @@
 							<div class="col-xs-12 col-sm-4 col-md-4">
 								<div class="form-group form-icon">
 									<p:calendar placeholder="Date"
+										value="#{eventsManagedBean.eventDate}"
 										styleClass="form-control styled-select" />
 								</div>
 							</div>
@@ -133,8 +136,8 @@
 					</div>
 					<div class="col-xs-12 col-sm-4 col-md-2">
 						<p:commandButton value="Modify"
-							styleClass="btn btn-primary btn-block caps"
-							actionListener="#{eventsManagedBean.modifyDtls}" />
+							styleClass="btn btn-primary btn-block caps" ajax="false"
+							action="#{eventsManagedBean.getResults}" type="submit" />
 					</div>
 
 					<div class="clear"></div>
@@ -145,125 +148,45 @@
 	</div>
 
 	<section id="about-us" class="aboutus-padding aboutus-padding_new">
+	<h:form id="mainForm" prependId="false">
+		<div class="clear mb-50"></div>
 
-	<div class="clear mb-50"></div>
-
-	<div class="tab-style-1">
-		<ul class="nav-tabs clearfix" role="tablist">
-			<li role="presentation"
-				class="#{eventsManagedBean.toSelectTab == 'Venue' ? 'active' : ''}"><a
-				href="home-page-with-flexslider.html#about-us-tab-1" role="tab"
-				data-toggle="tab">Venue</a></li>
-			<c:forEach
-				rendered="#{not empty eventsManagedBean.allSelectedServicesMap}"
-				id="foreach"
-				items="#{eventsManagedBean.allSelectedServicesMap.entrySet().toArray()}"
-				varStatus="stat" var="allS">
+		<div class="tab-style-1">
+			<ul class="nav-tabs clearfix" role="tablist">
 				<li role="presentation"
-					class="#{eventsManagedBean.toSelectTab == allS.key.getHeading() ? 'active' : ''}"><a
-					href="home-page-with-flexslider.html##{allS.key.getHeading()}"
-					role="tab" data-toggle="tab">#{allS.key.getHeading()}</a></li>
-			</c:forEach>
-			<li role="presentation"
-				class="#{eventsManagedBean.toSelectTab == 'Summary' ? 'active' : ''}"><a
-				href="home-page-with-flexslider.html#summary" role="tab"
-				data-toggle="tab">Summary</a></li>
-		</ul>
-		<div class="clear"></div>
+					class="#{eventsManagedBean.toSelectTab == 'Venue' ? 'active' : ''}"><a
+					href="home-page-with-flexslider.html#about-us-tab-1" role="tab"
+					data-toggle="tab">Venue</a></li>
+				<c:forEach
+					rendered="#{not empty eventsManagedBean.allSelectedServicesMap}"
+					id="foreacha"
+					items="#{eventsManagedBean.allSelectedServicesMap.entrySet().toArray()}"
+					varStatus="stat" var="allS">
+					<li role="presentation"
+						class="#{eventsManagedBean.toSelectTab == allS.key.getHeading() ? 'active' : ''}"><a
+						href="home-page-with-flexslider.html##{allS.key.getHeading()}"
+						role="tab" data-toggle="tab">#{allS.key.getHeading()}</a></li>
+				</c:forEach>
+				<li role="presentation"
+					class="#{eventsManagedBean.toSelectTab == 'Summary' ? 'active' : ''}"><a
+					href="home-page-with-flexslider.html#summary" role="tab"
+					data-toggle="tab">Summary <span
+						class="glyphicon glyphicon-shopping-cart"></span> <span
+						class="badge badge-warning">#{eventsManagedBean.selectCount}</span></a></li>
+			</ul>
+			<div class="clear"></div>
 
-		<div class="tab-content">
-			<div role="tabpanel"
-				class="tab-pane fade in #{eventsManagedBean.toSelectTab == 'Venue' ? 'active' : ''}"
-				id="about-us-tab-1">
-				<div class="tab-content-inner-about-us">
-					<div class="content-info">
-						<section class="section-sresults">
-						<div class="container clearfix">
-							<div class="row">
-								<div class="section-header-3 col-md-8 col-md-offset-2">
-									<h2 class="text-color-02">Matching Venue Services</h2>
-									<p>Did not find a matching vendor? Please don't hesitate to
-										call us anytime on +91-92931-30333</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
-									<ul class="featured-img-list">
-										<c:forEach items="#{eventsManagedBean.allVenueList}"
-											var="venue" varStatus="st">
-											<li class="wow fadeIn clearfix">
-												<div class="inner">
-													<div class="img">
-														<!-- <p:graphicImage height="120px" width="120px"
-																						id="slider#{st.count}"
-																						value="#{eventsManagedBean.getHotelImagesSm(venue.venueId).get(0)}">
-																					</p:graphicImage> -->
-														<img
-															src="#{eventsManagedBean.getHotelImagesSm(venue.venueId).get(0)}"
-															alt="hotel room" />
-													</div>
-													<div class="content">
-														<p:commandLink immediate="true"
-															action="#{eventsManagedBean.selectedVenueVals(venue.venueId)}">
-															<h3>#{venue.venueName}</h3>
-														</p:commandLink>
-														<p>#{venue.areaName}, #{venue.cityName}</p>
-														<div class="row">
-															<div class="col-sm-6 col-xs-12">
-																<fieldset class="rating">
-																	<input type="radio" id="star5" name="rating" value="5" /><label
-																		for="star5" title="Rocks!">5 stars</label> <input
-																		type="radio" id="star4" name="rating" value="4" /><label
-																		for="star4" title="Pretty good">4 stars</label> <input
-																		type="radio" id="star3" name="rating" value="3" /><label
-																		for="star3" title="Meh">3 stars</label> <input
-																		type="radio" id="star2" name="rating" value="2" /><label
-																		for="star2" title="Kinda bad">2 stars</label> <input
-																		type="radio" id="star1" name="rating" value="1" /><label
-																		for="star1" title="Sucks big time">1 star</label>
-																</fieldset>
-																&nbsp;(43)
-															</div>
-														</div>
-														<h4>Rs. #{eventsManagedBean.getCost(venue.finalCOST)}</h4>
-														<p>South Indian, North Indian, Continental
-															Specialists.</p>
-														<div class="row">
-															<div class="col-sm-4 col-xs-12">
-																<p:commandButton style="float:right"
-																	action="#{eventsManagedBean.selectFinalVenueBookNow(venue.venueId)}"
-																	styleclass="btn btn-primary btn-block caps"
-																	value="Book Now" />
-															</div>
-														</div>
-													</div>
-												</div>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-							</div>
-						</div>
-						</section>
-					</div>
-				</div>
-			</div>
-			<c:forEach
-				rendered="#{not empty eventsManagedBean.allSelectedServicesMap}"
-				id="foreach"
-				items="#{eventsManagedBean.allSelectedServicesMap.entrySet().toArray()}"
-				varStatus="stat" var="allS">
+			<div class="tab-content">
 				<div role="tabpanel"
-					class="tab-pane fade #{eventsManagedBean.toSelectTab == allS.key.getHeading() ? 'in active' : ''}"
-					id="#{allS.key.getHeading()}">
+					class="tab-pane fade in #{eventsManagedBean.toSelectTab == 'Venue' ? 'active' : ''}"
+					id="about-us-tab-1">
 					<div class="tab-content-inner-about-us">
 						<div class="content-info">
 							<section class="section-sresults">
 							<div class="container clearfix">
 								<div class="row">
 									<div class="section-header-3 col-md-8 col-md-offset-2">
-										<h2 class="text-color-02">Matching
-											#{allS.key.getHeading()} Services</h2>
+										<h2 class="text-color-02">Matching Venue Services</h2>
 										<p>Did not find a matching vendor? Please don't hesitate
 											to call us anytime on +91-92931-30333</p>
 									</div>
@@ -271,89 +194,64 @@
 								<div class="row">
 									<div class="col-md-10 col-md-offset-1">
 										<ul class="featured-img-list">
-											<c:if
-												test="#{ eventsManagedBean.venueRadio == 'Banquet Hall' and allS.key.getHeading() == 'Catering'}">
-												<c:forEach items="#{eventsManagedBean.venuePackages}"
-													var="packages" varStatus="st">
-													<li class="wow fadeIn clearfix">
-														<div class="inner">
-															<div class="img">
-																<img
-																	src="http://localhost/sam/vendors/10/Lighthouse.jpg"
-																	alt="hotel room" />
+											<c:forEach items="#{eventsManagedBean.allVenueList}"
+												var="venue" varStatus="st">
+												<li class="wow fadeIn clearfix">
+													<div class="inner">
+														<div class="img">
+															<!-- <p:graphicImage height="120px" width="120px"
+																						id="slider#{st.count}"
+																						value="#{eventsManagedBean.getHotelImagesSm(venue.venueId).get(0)}">
+																					</p:graphicImage> -->
+															<img
+																src="#{eventsManagedBean.getHotelImagesSm(venue.venueId).get(0)}"
+																alt="hotel room" />
+														</div>
+														<div class="content">
+															<p:commandLink immediate="true"
+																action="#{eventsManagedBean.selectedVenueVals(venue.venueId)}">
+																<h3>#{venue.venueName}</h3>
+															</p:commandLink>
+															<p>#{venue.areaName}, #{venue.cityName}</p>
+															<div class="row">
+																<div class="col-sm-6 col-xs-12">
+																	<fieldset class="rating">
+																		<input type="radio" id="star5" name="rating" value="5" /><label
+																			for="star5" title="Rocks!">5 stars</label> <input
+																			type="radio" id="star4" name="rating" value="4" /><label
+																			for="star4" title="Pretty good">4 stars</label> <input
+																			type="radio" id="star3" name="rating" value="3" /><label
+																			for="star3" title="Meh">3 stars</label> <input
+																			type="radio" id="star2" name="rating" value="2" /><label
+																			for="star2" title="Kinda bad">2 stars</label> <input
+																			type="radio" id="star1" name="rating" value="1" /><label
+																			for="star1" title="Sucks big time">1 star</label>
+																	</fieldset>
+																	&nbsp;(43)
+																</div>
 															</div>
-															<div class="content">
-																<h3>#{packages.packageName}</h3>
-																<p>#{eventsManagedBean.selectedEvent}</p>
-																<h4>Rs
-																	#{eventsManagedBean.getCost(packages.finalAmount *
-																	eventsManagedBean.totalCount)}</h4>
-																<p>#{packages.description}</p>
-																<div class="row">
-																	<div class="col-sm-4 col-xs-12">
-																		<p:commandButton style="float:right"
-																			action="#{eventsManagedBean.selectedFinalVenuePopup(packages.packageId)}"
-																			styleclass="btn btn-primary btn-block caps"
-																			value="Book Now" />
-																	</div>
+															<h4>Rs.
+																#{eventsManagedBean.getCost(venue.finalCOST)}</h4>
+															<p>South Indian, North Indian, Continental
+																Specialists.</p>
+															<div class="row">
+																<div class="col-sm-4 col-xs-12">
+																	<p:commandButton style="float:right" ajax="true"
+																		action="#{eventsManagedBean.selectFinalVenueBookNow(venue.venueId)}"
+																		styleclass="btn btn-primary btn-block caps"
+																		update="SummaryFrm"
+																		rendered="#{!(eventsManagedBean.finalVenueInfo.venueId eq venue.venueId)}"
+																		value="Book Now" />
+																	<p:commandButton style="float:right" disabled="true"
+																		styleclass="btn btn-primary btn-block caps"
+																		rendered="#{(eventsManagedBean.finalVenueInfo.venueId eq venue.venueId)}"
+																		value="Booked" />
 																</div>
 															</div>
 														</div>
-													</li>
-												</c:forEach>
-											</c:if>
-											<c:if
-												test="#{!(eventsManagedBean.venueRadio == 'Banquet Hall' and allS.key.getHeading() == 'Catering')}">
-												<c:forEach items="#{allS.value}" var="service"
-													varStatus="st">
-													<li class="wow fadeIn clearfix">
-														<div class="inner">
-															<div class="img">
-																<img
-																	src="#{eventsManagedBean.getServiceImagesSm(service.serviceProviderId).get(0)}"
-																	alt="hotel room" />
-															</div>
-															<div class="content">
-																<p:commandLink immediate="true"
-																	action="#{eventsManagedBean.popupService(allS.key,service.serviceProviderCode)}">
-																	<h3>#{service.serviceProviderName}</h3>
-																</p:commandLink>
-																<p>#{service.areaName}, #{service.cityName}</p>
-																<div class="row">
-																	<div class="col-sm-6 col-xs-12">
-																		<fieldset class="rating">
-																			<input type="radio" id="star5" name="rating"
-																				value="5" /><label for="star5" title="Rocks!">5
-																				stars</label> <input type="radio" id="star4" name="rating"
-																				value="4" /><label for="star4" title="Pretty good">4
-																				stars</label> <input type="radio" id="star3" name="rating"
-																				value="3" /><label for="star3" title="Meh">3
-																				stars</label> <input type="radio" id="star2" name="rating"
-																				value="2" /><label for="star2" title="Kinda bad">2
-																				stars</label> <input type="radio" id="star1" name="rating"
-																				value="1" /><label for="star1"
-																				title="Sucks big time">1 star</label>
-																		</fieldset>
-																		&nbsp;(43)
-																	</div>
-																</div>
-																<h4>Rs.
-																	#{eventsManagedBean.getProjectedCost(service.finalCost,service.unitOfCost)}</h4>
-																<p>South Indian, North Indian, Continental
-																	Specialists.</p>
-																<div class="row">
-																	<div class="col-sm-4 col-xs-12">
-																		<p:commandButton style="float:right"
-																			action="#{eventsManagedBean.selectedFinalServicePopup(allS.key,service.serviceProviderCode)}"
-																			styleclass="btn btn-primary btn-block caps"
-																			value="Book Now" />
-																	</div>
-																</div>
-															</div>
-														</div>
-													</li>
-												</c:forEach>
-											</c:if>
+													</div>
+												</li>
+											</c:forEach>
 										</ul>
 									</div>
 								</div>
@@ -362,107 +260,185 @@
 						</div>
 					</div>
 				</div>
-			</c:forEach>
-			<div role="tabpanel"
-				class="tab-pane fade in #{eventsManagedBean.toSelectTab == 'Summary' ? 'active' : ''}"
-				id="summary">
-				<div class="tab-content-inner-about-us">
-					<div class="content-info">
-						<section class="section-sresults">
-						<div class="container clearfix">
-							<div class="row">
-								<div class="section-header-3 col-md-8 col-md-offset-2">
-									<h2 class="text-color-02">Summary</h2>
-									<p>Did not find a matching vendor? Please don't hesitate to
-										call us anytime on +91-92931-30333</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="container">
-									<table id="cart" class="table table-hover table-condensed">
-										<thead>
-											<tr>
-												<th style="width: 60%">Vendor</th>
-												<th style="width: 10%">Rate/pax</th>
-												<th style="width: 10%">Price</th>
-												<th style="width: 10%"></th>
-											</tr>
-										</thead>
-										<c:forEach
-											items="#{eventsManagedBean.finalVenueMap.entrySet().toArray()}"
-											var="venue" varStatus="stVenue">
-											<c:forEach items="#{venue.value}" var="finalVenueD">
-												<tbody>
-													<tr>
-														<td data-th="Vendor">
-															<div class="row">
-																<div class="col-sm-4 ">
+				<c:forEach
+					rendered="#{not empty eventsManagedBean.allSelectedServicesMap}"
+					id="foreach"
+					items="#{eventsManagedBean.allSelectedServicesMap.entrySet().toArray()}"
+					varStatus="stat" var="allS">
+					<div role="tabpanel"
+						class="tab-pane fade #{eventsManagedBean.toSelectTab == allS.key.getHeading() ? 'in active' : ''}"
+						id="#{allS.key.getHeading()}">
+						<div class="tab-content-inner-about-us">
+							<div class="content-info">
+								<section class="section-sresults">
+								<div class="container clearfix">
+									<div class="row">
+										<div class="section-header-3 col-md-8 col-md-offset-2">
+											<h2 class="text-color-02">Matching
+												#{allS.key.getHeading()} Services</h2>
+											<p>Did not find a matching vendor? Please don't hesitate
+												to call us anytime on +91-92931-30333</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-10 col-md-offset-1">
+											<ul class="featured-img-list">
+												<c:if
+													test="#{ eventsManagedBean.venueRadio == 'Banquet Hall' and allS.key.getHeading() == 'Catering'}">
+													<c:forEach items="#{eventsManagedBean.venuePackages}"
+														var="packages" varStatus="st">
+														<li class="wow fadeIn clearfix">
+															<div class="inner">
+																<div class="img">
 																	<img
-																		src="#{eventsManagedBean.getHotelImagesSm(finalVenueD.value.venueId).get(0)}"
-																		alt="profile image" class="img-responsive" />
+																		src="http://localhost/sam/vendors/10/Lighthouse.jpg"
+																		alt="hotel room" />
 																</div>
-																<div class="col-sm-8">
-																	<h4 class="nomargin">#{finalVenueD.key}</h4>
-																	<div>
-																		<strong>Vendor:</strong> Venue
-																	</div>
-																	<div>
-																		<strong>Event:</strong> Event Type
-																	</div>
-																	<div>
-																		<strong>Date:</strong> #{eventsManagedBean.eventDate}
-																	</div>
-																	<div>
-																		<strong>Guests:</strong> Count
+																<div class="content">
+																	<h3>#{packages.packageName}</h3>
+																	<p>#{eventsManagedBean.selectedEvent}</p>
+																	<h4>Rs
+																		#{eventsManagedBean.getCost(packages.finalAmount *
+																		eventsManagedBean.totalCount)}</h4>
+																	<p>#{packages.description}</p>
+																	<div class="row">
+																		<div class="col-sm-4 col-xs-12">
+																			<p:commandButton style="float:right" ajax="true"
+																				action="#{eventsManagedBean.selectedFinalVenuePopup(packages.packageId)}"
+																				rendered="#{(eventsManagedBean.finalVenueInfo.packageId eq packages.packageId)}"
+																				styleclass="btn btn-primary btn-block caps"
+																				value="Booked" disabled="true" />
+																			<p:commandButton style="float:right" ajax="true"
+																				action="#{eventsManagedBean.selectedFinalVenuePopup(packages.packageId)}"
+																				rendered="#{!(eventsManagedBean.finalVenueInfo.packageId eq packages.packageId)}"
+																				styleclass="btn btn-primary btn-block caps"
+																				value="Book Now" update="SummaryFrm" />
+																		</div>
 																	</div>
 																</div>
 															</div>
-														</td>
-														<td data-th="Price " class="price-alignment">Rs.
-															#{eventsManagedBean.getCost(finalVenueD.value.finalAmount)}</td>
+														</li>
+													</c:forEach>
+												</c:if>
+												<c:if
+													test="#{!(eventsManagedBean.venueRadio == 'Banquet Hall' and allS.key.getHeading() == 'Catering')}">
+													<c:forEach items="#{allS.value}" var="service"
+														varStatus="st">
+														<li class="wow fadeIn clearfix">
+															<div class="inner">
+																<div class="img">
+																	<img
+																		src="#{eventsManagedBean.getServiceImagesSm(service.serviceProviderId).get(0)}"
+																		alt="hotel room" />
+																</div>
+																<div class="content">
+																	<p:commandLink immediate="true"
+																		action="#{eventsManagedBean.popupService(allS.key,service.serviceProviderCode)}">
+																		<h3>#{service.serviceProviderName}</h3>
+																	</p:commandLink>
+																	<p>#{service.areaName}, #{service.cityName}</p>
+																	<div class="row">
+																		<div class="col-sm-6 col-xs-12">
+																			<fieldset class="rating">
+																				<input type="radio" id="star5" name="rating"
+																					value="5" /><label for="star5" title="Rocks!">5
+																					stars</label> <input type="radio" id="star4" name="rating"
+																					value="4" /><label for="star4" title="Pretty good">4
+																					stars</label> <input type="radio" id="star3" name="rating"
+																					value="3" /><label for="star3" title="Meh">3
+																					stars</label> <input type="radio" id="star2" name="rating"
+																					value="2" /><label for="star2" title="Kinda bad">2
+																					stars</label> <input type="radio" id="star1" name="rating"
+																					value="1" /><label for="star1"
+																					title="Sucks big time">1 star</label>
+																			</fieldset>
+																			&nbsp;(43)
+																		</div>
+																	</div>
+																	<h4>Rs.
+																		#{eventsManagedBean.getProjectedCost(service.finalCost,service.unitOfCost)}</h4>
+																	<p>South Indian, North Indian, Continental
+																		Specialists.</p>
+																	<div class="row">
+																		<div class="col-sm-4 col-xs-12">
+																			<p:commandButton style="float:right"
+																				action="#{eventsManagedBean.selectedFinalServicePopup(allS.key,service.serviceProviderCode)}"
+																				styleclass="btn btn-primary btn-block caps"
+																				ajax="true" update="SummaryFrm"
+																				rendered="#{!(eventsManagedBean.finalServicesMap.get(allS.key.getId()).serviceProviderCode eq service.serviceProviderCode)}"
+																				value="Book Now" />
+																			<p:commandButton style="float:right" disabled="true"
+																				styleclass="btn btn-primary btn-block caps"
+																				rendered="#{(eventsManagedBean.finalServicesMap.get(allS.key.getId()).serviceProviderCode eq service.serviceProviderCode)}"
+																				value="Booked" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</li>
+													</c:forEach>
+												</c:if>
+											</ul>
+										</div>
+									</div>
+								</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 
-														<td data-th="Subtotal " class="price-alignment">Rs.
-															#{eventsManagedBean.getCost(finalVenueD.value.finalAmount)}</td>
-														<td class="actions price-alignment" data-th="">
-															<button class="btn btn-info btn-sm">
-																<i class="fa fa-pencil-square-o"></i>
-															</button>
-															<button class="btn btn-danger btn-sm">
-																<i class="fa fa-trash-o"></i>
-															</button>
-														</td>
+				<div role="tabpanel"
+					class="tab-pane fade in #{eventsManagedBean.toSelectTab == 'Summary' ? 'active' : ''}"
+					id="summary">
+					<h:panelGroup id="SummaryFrm">
+						<div class="tab-content-inner-about-us">
+							<div class="content-info">
+								<section class="section-sresults">
+								<div class="container clearfix">
+									<div class="row">
+										<div class="section-header-3 col-md-8 col-md-offset-2">
+											<h2 class="text-color-02">Summary</h2>
+											<p>Did not find a matching vendor? Please don't hesitate
+												to call us anytime on +91-92931-30333</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="container">
+											<table id="cart" class="table table-hover table-condensed">
+												<thead>
+													<tr>
+														<th style="width: 60%">Vendor</th>
+														<th style="width: 10%">Rate/pax</th>
+														<th style="width: 10%">Price</th>
+														<th style="width: 10%"></th>
 													</tr>
-												</tbody>
-											</c:forEach>
-										</c:forEach>
-										<c:forEach items="#{eventsManagedBean.allSelectedServicesMap}"
-											varStatus="stat" var="allS">
-											<c:forEach
-												items="#{eventsManagedBean.finalServicesMap.entrySet().toArray()}"
-												var="finalV">
-												<c:if test="#{allS.key.getId() == finalV.key}">
+												</thead>
+												<c:forEach
+													items="#{eventsManagedBean.venueDtls.entrySet().toArray()}"
+													var="finalVenueD">
 													<tbody>
 														<tr>
 															<td data-th="Vendor">
 																<div class="row">
 																	<div class="col-sm-4 ">
-																		<img src="images/features/featured-img-thumb-01.jpg"
+																		<img
+																			src="#{eventsManagedBean.getHotelImagesSm(finalVenueD.value.venueId).get(0)}"
 																			alt="profile image" class="img-responsive" />
 																	</div>
 																	<div class="col-sm-8">
-																		<h4 class="nomargin">#{finalV.value.serviceProviderName}</h4>
+																		<h4 class="nomargin">#{finalVenueD.key}</h4>
 																		<div>
-																			<strong>Vendor:</strong> #{allS.key.getId() eq
-																			finalV.key}
+																			<strong>Vendor:</strong> Venue
 																		</div>
 																		<div>
-																			<strong>Package:</strong> #{finalV.value.packageName}
+																			<strong>Event:</strong> Event Type
 																		</div>
 																		<div>
-																			<strong>Event:</strong> Type Event
-																		</div>
-																		<div>
-																			<strong>Date:</strong> #{eventsManagedBean.eventDate}
+																			<strong>Date:</strong>
+																			<h:outputText value="#{eventsManagedBean.eventDate}">
+																				<f:convertDateTime pattern="dd-MMM-yyyy" />
+																			</h:outputText>
 																		</div>
 																		<div>
 																			<strong>Guests:</strong> Count
@@ -471,11 +447,10 @@
 																</div>
 															</td>
 															<td data-th="Price " class="price-alignment">Rs.
-																#{eventsManagedBean.getProjectedCost(service.value.finalAmount,
-																service.value.unitOfCost)}</td>
+																#{eventsManagedBean.getCost(finalVenueD.value.finalAmount)}</td>
+
 															<td data-th="Subtotal " class="price-alignment">Rs.
-																#{eventsManagedBean.getProjectedCost(service.value.finalAmount,
-																service.value.unitOfCost)}</td>
+																#{eventsManagedBean.getCost(finalVenueD.value.finalAmount)}</td>
 															<td class="actions price-alignment" data-th="">
 																<button class="btn btn-info btn-sm">
 																	<i class="fa fa-pencil-square-o"></i>
@@ -486,44 +461,105 @@
 															</td>
 														</tr>
 													</tbody>
-												</c:if>
-											</c:forEach>
-										</c:forEach>
-										<tfoot>
-											<tr class="visible-xs">
-												<td class="text-center"></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td colspan="2" class="text-right">Total <strong>Rs.
-														Total Amount</strong></td>
-												<td><a href="#" class="btn btn-primary btn-block caps">Block
-														Now (5%/total) <i class="fa fa-angle-right"></i>
-												</a></td>
-											</tr>
-											<tr class="visible-xs">
-												<td></td>
-											</tr>
-											<tr>
-												<td><a href="#" class="btn btn-warning"><i
-														class="fa fa-angle-left"></i> Continue Shopping</a></td>
-												<td colspan="2"></td>
-												<td><a href="#" class="btn btn-warning btn-block">Confirm
-														by 5th June <i class="fa fa-angle-right"></i>
-												</a></td>
-											</tr>
-										</tfoot>
-									</table>
+												</c:forEach>
+
+												<c:forEach
+													items="#{eventsManagedBean.allSelectedServicesMap}"
+													varStatus="stat" var="allS">
+													<c:forEach
+														items="#{eventsManagedBean.finalServicesMap.entrySet().toArray()}"
+														var="finalV">
+														<c:if test="#{allS.key.getId() == finalV.key}">
+															<tbody>
+																<tr>
+																	<td data-th="Vendor">
+																		<div class="row">
+																			<div class="col-sm-4 ">
+																				<img src="images/features/featured-img-thumb-01.jpg"
+																					alt="profile image" class="img-responsive" />
+																			</div>
+																			<div class="col-sm-8">
+																				<h4 class="nomargin">#{finalV.value.serviceProviderName}</h4>
+																				<div>
+																					<strong>Vendor:</strong> #{allS.key.getId() eq
+																					finalV.key}
+																				</div>
+																				<div>
+																					<strong>Package:</strong>
+																					#{finalV.value.packageName}
+																				</div>
+																				<div>
+																					<strong>Event:</strong> Type Event
+																				</div>
+																				<div>
+																					<strong>Date:</strong>
+																					<h:outputText
+																						value="#{eventsManagedBean.eventDate}">
+																						<f:convertDateTime pattern="dd-MMM-yyyy" />
+																					</h:outputText>
+																				</div>
+																				<div>
+																					<strong>Guests:</strong> Count
+																				</div>
+																			</div>
+																		</div>
+																	</td>
+																	<td data-th="Price " class="price-alignment">Rs.
+																		#{eventsManagedBean.getProjectedCost(service.value.finalAmount,
+																		service.value.unitOfCost)}</td>
+																	<td data-th="Subtotal " class="price-alignment">Rs.
+																		#{eventsManagedBean.getProjectedCost(service.value.finalAmount,
+																		service.value.unitOfCost)}</td>
+																	<td class="actions price-alignment" data-th="">
+																		<button class="btn btn-info btn-sm">
+																			<i class="fa fa-pencil-square-o"></i>
+																		</button>
+																		<button class="btn btn-danger btn-sm">
+																			<i class="fa fa-trash-o"></i>
+																		</button>
+																	</td>
+																</tr>
+															</tbody>
+														</c:if>
+													</c:forEach>
+												</c:forEach>
+												<tfoot>
+													<tr class="visible-xs">
+														<td class="text-center"></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td colspan="2" class="text-right">Total <strong>Rs.
+																Total Amount</strong></td>
+														<td><a href="#"
+															class="btn btn-primary btn-block caps">Block Now
+																(5%/total) <i class="fa fa-angle-right"></i>
+														</a></td>
+													</tr>
+													<tr class="visible-xs">
+														<td></td>
+													</tr>
+													<tr>
+														<td><a href="#" class="btn btn-warning"><i
+																class="fa fa-angle-left"></i> Continue Shopping</a></td>
+														<td colspan="2"></td>
+														<td><a href="#" class="btn btn-warning btn-block">Confirm
+																by 5th June <i class="fa fa-angle-right"></i>
+														</a></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
 								</div>
+								</section>
 							</div>
 						</div>
-						</section>
-					</div>
+					</h:panelGroup>
 				</div>
 			</div>
 		</div>
-	</div>
-	</section>
+	</h:form> </section>
 
 	<section id="contact" class="">
 	<div class="container clearfix">

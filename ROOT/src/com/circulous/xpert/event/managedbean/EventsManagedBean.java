@@ -211,7 +211,11 @@ public class EventsManagedBean implements Serializable {
 	private String toSelectTab = "Venue";
 
 	private Date minDate;
+	
+	private HashMap venueDtls;
 
+	private int selectCount = 0;
+	
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("ROOT");
 	EntityManager em = emf.createEntityManager();
 
@@ -1019,11 +1023,12 @@ public class EventsManagedBean implements Serializable {
 		setFinalVenueInfo(vpInfo);
 		// finalServicesMap.put(vpInfo.getVenueId(), vpInfo);
 
-		HashMap venueDtls = new HashMap();
+		venueDtls = new HashMap();
 		venueDtls.put(vInfo.getVenueName(), vpInfo);
 		finalVenueMap.put(vtypeInfo.getVenueType(), venueDtls);
 
 		logger.debug("finalVenueMap$$$$$$$$$$$$$$$$$$$$$$$  " + finalVenueMap);
+		calculateCount();
 
 	}
 
@@ -1075,7 +1080,8 @@ public class EventsManagedBean implements Serializable {
 		finalVenueMap.put(vtypeInfo.getVenueType(), venueDtls);
 
 		logger.debug("finalVenueMap$$$$$$$$$$$$$$$$$$$$$$$  " + finalVenueMap);
-		return "newResults";
+		calculateCount();
+		return "";
 
 	}
 
@@ -1105,6 +1111,8 @@ public class EventsManagedBean implements Serializable {
 		ServiceProviderInfo vInfo = (ServiceProviderInfo) query1.getResultList().get(0);
 
 		finalServicesMap.put(vsppackage.getServiceTypeCode(), vsppackage);
+		toSelectTab = sv.getHeading();
+		calculateCount();
 
 	}
 
@@ -1234,12 +1242,17 @@ public class EventsManagedBean implements Serializable {
 		ViewServiceProviderPackage vsppackage = (ViewServiceProviderPackage) query.getSingleResult();
 		finalServicesMap.put(vsppackage.getServiceTypeCode(), vsppackage);
 		logger.debug(finalServicesMap);
-		return "newResults";
+		calculateCount();
+		return "";
 	}
 
 	public String showSummary() {
 		logger.debug("showSummary::::::::");
 		return "newSummary";
+	}
+	
+	public void calculateCount() {
+		selectCount = finalVenueMap.size() + finalServicesMap.size();
 	}
 
 	private void initMap(String address, String name) throws JsonSyntaxException, IOException {
@@ -2427,4 +2440,31 @@ public class EventsManagedBean implements Serializable {
 		this.minDate = minDate;
 	}
 
+	/**
+	 * @return the venueDtls
+	 */
+	public HashMap getVenueDtls() {
+		return venueDtls;
+	}
+
+	/**
+	 * @param venueDtls the venueDtls to set
+	 */
+	public void setVenueDtls(HashMap venueDtls) {
+		this.venueDtls = venueDtls;
+	}
+
+	/**
+	 * @return the selectCount
+	 */
+	public int getSelectCount() {
+		return selectCount;
+	}
+
+	/**
+	 * @param selectCount the selectCount to set
+	 */
+	public void setSelectCount(int selectCount) {
+		this.selectCount = selectCount;
+	}
 }
