@@ -962,9 +962,9 @@ ul.border-bottom li:last-child {
     float:left;
 }
 
-/* :not(:checked) is a filter, so that browsers that donâ€™t support :checked donâ€™t 
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
    follow these rules. Every browser that supports :checked also supports :not(), so
-   it doesnâ€™t make the test unnecessarily selective */
+   it doesn’t make the test unnecessarily selective */
 .rating:not(:checked) > input {
     position:absolute;
     top:-9999px;
@@ -984,7 +984,7 @@ ul.border-bottom li:last-child {
 }
 
 .rating:not(:checked) > label:before {
-    content: 'â˜… ';
+    content: '? ';
 }
 
 .rating > input:checked ~ label {
@@ -5400,12 +5400,21 @@ ul.featured-img-list li .inner .contentInr {
 	float: right;
 }
 
-@media ( min-width : 768px) {
+@media (min-width: 768px)
+.navbar-nav {
+  float: right;
+  margin: 0;
+}
+
+@media ( min-width : 768px) 
 .modal-content {
 	width: 85% !important;
 }
-}
 
+@media only screen and (max-width: 992px)
+#find-room-form-wrapper .inner {
+  top: 0px;
+}
 
 .login-header-3 {
 	text-align: center;
