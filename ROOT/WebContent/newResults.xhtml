@@ -170,9 +170,9 @@
 				<li role="presentation"
 					class="#{eventsManagedBean.toSelectTab == 'Summary' ? 'active' : ''}"><a
 					href="home-page-with-flexslider.html#summary" role="tab"
-					data-toggle="tab">Summary <span
+					data-toggle="tab"><span
 						class="glyphicon glyphicon-shopping-cart"></span> <span
-						class="badge badge-warning">#{eventsManagedBean.selectCount}</span></a></li>
+						class="badge badge-warning"><h:outputText id="countId" value="#{eventsManagedBean.selectCount}" /></span>Summary </a></li>
 			</ul>
 			<div class="clear"></div>
 
@@ -239,7 +239,7 @@
 																	<p:commandButton style="float:right" ajax="true"
 																		action="#{eventsManagedBean.selectFinalVenueBookNow(venue.venueId)}"
 																		styleclass="btn btn-primary btn-block caps"
-																		update="SummaryFrm"
+																		update="SummaryFrm countId"
 																		rendered="#{!(eventsManagedBean.finalVenueInfo.venueId eq venue.venueId)}"
 																		value="Book Now" />
 																	<p:commandButton style="float:right" disabled="true"
@@ -312,7 +312,7 @@
 																				action="#{eventsManagedBean.selectedFinalVenuePopup(packages.packageId)}"
 																				rendered="#{!(eventsManagedBean.finalVenueInfo.packageId eq packages.packageId)}"
 																				styleclass="btn btn-primary btn-block caps"
-																				value="Book Now" update="SummaryFrm" />
+																				value="Book Now" update="SummaryFrm countId" />
 																		</div>
 																	</div>
 																</div>
@@ -364,7 +364,7 @@
 																			<p:commandButton style="float:right"
 																				action="#{eventsManagedBean.selectedFinalServicePopup(allS.key,service.serviceProviderCode)}"
 																				styleclass="btn btn-primary btn-block caps"
-																				ajax="true" update="SummaryFrm"
+																				ajax="true" update="SummaryFrm countId"
 																				rendered="#{!(eventsManagedBean.finalServicesMap.get(allS.key.getId()).serviceProviderCode eq service.serviceProviderCode)}"
 																				value="Book Now" />
 																			<p:commandButton style="float:right" disabled="true"
